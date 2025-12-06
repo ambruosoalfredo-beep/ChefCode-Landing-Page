@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  font-size: 14px;
+  /* Slightly smaller text/spacing on mobile = "less zoomed" feel */
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+    /* Back to normal size on desktop */
+  }
+}
+
+body {
+  background-color: #f8fafc;
+  /* slate-50 */
+}
+
+/* Utilità per nascondere la scrollbar ma permettere lo scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
