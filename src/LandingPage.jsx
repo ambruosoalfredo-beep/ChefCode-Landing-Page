@@ -64,12 +64,12 @@ const LandingPage = () => {
     <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
 
       {/* --- NAVBAR --- */}
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/90 backdrop-blur-lg shadow-lg py-3 border-b border-white/5' : 'bg-transparent py-6'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/90 backdrop-blur-lg shadow-lg py-3 border-b border-white/5' : 'bg-transparent py-4 md:py-6'}`}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
           {/* Link logo to home */}
           <div className="flex items-center gap-2 group cursor-pointer">
             <Link to="/">
-              <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+              <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
             </Link>
           </div>
 
@@ -103,7 +103,7 @@ const LandingPage = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6">
+          <div className="md:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
             <NavLink href="/#how-it-works" mobile>How it Works</NavLink>
             <NavLink href="/#features" mobile>Features</NavLink>
             <NavLink href="/#dr-ai" mobile>Dr.AI</NavLink>
