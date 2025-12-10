@@ -7,6 +7,7 @@ import Immagine1 from './assets/Immagine1.png';
 import Immagine2 from './assets/Immagine2.jpg';
 import Immagine3 from './assets/Immagine3.jpg';
 import Immagine4 from './assets/Immagine4.jpg';
+import Immagine5 from './assets/Immagine5.jpg';
 
 const AboutUs = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,6 +45,12 @@ const AboutUs = () => {
             name: "Kshama Tupe",
             role: "Senior Business Analyst",
             details: ["Solution Designer", "Digital Innovation"]
+        },
+        {
+            img: Immagine5,
+            name: "Mariem Daha",
+            role: "Software Engineer",
+            details: ["Web Designer", "AI & Analytic focus"]
         }
     ];
 
