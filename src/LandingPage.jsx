@@ -143,14 +143,15 @@ const LandingPage = () => {
       {/* --- HERO SECTION (Hypnotic Dark Theme) --- */}
       <section className="relative pt-40 pb-32 md:pt-52 md:pb-48 overflow-hidden bg-slate-900 border-b border-slate-800">
         {/* Video Background */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <video
             src={videoDemo}
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-50"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover opacity-50"
+            style={{ objectPosition: 'center center' }}
           />
           {/* Dark Overlay for contrast */}
           <div className="absolute inset-0 bg-slate-900/60"></div>
