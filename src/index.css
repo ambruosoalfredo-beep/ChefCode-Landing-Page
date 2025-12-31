@@ -29,7 +29,6 @@ body {
   /* slate-50 */
 }
 
-/* Utilità per nascondere la scrollbar ma permettere lo scroll */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -37,4 +36,83 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* === AGGRESSIVE BUTTON ANIMATIONS === */
+
+/* Pulse animation for primary CTAs */
+@keyframes btn-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+  }
+
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 0 rgba(249, 115, 22, 0.3);
+  }
+}
+
+/* Primary button - Maximum impact */
+.btn-aggressive-primary {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-aggressive-primary:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 0 50px -8px rgba(249, 115, 22, 0.7),
+    0 20px 35px -10px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
+}
+
+.btn-aggressive-primary:active {
+  transform: translateY(-2px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Idle pulse for maximum attention */
+.btn-pulse-orange {
+  animation: btn-pulse 2.5s ease-in-out infinite;
+}
+
+/* Secondary button - Dynamic but subtle */
+.btn-aggressive-secondary {
+  transition: all 0.25s ease-out;
+}
+
+.btn-aggressive-secondary:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-aggressive-secondary:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* Ghost/Outline button */
+.btn-aggressive-ghost {
+  transition: all 0.3s ease-out;
+}
+
+.btn-aggressive-ghost:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.2);
+}
+
+/* Small buttons (icons, toggles) */
+.btn-aggressive-small {
+  transition: all 0.2s ease-out;
+}
+
+.btn-aggressive-small:hover {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.btn-aggressive-small:active {
+  transform: scale(0.95);
 }

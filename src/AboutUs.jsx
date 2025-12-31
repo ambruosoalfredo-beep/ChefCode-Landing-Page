@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from './assets/logo.svg';
@@ -25,14 +26,14 @@ const AboutUs = () => {
         {
             img: Immagine2,
             name: "Alfredo Ambruoso",
-            role: "20+ yrs Chef & Kitchen Leader",
-            details: ["Menu Engineering & Workflow Design", "Cost Control, HACCP & Compliance"]
+            role: "Co-Founder ChefCode",
+            details: ["20+ yrs Chef & Kitchen Leader", "Menu Engineering & Workflow Design", "Cost Control, HACCP & Compliance"]
         },
         {
             img: Immagine1,
             name: "Daniele Paciotti",
-            role: "26+ Strategy / Business",
-            details: ["Business & Sales Management", "Product Management"]
+            role: "Co-Founder ChefCode",
+            details: ["26+ Strategy / Business", "Business & Sales Management", "Product Management"]
         },
         {
             img: Immagine3,
@@ -84,7 +85,7 @@ const AboutUs = () => {
 
                     <div className="hidden md:flex items-center gap-4">
                         <Link to="/">
-                            <button className="bg-white hover:bg-orange-500 hover:text-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 duration-300">
+                            <button className="btn-aggressive-primary bg-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm">
                                 Back to Home
                             </button>
                         </Link>
@@ -125,7 +126,7 @@ const AboutUs = () => {
                                 <div className="text-orange-600 font-bold text-sm uppercase tracking-wide mb-4">{member.role}</div>
                                 <div className="text-slate-500 font-medium leading-relaxed">
                                     {member.details.map((line, idx) => (
-                                        <div key={idx}>{line}</div>
+                                        <div key={idx} className={idx === 0 && (member.name === "Alfredo Ambruoso" || member.name === "Daniele Paciotti") ? "font-bold" : ""}>{line}</div>
                                     ))}
                                 </div>
                             </div>

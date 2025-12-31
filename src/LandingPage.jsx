@@ -158,16 +158,16 @@ const LandingPage = () => {
             <NavLink href="/about" mobile>About Us</NavLink>
             <div className="border-t border-slate-700 pt-6 flex flex-col gap-3">
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <button className="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-lg font-bold shadow-lg transition-colors">
+                <button className="btn-aggressive-secondary w-full bg-slate-800 text-white py-3 rounded-lg font-bold shadow-lg">
                   Log in
                 </button>
               </Link>
               <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                <button className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50 transition-colors">
+                <button className="btn-aggressive-primary w-full bg-orange-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50">
                   Register Now
                 </button>
               </Link>
-              <button onClick={scrollToDemo} className="w-full bg-white hover:bg-orange-50 border-2 border-orange-600 text-orange-600 py-3 rounded-lg font-bold shadow-lg transition-colors">
+              <button onClick={scrollToDemo} className="btn-aggressive-ghost w-full bg-white border-2 border-orange-600 text-orange-600 py-3 rounded-lg font-bold shadow-lg">
                 Book a Demo
               </button>
             </div>
@@ -278,12 +278,12 @@ const LandingPage = () => {
             }}
             className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-20"
           >
-            <button onClick={scrollToDemo} className="bg-gradient-to-r from-orange-600 to-orange-500 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-[0_0_40px_-5px_rgba(249,115,22,0.5)] hover:scale-105 transition-all flex items-center gap-2 group min-w-[240px] justify-center relative overflow-hidden">
+            <button onClick={scrollToDemo} className="btn-aggressive-primary btn-pulse-orange bg-gradient-to-r from-orange-600 to-orange-500 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center gap-2 group min-w-[240px] justify-center relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <span className="relative">Start Free Trial</span>
               <ArrowRight className="relative group-hover:translate-x-1 transition-transform" size={20} />
             </button>
-            <button onClick={() => setIsVideoOpen(true)} className="bg-slate-800/50 border border-slate-700 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-slate-800 hover:border-orange-500/50 transition-all flex items-center gap-2 min-w-[240px] justify-center backdrop-blur-sm">
+            <button onClick={() => setIsVideoOpen(true)} className="btn-aggressive-secondary bg-slate-800/50 border border-slate-700 text-white px-10 py-5 rounded-2xl font-bold text-lg backdrop-blur-sm flex items-center gap-2 min-w-[240px] justify-center">
               <Play size={18} fill="currentColor" className="text-white" />
               ChefCode Vision
             </button>

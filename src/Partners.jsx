@@ -23,13 +23,13 @@ const Partners = () => {
         {
             img: Immagine6,
             name: "Flavio Di Gregorio",
-            role: "Founder FDG",
+            role: "Founder Food & Diet Goal",
             details: ["University Researcher", "Doctor & Nutritionist"]
         },
         {
             img: Immagine7,
             name: "Maria Teresa Lombardi",
-            role: "Co-Founder FDG",
+            role: "Co-Founder Food & Diet Goal",
             details: ["Biologist Nutritionist"]
         }
     ];
