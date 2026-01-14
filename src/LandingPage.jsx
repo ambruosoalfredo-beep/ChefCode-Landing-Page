@@ -33,9 +33,17 @@ const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [openFAQ, setOpenFAQ] = useState(null);
+
+  // Beta form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    restaurant: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState({ loading: false, success: false, error: false });
 
   // Handle scroll for navbar styling and progress bar
   useEffect(() => {
@@ -103,36 +111,6 @@ const LandingPage = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            {/* User Menu Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-800/50"
-              >
-                <User size={20} />
-                <ChevronDown size={16} className={`transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl py-2 z-50">
-                  <Link
-                    to="/login"
-                    className="block w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors font-medium"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="block w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors font-medium"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    Register Now
-                  </Link>
-                </div>
-              )}
-            </div>
-
             <button
               onClick={scrollToDemo}
               className="bg-white hover:bg-orange-500 hover:text-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 duration-300"
@@ -157,17 +135,7 @@ const LandingPage = () => {
             <NavLink href="/partners" mobile>Partners</NavLink>
             <NavLink href="/about" mobile>About Us</NavLink>
             <div className="border-t border-slate-700 pt-6 flex flex-col gap-3">
-              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <button className="btn-aggressive-secondary w-full bg-slate-800 text-white py-3 rounded-lg font-bold shadow-lg">
-                  Log in
-                </button>
-              </Link>
-              <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                <button className="btn-aggressive-primary w-full bg-orange-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50">
-                  Register Now
-                </button>
-              </Link>
-              <button onClick={scrollToDemo} className="btn-aggressive-ghost w-full bg-white border-2 border-orange-600 text-orange-600 py-3 rounded-lg font-bold shadow-lg">
+              <button onClick={scrollToDemo} className="btn-aggressive-primary btn-pulse-orange w-full bg-orange-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50">
                 Book a Demo
               </button>
             </div>
@@ -1117,25 +1085,100 @@ const LandingPage = () => {
             </div>
 
             <div className="md:w-1/2 p-12 md:p-16 bg-white">
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={async (e) => {
+                e.preventDefault();
+                setFormStatus({ loading: true, success: false, error: false });
+
+                try {
+                  const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      access_key: 'bb65b8a8-c554-46d6-bf6c-8e57bcb0b629',
+                      name: formData.name,
+                      email: formData.email,
+                      restaurant: formData.restaurant,
+                      message: formData.message || 'No message provided',
+                      subject: 'New Beta Sign-up - ChefCode'
+                    })
+                  });
+
+                  if (response.ok) {
+                    setFormStatus({ loading: false, success: true, error: false });
+                    setFormData({ name: '', email: '', restaurant: '', message: '' });
+                  } else {
+                    setFormStatus({ loading: false, success: false, error: true });
+                  }
+                } catch (error) {
+                  setFormStatus({ loading: false, success: false, error: true });
+                }
+              }}>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Name <span className="text-orange-600">*</span></label>
-                  <input type="text" className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900" placeholder="Chef Marco" />
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                    placeholder="Chef Marco"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email <span className="text-orange-600">*</span></label>
-                  <input type="email" className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900" placeholder="marco@kitchen.com" />
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                    placeholder="marco@kitchen.com"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Restaurant Name <span className="text-orange-600">*</span></label>
-                  <input type="text" className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900" placeholder="La Trattoria" />
+                  <input
+                    type="text"
+                    required
+                    value={formData.restaurant}
+                    onChange={(e) => setFormData({ ...formData, restaurant: e.target.value })}
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                    placeholder="La Trattoria"
+                  />
                 </div>
-                <button type="button" className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-400/40 transition-all mt-6 transform hover:-translate-y-1">
-                  Join Beta Testing — Free Early Access
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Message (Optional)</label>
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    rows="4"
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900 resize-none"
+                    placeholder="Tell us about your restaurant or what you're looking for..."
+                  />
+                </div>
+
+                {formStatus.success && (
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl font-medium text-sm">
+                    ✅ Thanks! We'll contact you soon about beta access.
+                  </div>
+                )}
+
+                {formStatus.error && (
+                  <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl font-medium text-sm">
+                    ❌ Oops! Something went wrong. Please try again.
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={formStatus.loading}
+                  className="btn-aggressive-primary w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-400/40 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus.loading ? 'Sending...' : 'Join Beta Testing — Free Early Access'}
                 </button>
                 <div className="text-center mt-6">
                   <span className="text-slate-400 text-sm font-medium">or</span>
-                  <button className="text-slate-600 font-bold text-sm ml-2 hover:text-orange-600 hover:underline transition-colors">Watch Platform Walkthrough</button>
+                  <button type="button" onClick={() => setIsVideoOpen(true)} className="text-slate-600 font-bold text-sm ml-2 hover:text-orange-600 hover:underline transition-colors">Watch Platform Walkthrough</button>
                 </div>
               </form>
             </div>
