@@ -106,8 +106,8 @@ const LandingPage = () => {
             <NavLink href="/#how-it-works" scrolled={scrolled}>How it Works</NavLink>
             <NavLink href="/#features" scrolled={scrolled}>Features</NavLink>
             <NavLink href="/#dr-ai" scrolled={scrolled}>Dr.AI</NavLink>
-            <NavLink href="/#faq" scrolled={scrolled}>FAQ</NavLink>
             <NavLink href="/#testimonials" scrolled={scrolled}>Testimonials</NavLink>
+            <NavLink href="/#faq" scrolled={scrolled}>FAQ</NavLink>
             <NavLink href="/partners" scrolled={scrolled}>Partners</NavLink>
             <NavLink href="/about" scrolled={scrolled}>About Us</NavLink>
           </div>
@@ -133,6 +133,7 @@ const LandingPage = () => {
             <NavLink href="/#how-it-works" mobile>How it Works</NavLink>
             <NavLink href="/#features" mobile>Features</NavLink>
             <NavLink href="/#dr-ai" mobile>Dr.AI</NavLink>
+            <NavLink href="/#testimonials" mobile>Testimonials</NavLink>
             <NavLink href="/#faq" mobile>FAQ</NavLink>
             <NavLink href="/partners" mobile>Partners</NavLink>
             <NavLink href="/about" mobile>About Us</NavLink>
@@ -906,16 +907,16 @@ const LandingPage = () => {
             <p className="text-slate-600 mb-12 text-lg font-medium max-w-2xl mx-auto">ChefCode connects with the tools your kitchen already uses.</p>
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="p-8 bg-slate-50 border border-slate-100 rounded-3xl hover:border-orange-200 hover:shadow-lg transition-all flex items-center justify-center">
-                <span className="font-bold text-slate-700 text-lg">POS systems</span>
+              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-500/30 hover:scale-105 transition-all duration-300 flex items-center justify-center group">
+                <span className="font-bold text-white text-lg group-hover:text-orange-400 transition-colors">POS systems</span>
               </div>
-              <div className="p-8 bg-slate-50 border border-slate-100 rounded-3xl hover:border-orange-200 hover:shadow-lg transition-all flex items-center justify-center">
-                <span className="font-bold text-slate-700 text-lg">Restaurant management/ERP systems</span>
+              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/30 hover:scale-105 transition-all duration-300 flex items-center justify-center group">
+                <span className="font-bold text-white text-lg group-hover:text-blue-400 transition-colors">Restaurant management/ERP systems</span>
               </div>
-              <div className="p-8 bg-slate-50 border border-slate-100 rounded-3xl hover:border-orange-200 hover:shadow-lg transition-all relative overflow-hidden flex items-center justify-center">
-                <span className="font-bold text-slate-700 text-lg flex flex-col items-center gap-2">
+              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/30 hover:scale-105 transition-all duration-300 relative overflow-hidden flex items-center justify-center group">
+                <span className="font-bold text-white text-lg flex flex-col items-center gap-3 group-hover:text-emerald-400 transition-colors">
                   Supplier & Partner Integrations
-                  <span className="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Coming Soon</span>
+                  <span className="text-xs bg-orange-500 text-white px-4 py-1.5 rounded-full uppercase tracking-wider font-bold shadow-lg">Coming Soon</span>
                 </span>
               </div>
             </div>
@@ -1087,7 +1088,16 @@ const LandingPage = () => {
             <div className="md:w-1/2 p-12 md:p-16 bg-slate-900 text-white flex flex-col justify-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
               <h2 className="text-4xl md:text-5xl font-black mb-6 relative z-10">Ready to Cook Smarter?</h2>
-              <p className="text-slate-300 mb-10 text-lg relative z-10 leading-relaxed">Join our beta program and unlock exclusive early-access advantages while helping shape the future of AI-powered kitchen management.</p>
+              <ul className="text-slate-300 mb-10 text-lg relative z-10 leading-relaxed space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
+                  <span><span className="text-orange-500 font-bold">Join our beta program and unlock exclusive early-access advantages</span> while helping shape the future of AI-powered kitchen management.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
+                  <span>Do you have additional questions?</span>
+                </li>
+              </ul>
               <div className="flex items-center gap-3 text-sm text-slate-400 relative z-10 font-bold bg-slate-800 w-fit px-4 py-2 rounded-full">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                 No credit card needed. Just curiosity.
@@ -1187,7 +1197,7 @@ const LandingPage = () => {
                   disabled={formStatus.loading}
                   className="btn-aggressive-primary w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-400/40 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {formStatus.loading ? 'Sending...' : 'Join Beta Testing — Free Early Access'}
+                  {formStatus.loading ? 'Sending...' : 'Contact Us'}
                 </button>
                 <div className="text-center mt-6">
                   <span className="text-slate-400 text-sm font-medium">or</span>
@@ -1232,7 +1242,7 @@ const LandingPage = () => {
               <ul className="space-y-4 font-medium">
                 <li><Link to="/partners" className="hover:text-orange-500 transition-colors">Partners</Link></li>
                 <li><Link to="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-                <li><a href="#" className="hover:text-orange-500 transition-colors">Contact</a></li>
+                <li><a href="#demo-signup" className="hover:text-orange-500 transition-colors">Contact</a></li>
                 <li><a href="#" className="hover:text-orange-500 transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
