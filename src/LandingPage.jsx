@@ -935,7 +935,7 @@ const LandingPage = () => {
             <h2 className="text-3xl md:text-5xl font-black mb-4">Built with Chefs. Trusted by Kitchens.</h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-20">
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
               {
                 text: "A single platform managing the entire restaurant chain from suppliers to kitchen to customer wellness. ChefCode brings method and traceability to an industry that needs it, creating a common language between culinary and healthcare professionals.",
@@ -956,20 +956,16 @@ const LandingPage = () => {
                 icon: ChefHat
               }
             ].map((t, i) => (
-              <div key={i} className="bg-slate-800 p-10 rounded-[2rem] relative border border-slate-700 hover:border-orange-500/30 transition-colors pb-16 flex flex-col h-full">
+              <div key={i} className="bg-slate-800 p-10 rounded-[2rem] relative border border-slate-700 hover:border-orange-500/30 transition-colors flex flex-col h-full">
                 <div className="text-orange-500 text-6xl font-serif absolute top-6 left-8 opacity-20">"</div>
-                <p className="text-slate-300 italic mb-12 relative z-10 text-lg leading-relaxed flex-grow">{t.text}</p>
+                <p className="text-slate-300 italic mb-8 relative z-10 text-lg leading-relaxed flex-grow">{t.text}</p>
 
-                {/* Icon positioned on bottom border */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                {/* Icon and name inside box with border-top */}
+                <div className="border-t border-slate-700 pt-6 flex flex-col items-center gap-3">
                   <div className="w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
                     <t.icon className="text-white" size={48} strokeWidth={2} />
                   </div>
-                </div>
-
-                {/* Name centered below card */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full pt-16 text-center">
-                  <div className="font-bold text-white text-xl">{t.author}</div>
+                  <div className="font-bold text-white text-xl text-center">{t.author}</div>
                 </div>
               </div>
             ))}
