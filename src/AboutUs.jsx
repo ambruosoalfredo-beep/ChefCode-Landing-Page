@@ -9,6 +9,7 @@ import Immagine2 from './assets/Immagine2.jpg';
 import Immagine3 from './assets/Immagine3.jpg';
 import Immagine4 from './assets/Immagine4.jpg';
 import Immagine5 from './assets/Immagine5.jpg';
+import Immagine9 from './assets/Immagine9.jpg';
 
 const AboutUs = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ const AboutUs = () => {
         {
             img: Immagine3,
             name: "Valerio Cortese",
-            role: "Film Maker and UI",
+            role: "Video Editor,VFX and UI",
             details: ["Multi-disciplinary creative", "UI & branding specialist"]
         },
         {
@@ -52,6 +53,12 @@ const AboutUs = () => {
             name: "Mariem Daha",
             role: "Software Engineer",
             details: ["Web Designer", "AI & Analytic focus"]
+        },
+        {
+            img: Immagine9,
+            name: "Francesco Balsamo",
+            role: "Software Developer",
+            details: ["Full Stack Developer", "Software & Data Integration focus"]
         }
     ];
 
