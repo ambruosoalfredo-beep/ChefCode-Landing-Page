@@ -459,7 +459,7 @@ const LandingPage = () => {
                     <p className="text-slate-400 text-xs leading-relaxed">
                       Voice data is processed <strong className="text-white">locally on your device</strong>.
                       No recordings are stored, transmitted, or used for AI training.
-                      <span className="block mt-2 text-slate-500">Full compliance with EU GDPR Art. 25 (Privacy by Design).</span>
+
                     </p>
                   </div>
                 </div>
