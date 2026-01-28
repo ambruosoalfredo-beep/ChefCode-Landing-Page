@@ -72,15 +72,35 @@ const LandingPage = () => {
     setIsMenuOpen(false);
   };
 
-  const NavLink = ({ href, children, scrolled, mobile }) => (
-    <a
-      href={href}
-      className={`${mobile ? 'text-lg text-slate-300' : 'text-sm'} ${scrolled || mobile ? 'text-slate-300 hover:text-white' : 'text-slate-300 hover:text-white'} font-medium transition-colors duration-200 tracking-wide`}
-      onClick={() => setIsMenuOpen(false)}
-    >
-      {children}
-    </a>
-  );
+  const NavLink = ({ href, children, scrolled, mobile }) => {
+    // Determine if it's a direct internal route (ex: "/about") vs an anchor link (ex: "/#features")
+    // If it starts with / and has NO hash, use Link. Otherwise use a tag.
+    const isInternalRoute = href.startsWith('/') && !href.includes('#');
+
+    const baseClasses = `${mobile ? 'text-lg text-slate-300' : 'text-sm'} ${scrolled || mobile ? 'text-slate-300 hover:text-white' : 'text-slate-300 hover:text-white'} font-medium transition-colors duration-200 tracking-wide`;
+
+    if (isInternalRoute) {
+      return (
+        <Link
+          to={href}
+          className={baseClasses}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          {children}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        href={href}
+        className={baseClasses}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {children}
+      </a>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
