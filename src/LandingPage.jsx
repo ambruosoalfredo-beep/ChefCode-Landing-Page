@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './assets/logo.svg';
 import { Link } from 'react-router-dom';
-import videoDemo from './assets/Chef Final LOW BITRATE.mp4';
+import videoDemo from './assets/chef-video.mp4';
 import { motion } from 'framer-motion';
 import {
   Mic,
