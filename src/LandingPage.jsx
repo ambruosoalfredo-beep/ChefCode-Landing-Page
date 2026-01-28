@@ -348,7 +348,7 @@ const LandingPage = () => {
               {
                 icon: <ScanLine className="w-12 h-12 text-white" />,
                 title: "Scan & Capture",
-                desc: "Snap invoices or dictate recipes, tasks, and ingredients. ChefCode's AI assists in logging everything for your review."
+                desc: "Snap invoices or use voice to log recipes, tasks, and ingredients. ChefCode's AI assists in logging everything for your review."
               },
               {
                 icon: <BarChart3 className="w-12 h-12 text-white" />,
