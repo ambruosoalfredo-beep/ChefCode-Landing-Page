@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
     return (
         <div className="min-h-screen bg-slate-50">
             {/* Header */}
-            <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+            <header className="bg-slate-900 sticky top-0 z-50">
                 <div className="container mx-auto px-4 md:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="flex items-center gap-2">
@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
             </header>
 
             {/* Hero */}
-            <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-20">
+            <section className="bg-slate-900 text-white py-20">
                 <div className="container mx-auto px-4 md:px-8 text-center">
                     <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full mb-6">
                         <Shield className="text-orange-400" size={24} />

@@ -3,6 +3,7 @@ import logo from './assets/logo.svg';
 import { Link } from 'react-router-dom';
 import videoDemo from './assets/chef-video.mp4';
 import { motion } from 'framer-motion';
+import mockup from './assets/mockup.png';
 import {
   Mic,
   ScanLine,
@@ -192,7 +193,7 @@ const LandingPage = () => {
       )}
 
       {/* --- HERO SECTION (Hypnotic Dark Theme) --- */}
-      <section className="relative pt-40 pb-32 md:pt-52 md:pb-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+      <section className="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden bg-slate-900 border-b border-slate-800">
         {/* Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
@@ -201,8 +202,7 @@ const LandingPage = () => {
             loop
             muted
             playsInline
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover opacity-50"
-            style={{ objectPosition: 'center center' }}
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
           />
           {/* Dark Overlay for contrast */}
           <div className="absolute inset-0 bg-slate-900/60"></div>
@@ -303,6 +303,7 @@ const LandingPage = () => {
             </button>
           </motion.div>
 
+
           {/* Floating Glass Cards Effect */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -342,6 +343,8 @@ const LandingPage = () => {
           >
             *Based on pilot customer data. Individual results may vary.
           </motion.p>
+
+
         </div>
       </section>
 
@@ -350,6 +353,8 @@ const LandingPage = () => {
       < section id="how-it-works" className="py-24 bg-slate-50 relative overflow-hidden" >
         {/* Subtle background pattern */}
         < div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:16px_16px]" ></div >
+
+
 
         <div className="container mx-auto px-4 md:px-8 relative">
           <motion.div
@@ -417,6 +422,43 @@ const LandingPage = () => {
 
 
       {/* --- HYBRID AI SECTION (Dark & Powerful) --- */}
+      {/* --- SHOWCASE SECTION --- */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.8 }}
+        className="container mx-auto px-4 md:px-8 mb-24 mt-12"
+      >
+        <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 bg-slate-900 group">
+          {/* Background Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 z-0"></div>
+          <div className="absolute top-0 right-0 w-2/3 h-full bg-orange-500/10 blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-2/3 h-full bg-indigo-500/10 blur-[120px] pointer-events-none"></div>
+
+          <div className="relative z-10 pt-12 md:pt-20 text-center">
+
+            {/* Text Content with Padding */}
+            <div className="px-6 md:px-20">
+              <h3 className="text-white text-3xl md:text-5xl font-black mb-6 leading-tight">
+                Designed for Speed.<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">Built for Control.</span>
+              </h3>
+              <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">See your entire kitchen operation at a glance. Updated in real-time.</p>
+            </div>
+
+            {/* Image Touching Edges (Full Width) */}
+            <div className="w-full px-0">
+              <img
+                src={mockup}
+                alt="ChefCode Dashboard Interface"
+                className="w-full h-auto shadow-2xl transform group-hover:scale-[1.01] transition-transform duration-700 hover:shadow-orange-500/10"
+              />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       < motion.section
         initial={{ opacity: 0, scale: 0.95, y: 50 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -759,7 +801,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="w-full md:w-1/2 order-1 md:order-2">
-              <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 leading-tight">AI-suggested prep lists—<br /><span className="text-orange-600">built for you, approved by you.</span></h2>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 leading-tight">AI-suggested prep lists<br /><span className="text-orange-600">built for you, approved by you.</span></h2>
               <p className="text-slate-600 text-lg mb-8 leading-relaxed font-medium">
                 ChefCode's AI analyzes sales history, forecasted trends & events, and current inventory to suggest dynamic production plans for your approval.
                 <br /><br />
@@ -822,7 +864,7 @@ const LandingPage = () => {
 
                 {/* Future Feature Badge */}
                 <div className="w-full flex justify-center mt-4">
-                  <div className="px-8 py-4 bg-slate-800/80 border border-slate-700 rounded-2xl backdrop-blur-md hover:border-indigo-500/50 transition-colors group cursor-default max-w-md">
+                  <div className="px-8 py-6 bg-slate-800/80 border border-slate-700 rounded-[2.5rem] backdrop-blur-md hover:border-indigo-500/50 transition-colors group cursor-default max-w-md">
                     <div className="flex items-center justify-center gap-3 mb-3">
                       <div className="bg-indigo-500/20 p-2 rounded-lg text-indigo-400 group-hover:scale-110 transition-transform flex-shrink-0">
                         <ShieldCheck size={20} />
@@ -843,14 +885,7 @@ const LandingPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-full transition-all shadow-lg shadow-emerald-500/30 hover:-translate-y-1">
-                  Download Free HACCP Checklist
-                </button>
-                <div className="text-slate-400 text-xs font-bold uppercase tracking-wider mt-2 sm:mt-0 flex items-center justify-center bg-slate-800 px-3 py-1 rounded-lg">
-                  No sign-up required
-                </div>
-              </div>
+
 
               <p className="mt-12 text-center text-white font-bold text-xl italic tracking-wide border-t border-emerald-500/30 pt-8 max-w-md mx-auto opacity-90">
                 "Compliance without the clipboard."
@@ -973,7 +1008,7 @@ const LandingPage = () => {
                   <div className="w-20 h-20 bg-white rounded-2xl shadow-lg shadow-orange-500/10 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform duration-300">
                     <ShoppingBasket size={36} strokeWidth={1.5} />
                   </div>
-                  <span className="font-bold text-slate-900 text-xl leading-tight">AI-assisted purchasing with your approval—effortless and controlled.</span>
+                  <span className="font-bold text-slate-900 text-xl leading-tight">Smart Orders for Smarter Purchasing.</span>
                 </div>
               </div>
               <p className="mt-8 text-center text-orange-600 font-bold text-lg italic tracking-wide border-t border-orange-200/50 pt-6 max-w-sm mx-auto opacity-90">
