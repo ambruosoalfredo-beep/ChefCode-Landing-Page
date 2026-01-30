@@ -895,9 +895,7 @@ const LandingPage = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-8 text-center">
-                    <button className="text-orange-600 font-bold text-sm hover:underline flex items-center justify-center gap-2 mx-auto">View Full Plan <ArrowRight size={14} /></button>
-                  </div>
+
                 </div>
               </div>
             </div>
