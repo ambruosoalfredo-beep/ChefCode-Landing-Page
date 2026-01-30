@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import logo from './assets/logo.svg';
 import { Link } from 'react-router-dom';
 import videoDemo from './assets/chef-video.webm';
 import { motion } from 'framer-motion';
-import mockup from './assets/mockup.png';
+import mockup from './assets/mockup.webp';
+import mockupStop from './assets/animationstop.png';
 
 import analyticsDashboard from './assets/interfacciaoffy.png';
 import {
@@ -44,6 +45,18 @@ import {
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [analyticsAnimationDone, setAnalyticsAnimationDone] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
+  const animationTimer = useRef(null);
+
+  const startAnimationSequence = () => {
+    setAnalyticsAnimationDone(false);
+    setAnimationKey(prev => prev + 1); // Force image reload to restart animation
+    if (animationTimer.current) clearTimeout(animationTimer.current);
+    animationTimer.current = setTimeout(() => {
+      setAnalyticsAnimationDone(true);
+    }, 4800);
+  };
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -476,17 +489,32 @@ const LandingPage = () => {
             </div>
 
             {/* Right Col: Image Mockup */}
-            <div className="relative group/image">
-              <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-blue-500/10 rounded-3xl blur-2xl transform rotate-3 scale-95 opacity-0 group-hover/image:opacity-100 transition-opacity duration-700"></div>
+            <motion.div
+              className="relative group/image cursor-pointer"
+              onViewportEnter={startAnimationSequence}
+              onMouseEnter={startAnimationSequence}
+              viewport={{ once: true }}
+            >
+
+              {/* Animated WebP (Visible initially) */}
               <img
+                key={animationKey}
                 src={mockup}
-                alt="ChefCode Analytics Dashboard"
-                className="relative transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain drop-shadow-2xl"
+                alt="ChefCode Analytics Dashboard Animation"
+                className={`transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'opacity-0 absolute inset-0' : 'relative opacity-100'}`}
               />
+
+              {/* Static PNG (Visible after animation) */}
+              <img
+                src={mockupStop}
+                alt="ChefCode Analytics Dashboard Static"
+                className={`transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'relative opacity-100' : 'opacity-0 absolute inset-0'}`}
+              />
+
               <p className="mt-20 text-center text-orange-600 font-bold text-2xl italic tracking-wide opacity-90">
                 "Numbers made human. Insights made useful."
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

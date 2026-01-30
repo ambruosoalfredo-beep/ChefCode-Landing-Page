@@ -13,8 +13,10 @@ const ComingSoonPage = () => {
                         <ArrowLeft size={20} className="text-slate-400 group-hover:text-white transition-colors" />
                     </div>
                 </Link>
-                {/* Bigger Logo */}
-                <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
+                {/* Bigger Logo - Home Link */}
+                <Link to="/" className="flex items-center justify-center group cursor-pointer">
+                    <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain transition-transform group-hover:scale-105" />
+                </Link>
                 <div className="w-10"></div> {/* Spacer for center alignment effect */}
             </nav>
 
