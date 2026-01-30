@@ -1125,7 +1125,7 @@ const LandingPage = () => {
               </div>
               <span className="font-bold text-slate-800 text-xl transition-colors text-center relative z-10">Supplier & Partner Integration</span>
               <div className="mt-6 bg-white border border-orange-200 text-orange-600 px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-sm group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all z-20">
-                Discover Roadmap <ArrowRight size={16} />
+                View Coming Soon Feature <ArrowRight size={16} />
               </div>
             </Link>
           </div>
