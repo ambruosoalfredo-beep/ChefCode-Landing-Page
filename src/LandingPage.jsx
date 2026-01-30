@@ -45,7 +45,7 @@ import {
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [analyticsAnimationDone, setAnalyticsAnimationDone] = useState(false);
+  const [analyticsAnimationDone, setAnalyticsAnimationDone] = useState(true);
   const [animationKey, setAnimationKey] = useState(0);
   const animationTimer = useRef(null);
 
@@ -55,7 +55,7 @@ const LandingPage = () => {
     if (animationTimer.current) clearTimeout(animationTimer.current);
     animationTimer.current = setTimeout(() => {
       setAnalyticsAnimationDone(true);
-    }, 4800);
+    }, 500);
   };
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -440,12 +440,11 @@ const LandingPage = () => {
       </section >
 
       {/* --- ANALYTICS SECTION (Full Width - Light Theme) --- */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden border-b border-slate-200">
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-        {/* Background Effects */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-200/30 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+        {/* Background Effects removed for consistency */}
 
         <div className="container mx-auto px-4 md:px-8 relative z-10 group">
           <div className="grid lg:grid-cols-[40%_60%] gap-12 items-center">
@@ -496,19 +495,19 @@ const LandingPage = () => {
               viewport={{ once: true }}
             >
 
-              {/* Animated WebP (Visible initially) */}
+              {/* Animated WebP (Overlay) */}
               <img
                 key={animationKey}
                 src={mockup}
                 alt="ChefCode Analytics Dashboard Animation"
-                className={`transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'opacity-0 absolute inset-0' : 'relative opacity-100'}`}
+                className={`absolute inset-0 z-20 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
               />
 
-              {/* Static PNG (Visible after animation) */}
+              {/* Static PNG (Layout Anchor) */}
               <img
                 src={mockupStop}
                 alt="ChefCode Analytics Dashboard Static"
-                className={`transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'relative opacity-100' : 'opacity-0 absolute inset-0'}`}
+                className={`relative z-10 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'opacity-100' : 'opacity-0'}`}
               />
 
               <p className="mt-20 text-center text-orange-600 font-bold text-2xl italic tracking-wide opacity-90">
