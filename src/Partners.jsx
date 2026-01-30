@@ -207,8 +207,8 @@ const Partners = () => {
                             <ul className="space-y-4 font-medium">
                                 <li><Link to="/partners" className="hover:text-orange-500 transition-colors text-orange-500">Partners</Link></li>
                                 <li><Link to="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-                                <li><a href="#" className="hover:text-orange-500 transition-colors">Contact</a></li>
-                                <li><a href="#" className="hover:text-orange-500 transition-colors">Privacy Policy</a></li>
+                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">Contact</Link></li>
+                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link></li>
                             </ul>
                         </div>
 

@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import videoDemo from './assets/chef-video.mp4';
 import { motion } from 'framer-motion';
 import mockup from './assets/mockup.png';
+import analyticsDashboard from './assets/interfacciaoffy.png';
 import {
   Mic,
   ScanLine,
+  Database,
+  Share2,
   BarChart3,
   ShieldCheck,
   BrainCircuit,
@@ -30,7 +33,11 @@ import {
   Stethoscope,
   Carrot,
   ChefHat,
-  Shield
+  Shield,
+  Thermometer,
+  Package,
+  ClipboardCheck,
+  FileCheck
 } from 'lucide-react';
 
 const LandingPage = () => {
@@ -278,7 +285,7 @@ const LandingPage = () => {
             }}
             className="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            ChefCode is your <span className="text-white font-semibold">AI-powered kitchen assistant</span> that suggests data-driven recommendations. It analyzes voice inputs, invoices, and sales data—<span className="text-orange-400 font-semibold">empowering you to make smarter decisions</span> with confidence.
+            ChefCode is the <span className="text-white font-semibold">invisible brain of your kitchen</span> that suggests data-driven recommendations. It analyzes voice inputs, invoices, and sales data—<span className="text-orange-400 font-semibold">empowering you to make smarter decisions</span> with confidence.
           </motion.p>
 
           <motion.div
@@ -818,7 +825,7 @@ const LandingPage = () => {
                 </li>
                 <li className="flex items-center gap-3 text-slate-700 font-bold">
                   <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                  AI-suggested deduction of raw items
+                  Auto-deduction of raw items
                 </li>
                 <li className="flex items-center gap-3 text-slate-700 font-bold">
                   <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
@@ -835,68 +842,62 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* HACCP */}
-          <div className="bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white text-center relative overflow-hidden shadow-2xl">
-            {/* Background glow */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px] bg-emerald-900/20 rounded-full blur-3xl -z-10 -mt-40"></div>
 
-            <div className="max-w-3xl mx-auto relative z-10">
-              <div className="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/30">
-                <ShieldCheck size={40} className="text-emerald-400" />
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black mb-6">HACCP - Food safety. <br />AI-Assisted Tracking.</h2>
-              <p className="text-slate-300 text-lg mb-12 leading-relaxed max-w-2xl mx-auto">
-                ChefCode's AI tracks every movement in your kitchen with full traceability. From goods-in to production to sale, AI-generated HACCP records require your periodic review and approval.
-              </p>
+        </div>
+      </section>
 
-              <div className="flex flex-wrap justify-center gap-4 mb-12 max-w-4xl mx-auto">
-                {[
-                  'Temperature & expiry logs',
-                  'Batch traceability',
-                  'Daily compliance checklists',
-                  'Instant audit-ready reports'
-                ].map((tag, i) => (
-                  <span key={i} className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-sm font-bold text-slate-300 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default flex items-center gap-2">
-                    <CheckCircle2 size={14} className="text-emerald-500" />
-                    {tag}
-                  </span>
-                ))}
+      {/* HACCP SECTION */}
+      <section className="bg-white px-4 md:px-8 py-24">
+        <div className="bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white text-center relative overflow-hidden shadow-2xl max-w-7xl mx-auto border border-slate-800">
+          {/* Background glow */}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px] bg-emerald-900/20 rounded-full blur-3xl -z-10 -mt-40"></div>
 
-                {/* Future Feature Badge */}
-                <div className="w-full flex justify-center mt-4">
-                  <div className="px-8 py-6 bg-slate-800/80 border border-slate-700 rounded-[2.5rem] backdrop-blur-md hover:border-indigo-500/50 transition-colors group cursor-default max-w-md">
-                    <div className="flex items-center justify-center gap-3 mb-3">
-                      <div className="bg-indigo-500/20 p-2 rounded-lg text-indigo-400 group-hover:scale-110 transition-transform flex-shrink-0">
-                        <ShieldCheck size={20} />
-                      </div>
-                      <div className="text-white font-bold text-sm">
-                        Blockchain-based data integrity
-                      </div>
-                    </div>
-                    <div className="text-slate-400 text-xs font-medium text-center mb-4">
-                      Future feature for tamper-proof food safety records
-                    </div>
-                    <div className="flex justify-center">
-                      <div className="bg-indigo-500 text-white px-6 py-2 rounded-lg font-bold tracking-wider text-xs uppercase shadow-lg shadow-indigo-500/30 min-w-[160px] text-center">
-                        Coming Soon
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="max-w-3xl mx-auto relative z-10">
+            <div className="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/30">
+              <ShieldCheck size={40} className="text-emerald-400" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black mb-6">HACCP - Food safety. <br />AI-Assisted Tracking.</h2>
+            <p className="text-slate-300 text-lg mb-12 leading-relaxed max-w-2xl mx-auto">
+              ChefCode tracks every movement in your kitchen with full traceability. From goods-in to production to sale, your HACCP records are created automatically but always approved <strong className="text-white">by human</strong>.
+            </p>
 
+            <div className="flex flex-wrap justify-center gap-4 mb-12 max-w-4xl mx-auto">
+              {[
+                { icon: Thermometer, text: 'Temperature & expiry logs' },
+                { icon: Package, text: 'Batch traceability' },
+                { icon: ClipboardCheck, text: 'Daily compliance checklists' },
+                { icon: FileCheck, text: 'Instant audit-ready reports' }
+              ].map((item, i) => (
+                <span key={i} className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-sm font-bold text-slate-300 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default flex items-center gap-3">
+                  <item.icon size={16} className="text-slate-400" />
+                  <span>{item.text}</span>
+                  <CheckCircle2 size={16} className="text-emerald-500" />
+                </span>
+              ))}
+              <Link to="/coming-soon" className="px-5 py-2.5 bg-orange-500/10 border border-orange-500/30 border-dashed rounded-full text-sm font-bold text-orange-400 backdrop-blur-md hover:bg-orange-500/20 transition-all hover:scale-105 cursor-pointer flex items-center gap-2 group">
+                <Database size={14} className="text-orange-500" />
+                Blockchain-based data integrity
+                <span className="ml-1 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+                  Coming Soon <ArrowRight size={10} />
+                </span>
+              </Link>
+            </div>
 
+            <p className="mt-12 text-center text-white font-bold text-xl italic tracking-wide border-t border-emerald-500/30 pt-8 max-w-md mx-auto opacity-90">
+              "Compliance without the clipboard."
+            </p>
 
-              <p className="mt-12 text-center text-white font-bold text-xl italic tracking-wide border-t border-emerald-500/30 pt-8 max-w-md mx-auto opacity-90">
-                "Compliance without the clipboard."
-              </p>
+            <div className="mt-10 flex justify-center">
+              <Link to="/haccp" className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-full font-bold transition-all hover:scale-105 shadow-lg hover:shadow-emerald-500/25">
+                Discover HACCP Features <ArrowRight size={20} />
+              </Link>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* --- DR. AI (Modern Card Style - Pop-up Effect) --- */}
-      < section id="dr-ai" className="py-24 bg-orange-50/50" >
+      <section id="dr-ai" className="py-24 bg-orange-50/50">
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-black mb-6 text-slate-900">Meet Dr.AI <br /> <span className="text-orange-600">Your menu’s smartest advisor</span></h2>
@@ -992,110 +993,115 @@ const LandingPage = () => {
             "Menu engineering meets nutritional intelligence."
           </p>
         </div>
-      </section >
+      </section>
 
-      {/* --- ECOSYSTEM & ANALYTICS --- */}
-      < section className="py-24 bg-white" >
+
+
+      {/* --- ANALYTICS SECTION --- */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row gap-12 lg:gap-24 mb-24">
-            <div className="flex-1">
-              <div className="inline-block px-3 py-1 bg-slate-900 rounded text-[10px] font-bold text-white uppercase tracking-wider mb-6">COMING SOON</div>
-              <h3 className="text-4xl font-black mb-6 text-slate-900">Restaurant ↔ Supplier Marketplace</h3>
-              <p className="text-slate-600 mb-8 text-lg font-medium">A connected ecosystem where restaurants buy directly from approved suppliers with discounted products and instant price syncing.</p>
-              <div className="p-8 bg-slate-50 border border-slate-100 rounded-3xl relative overflow-hidden group hover:border-orange-200 transition-colors">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100/50 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                <div className="flex items-center gap-6 text-slate-600 relative z-10">
-                  <div className="w-20 h-20 bg-white rounded-2xl shadow-lg shadow-orange-500/10 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform duration-300">
-                    <ShoppingBasket size={36} strokeWidth={1.5} />
+          <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl text-white relative overflow-hidden group max-w-7xl mx-auto">
+            {/* Background Effects */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+              {/* Left Col: Text & Content */}
+              <div className="text-center flex flex-col items-center">
+                <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center shadow-inner mb-8 text-orange-400 border border-slate-700">
+                  <BarChart3 size={32} />
+                </div>
+                <h3 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">Your Kitchen,<br /> <span className="text-blue-400">Decoded.</span></h3>
+                <p className="text-slate-400 mb-8 text-lg font-medium max-w-xl">
+                  See exactly what’s working - and what’s wasting. From live food costs to supplier insights, ChefCode gives you the clarity to act fast.
+                </p>
+
+                <ul className="flex flex-col gap-4 mb-10 items-center">
+                  {[
+                    'Real-time food cost (COGS)',
+                    'Waste & prep reports',
+                    'Supplier performance',
+                    'Multi-location visibility'
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-slate-300 font-bold text-lg group/item justify-center">
+                      <CheckCircle2 size={20} className="text-emerald-500 shrink-0 group-hover/item:scale-110 transition-transform" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* KPI Cards Mini */}
+                <div className="flex gap-8 justify-center w-full">
+                  <div className="bg-slate-800/80 border border-slate-700/50 p-6 md:p-8 rounded-3xl backdrop-blur-md hover:-translate-y-1 transition-transform min-w-[140px]">
+                    <div className="text-4xl md:text-5xl font-black text-orange-400 mb-2">-12%</div>
+                    <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Food Waste</div>
                   </div>
-                  <span className="font-bold text-slate-900 text-xl leading-tight">Smart Orders for Smarter Purchasing.</span>
+                  <div className="bg-slate-800/80 border border-slate-700/50 p-6 md:p-8 rounded-3xl backdrop-blur-md hover:-translate-y-1 transition-transform min-w-[140px]">
+                    <div className="text-4xl md:text-5xl font-black text-blue-400 mb-2">+8%</div>
+                    <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Margin Avg</div>
+                  </div>
                 </div>
-              </div>
-              <p className="mt-8 text-center text-orange-600 font-bold text-lg italic tracking-wide border-t border-orange-200/50 pt-6 max-w-sm mx-auto opacity-90">
-                "Where kitchens and suppliers connect effortlessly."
-              </p>
-            </div>
 
-            <div className="bg-slate-900 rounded-[2.5rem] p-10 shadow-2xl text-white relative overflow-hidden group flex-1">
-              {/* Abstract decorative graphic */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-slate-800 to-slate-900 rounded-bl-full opacity-80 -mr-20 -mt-20 group-hover:scale-105 transition-transform duration-700"></div>
-
-              <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center shadow-inner mb-8 text-orange-400 relative z-10 border border-slate-700">
-                <BarChart3 size={32} />
+                <p className="text-slate-500 text-xs mt-6 font-medium opacity-70">*Average improvements</p>
               </div>
 
-              <h3 className="text-4xl font-black mb-6 text-white relative z-10">Your Kitchen, Decoded.</h3>
-              <p className="text-slate-400 mb-8 text-lg font-medium relative z-10">See exactly what’s working - and what’s wasting. From live food costs to supplier insights, ChefCode gives managers and chefs the clarity to act fast.</p>
-              <ul className="space-y-3 mb-8 relative z-10">
-                <li className="flex items-center gap-3 text-slate-300 font-bold">
-                  <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                  Real-time food cost (COGS) tracking
-                </li>
-                <li className="flex items-center gap-3 text-slate-300 font-bold">
-                  <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                  Waste and prep accuracy reports
-                </li>
-                <li className="flex items-center gap-3 text-slate-300 font-bold">
-                  <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                  Supplier and price performance
-                </li>
-                <li className="flex items-center gap-3 text-slate-300 font-bold">
-                  <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                  Multi-location visibility
-                </li>
-              </ul>
-
-              <div className="grid grid-cols-2 gap-6 relative z-10">
-                <div className="p-6 rounded-3xl bg-slate-800/80 border border-slate-700 text-center backdrop-blur-md shadow-lg">
-                  <div className="text-4xl font-black text-orange-400 mb-2 tracking-tight">-12%</div>
-                  <div className="text-xs text-slate-400 font-bold uppercase tracking-widest">Food Waste</div>
-                </div>
-                <div className="p-6 rounded-3xl bg-slate-800/80 border border-slate-700 text-center backdrop-blur-md shadow-lg">
-                  <div className="text-4xl font-black text-blue-400 mb-2 tracking-tight">+8%</div>
-                  <div className="text-xs text-slate-400 font-bold uppercase tracking-widest">Margin Avg</div>
-                </div>
-              </div>
-
-              {/* Analytics Disclaimer */}
-              <p className="text-slate-500 text-xs mt-4 text-center font-medium relative z-10">
-                *Average improvements from pilot customers
-              </p>
-
-              <p className="mt-8 text-center text-orange-400 font-bold text-lg italic tracking-wide border-t border-slate-800 pt-6 max-w-sm mx-auto opacity-90 relative z-10">
-                "Numbers made human. Insights made useful."
-              </p>
-            </div>
-          </div>
-
-          {/* Integrations Banner Replacement */}
-          <div id="integrations" className="border-t border-slate-100 pt-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-black mb-6 text-slate-900">Powerful integrations that grow with you.</h2>
-            <p className="text-slate-600 mb-12 text-lg font-medium max-w-2xl mx-auto">ChefCode connects with the tools your kitchen already uses.</p>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-500/30 hover:scale-105 transition-all duration-300 flex items-center justify-center group">
-                <span className="font-bold text-white text-lg group-hover:text-orange-400 transition-colors">POS systems</span>
-              </div>
-              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/30 hover:scale-105 transition-all duration-300 flex items-center justify-center group">
-                <span className="font-bold text-white text-lg group-hover:text-blue-400 transition-colors">Restaurant management/ERP systems</span>
-              </div>
-              <div className="p-8 bg-slate-800 border-2 border-slate-700 rounded-3xl hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/30 hover:scale-105 transition-all duration-300 relative overflow-hidden flex items-center justify-center group">
-                <span className="font-bold text-white text-lg flex flex-col items-center gap-3 group-hover:text-emerald-400 transition-colors">
-                  Supplier & Partner Integrations
-                  <span className="text-xs bg-orange-500 text-white px-4 py-1.5 rounded-full uppercase tracking-wider font-bold shadow-lg">Coming Soon</span>
-                </span>
+              {/* Right Col: Image Mockup */}
+              <div className="relative group/image">
+                <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-blue-500/20 rounded-3xl blur-2xl transform rotate-3 scale-95 opacity-0 group-hover/image:opacity-100 transition-opacity duration-700"></div>
+                <img
+                  src={analyticsDashboard}
+                  alt="ChefCode Analytics Dashboard"
+                  className="relative transform scale-100 group-hover/image:scale-105 transition-transform duration-500 w-full object-contain drop-shadow-2xl"
+                />
+                <p className="mt-6 text-center text-orange-400 font-bold text-lg italic tracking-wide opacity-90">
+                  "Numbers made human. Insights made useful."
+                </p>
               </div>
             </div>
-
-            <p className="mt-8 text-center text-orange-600 font-bold text-lg italic tracking-wide border-t border-orange-200/50 pt-6 max-w-md mx-auto opacity-90">
-              "A platform that fits your kitchen, not the other way around."
-            </p>
           </div>
         </div>
-      </section >
+      </section>
+
+
+      {/* --- INTEGRATIONS SECTION --- */}
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-black mb-6 text-slate-900">Powerful integrations<br /> that grow with you.</h2>
+          <p className="text-slate-600 mb-16 text-lg max-w-2xl mx-auto">
+            ChefCode connects with the tools your kitchen already uses.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="p-10 bg-gradient-to-br from-white to-blue-50 border border-blue-100/50 rounded-[2rem] shadow-lg shadow-blue-900/5 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all flex flex-col items-center justify-center h-full group backdrop-blur-sm relative overflow-hidden">
+              <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
+              <div className="w-24 h-24 bg-white/80 backdrop-blur-md rounded-3xl mb-6 flex items-center justify-center text-blue-600 shadow-sm border border-blue-100 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                <ScanLine size={48} strokeWidth={1.5} />
+              </div>
+              <span className="font-bold text-slate-800 text-xl relative z-10">POS systems</span>
+            </div>
+            <div className="p-10 bg-gradient-to-br from-white to-emerald-50 border border-emerald-100/50 rounded-[2rem] shadow-lg shadow-emerald-900/5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all flex flex-col items-center justify-center h-full group backdrop-blur-sm relative overflow-hidden">
+              <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
+              <div className="w-24 h-24 bg-white/80 backdrop-blur-md rounded-3xl mb-6 flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-100 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                <Database size={48} strokeWidth={1.5} />
+              </div>
+              <span className="font-bold text-slate-800 text-xl text-center relative z-10">Restaurant management/ERP systems</span>
+            </div>
+            <Link to="/coming-soon" className="p-10 bg-gradient-to-br from-white to-orange-50 border border-orange-200/50 rounded-[2rem] shadow-lg shadow-orange-900/5 hover:shadow-xl hover:shadow-orange-500/10 hover:-translate-y-1 transition-all flex flex-col items-center justify-center h-full group backdrop-blur-sm relative overflow-hidden cursor-pointer block">
+              <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10 opacity-50" />
+              <span className="absolute top-6 right-6 px-3 py-1 bg-orange-500 text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-orange-500/20 z-20">Coming Soon</span>
+              <div className="w-24 h-24 bg-white/80 backdrop-blur-md rounded-3xl mb-6 flex items-center justify-center text-orange-500 shadow-sm border border-orange-100 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                <Share2 size={48} strokeWidth={1.5} />
+              </div>
+              <span className="font-bold text-slate-800 text-xl transition-colors text-center relative z-10">Supplier & Partner Integration</span>
+              <div className="mt-6 bg-white border border-orange-200 text-orange-600 px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-sm group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all z-20">
+                Discover Roadmap <ArrowRight size={16} />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* --- TESTIMONIALS --- */}
-      < section id="testimonials" className="py-24 bg-slate-900 text-white" >
+      <section id="testimonials" className="py-24 bg-slate-900 text-white">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center mb-20">
             <h2 className="text-3xl md:text-5xl font-black mb-4">Built with Chefs. Trusted by Kitchens.</h2>
@@ -1140,7 +1146,7 @@ const LandingPage = () => {
       </section >
 
       {/* --- FAQ ACCORDION SECTION --- */}
-      < section id="faq" className="py-24 bg-slate-50 relative overflow-hidden" >
+      <section id="faq" className="py-24 bg-slate-50 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
         <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -1167,7 +1173,7 @@ const LandingPage = () => {
               },
               {
                 question: "How does the invoice scanning work?",
-                answer: "Just snap a photo of any invoice with your phone. ChefCode's AI-powered OCR extracts supplier info, items, quantities, and prices—even from handwritten invoices. The AI suggests categorization and inventory updates for your review and approval."
+                answer: "Just snap a photo of any invoice with your phone. ChefCode's AI-powered OCR extracts supplier info, items, quantities, and prices. The AI suggests categorization and inventory updates for your review and approval."
               },
               {
                 question: "Can ChefCode predict what I'll need?",
@@ -1228,164 +1234,167 @@ const LandingPage = () => {
         </div>
       </section >
 
-      {/* --- CTA FORM --- */}
-      {/* --- CTA FORM --- */}
-      <section id="demo-signup" className="py-24 bg-white relative overflow-hidden">
-        {/* Decorative background blob */}
-        <div className="absolute -right-40 top-20 w-[600px] h-[600px] bg-orange-100 rounded-full blur-[100px] opacity-60 pointer-events-none"></div>
+      {/* --- COMING SOON TEASER --- */}
+      < section className="py-24 bg-slate-900 text-center relative overflow-hidden" >
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-8">Building the Future Kitchen</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto mb-12 text-lg">
+            Explore our roadmap including HACCP automation, Blockchain integrity, and the Supplier Marketplace.
+          </p>
+          <Link to="/coming-soon" className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105 shadow-xl hover:shadow-blue-500/25">
+            View Coming Soon Features <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section >
 
-        <div className="container mx-auto px-4 md:px-8 relative z-10">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            whileHover={{
-              scale: 1.02,
-              boxShadow: "0 30px 80px -15px rgba(249, 115, 22, 0.4), 0 0 100px -20px rgba(249, 115, 22, 0.3)",
-              transition: { type: "spring", stiffness: 300, damping: 20 }
-            }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, duration: 0.8 }}
-            className="max-w-5xl mx-auto bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden flex flex-col md:flex-row"
-          >
-            <div className="md:w-1/2 p-12 md:p-16 bg-slate-900 text-white flex flex-col justify-center relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-              <h2 className="text-4xl md:text-5xl font-black mb-6 relative z-10">Ready to Cook Smarter?</h2>
-              <ul className="text-slate-300 mb-10 text-lg relative z-10 leading-relaxed space-y-3">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
-                  <span><span className="text-orange-500 font-bold">Join our beta program and unlock exclusive early-access advantages</span> while helping shape the future of AI-powered kitchen management.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
-                  <span>Do you have additional questions?</span>
-                </li>
-              </ul>
-              <div className="flex items-center gap-3 text-sm text-slate-400 relative z-10 font-bold bg-slate-800 w-fit px-4 py-2 rounded-full">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                No credit card needed. Just curiosity.
-              </div>
-              <p className="mt-8 text-orange-400 font-bold text-lg italic tracking-wide border-t border-slate-700 pt-6 max-w-sm opacity-90">
-                "Ready to Cook Smarter?"
-              </p>
+
+      <section id="demo-signup" className="py-24 bg-slate-50 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 100, damping: 20, duration: 0.8 }}
+          className="max-w-5xl mx-auto bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden flex flex-col md:flex-row"
+        >
+          <div className="md:w-1/2 p-12 md:p-16 bg-slate-900 text-white flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 relative z-10">Ready to Cook Smarter?</h2>
+            <ul className="text-slate-300 mb-10 text-lg relative z-10 leading-relaxed space-y-3">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
+                <span><span className="text-orange-500 font-bold">Join our beta program and unlock exclusive early-access advantages</span> while helping shape the future of AI-powered kitchen management.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="text-white mt-1 flex-shrink-0" size={20} />
+                <span>Do you have additional questions?</span>
+              </li>
+            </ul>
+            <div className="flex items-center gap-3 text-sm text-slate-400 relative z-10 font-bold bg-slate-800 w-fit px-4 py-2 rounded-full">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              No credit card needed. Just curiosity.
             </div>
+            <p className="mt-8 text-orange-400 font-bold text-lg italic tracking-wide border-t border-slate-700 pt-6 max-w-sm opacity-90">
+              "Ready to Cook Smarter?"
+            </p>
+          </div>
 
-            <div className="md:w-1/2 p-12 md:p-16 bg-white">
-              <form className="space-y-5" onSubmit={async (e) => {
-                e.preventDefault();
-                setFormStatus({ loading: true, success: false, error: false });
+          <div className="md:w-1/2 p-12 md:p-16 bg-white">
+            <form className="space-y-5" onSubmit={async (e) => {
+              e.preventDefault();
+              setFormStatus({ loading: true, success: false, error: false });
 
-                try {
-                  const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      access_key: 'bb65b8a8-c554-46d6-bf6c-8e57bcb0b629',
-                      name: formData.name,
-                      email: formData.email,
-                      restaurant: formData.restaurant,
-                      message: formData.message || 'No message provided',
-                      subject: 'New Beta Sign-up - ChefCode'
-                    })
-                  });
+              try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    access_key: 'bb65b8a8-c554-46d6-bf6c-8e57bcb0b629',
+                    name: formData.name,
+                    email: formData.email,
+                    restaurant: formData.restaurant,
+                    message: formData.message || 'No message provided',
+                    subject: 'New Beta Sign-up - ChefCode'
+                  })
+                });
 
-                  if (response.ok) {
-                    setFormStatus({ loading: false, success: true, error: false });
-                    setFormData({ name: '', email: '', restaurant: '', message: '' });
-                  } else {
-                    setFormStatus({ loading: false, success: false, error: true });
-                  }
-                } catch (error) {
+                if (response.ok) {
+                  setFormStatus({ loading: false, success: true, error: false });
+                  setFormData({ name: '', email: '', restaurant: '', message: '' });
+                } else {
                   setFormStatus({ loading: false, success: false, error: true });
                 }
-              }}>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Name <span className="text-orange-600">*</span></label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
-                    placeholder="Chef Marco"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email <span className="text-orange-600">*</span></label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
-                    placeholder="marco@kitchen.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Restaurant Name <span className="text-orange-600">*</span></label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.restaurant}
-                    onChange={(e) => setFormData({ ...formData, restaurant: e.target.value })}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
-                    placeholder="La Trattoria"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Message (Optional)</label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows="4"
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900 resize-none"
-                    placeholder="Tell us about your restaurant or what you're looking for..."
-                  />
-                </div>
+              } catch (error) {
+                setFormStatus({ loading: false, success: false, error: true });
+              }
+            }}>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Name <span className="text-orange-600">*</span></label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                  placeholder="Chef Marco"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email <span className="text-orange-600">*</span></label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                  placeholder="marco@kitchen.com"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Restaurant Name <span className="text-orange-600">*</span></label>
+                <input
+                  type="text"
+                  required
+                  value={formData.restaurant}
+                  onChange={(e) => setFormData({ ...formData, restaurant: e.target.value })}
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900"
+                  placeholder="La Trattoria"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Message (Optional)</label>
+                <textarea
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  rows="4"
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium text-slate-900 resize-none"
+                  placeholder="Tell us about your restaurant or what you're looking for..."
+                />
+              </div>
 
-                {formStatus.success && (
-                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl font-medium text-sm">
-                    ✅ Thanks! We'll contact you soon about beta access.
-                  </div>
-                )}
-
-                {formStatus.error && (
-                  <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl font-medium text-sm">
-                    ❌ Oops! Something went wrong. Please try again.
-                  </div>
-                )}
-
-                {/* GDPR Consent */}
-                <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                  <input
-                    type="checkbox"
-                    required
-                    className="mt-1 w-4 h-4 text-orange-600 border-slate-300 rounded focus:ring-orange-500"
-                    id="gdpr-consent"
-                  />
-                  <label htmlFor="gdpr-consent" className="text-xs text-slate-600 leading-relaxed">
-                    I agree to ChefCode's <a href="/privacy" className="text-orange-600 font-bold hover:underline">Privacy Policy</a> and consent to the processing of my personal data for demo and contact purposes. <span className="text-orange-600">*</span>
-                  </label>
+              {formStatus.success && (
+                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl font-medium text-sm">
+                  ✅ Thanks! We'll contact you soon about beta access.
                 </div>
+              )}
 
-                <button
-                  type="submit"
-                  disabled={formStatus.loading}
-                  className="btn-aggressive-primary w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-400/40 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {formStatus.loading ? 'Sending...' : 'Contact Us'}
-                </button>
-                <div className="text-center mt-6">
-                  <span className="text-slate-400 text-sm font-medium">or</span>
-                  <button type="button" onClick={() => setIsVideoOpen(true)} className="text-slate-600 font-bold text-sm ml-2 hover:text-orange-600 hover:underline transition-colors">Watch Platform Walkthrough</button>
+              {formStatus.error && (
+                <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl font-medium text-sm">
+                  ❌ Oops! Something went wrong. Please try again.
                 </div>
-              </form>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+              )}
+
+              {/* GDPR Consent */}
+              <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <input
+                  type="checkbox"
+                  required
+                  className="mt-1 w-4 h-4 text-orange-600 border-slate-300 rounded focus:ring-orange-500"
+                  id="gdpr-consent"
+                />
+                <label htmlFor="gdpr-consent" className="text-xs text-slate-600 leading-relaxed">
+                  I agree to ChefCode's <a href="/privacy" className="text-orange-600 font-bold hover:underline">Privacy Policy</a> and consent to the processing of my personal data for demo and contact purposes. <span className="text-orange-600">*</span>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={formStatus.loading}
+                className="btn-aggressive-primary w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-400/40 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {formStatus.loading ? 'Sending...' : 'Contact Us'}
+              </button>
+              <div className="text-center mt-6">
+                <span className="text-slate-400 text-sm font-medium">or</span>
+                <button type="button" onClick={() => setIsVideoOpen(true)} className="text-slate-600 font-bold text-sm ml-2 hover:text-orange-600 hover:underline transition-colors">Watch Platform Walkthrough</button>
+              </div>
+            </form>
+          </div>
+        </motion.div>
+      </section >
 
       {/* --- FOOTER (Dark Anchoring) --- */}
-      <footer className="bg-slate-950 border-t border-slate-900 pt-20 pb-10 text-sm text-slate-500">
+      < footer className="bg-slate-950 border-t border-slate-900 pt-20 pb-10 text-sm text-slate-500" >
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div>

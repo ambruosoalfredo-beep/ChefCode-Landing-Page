@@ -27,38 +27,38 @@ const AboutUs = () => {
         {
             img: Immagine2,
             name: "Alfredo Ambruoso",
-            role: "Co-Founder ChefCode",
-            details: ["20+ yrs Chef & Kitchen Leader", "Menu Engineering & Workflow Design", "Cost Control, HACCP & Compliance"]
+            role: "COO & CO-FOUNDER CHEFCODE",
+            details: ["20+ years", "Kitchen leadership", "Menu & workflow designer", "Food-cost & HACCP specialist"]
         },
         {
             img: Immagine1,
             name: "Daniele Paciotti",
-            role: "Co-Founder ChefCode",
-            details: ["26+ Strategy / Business", "Business & Sales Management", "Product Management"]
-        },
-        {
-            img: Immagine3,
-            name: "Valerio Cortese",
-            role: "Video Editor,VFX and UI",
-            details: ["Multi-disciplinary creative", "UI & branding specialist"]
+            role: "CPO & CO-FOUNDER CHEFCODE",
+            details: ["26+ years", "Automotive Leadership", "Product Management", "Business Development", "Sales Management"]
         },
         {
             img: Immagine4,
             name: "Kshama Tupe",
-            role: "Senior Business Analyst",
-            details: ["Solution Designer", "Digital Innovation"]
+            role: "SENIOR BUSINESS ANALYST",
+            details: ["10+ years", "Digital Innovation", "Product Management", "Solution Designer", "Digital Innovation"]
+        },
+        {
+            img: Immagine3,
+            name: "Valerio Cortese",
+            role: "VIDEO EDITOR, VFX & UI",
+            details: ["20+ years", "Film Making", "Multi-disciplinary creative", "UI & branding specialist"]
         },
         {
             img: Immagine5,
             name: "Mariem Daha",
-            role: "Software Engineer",
-            details: ["Web Designer", "AI & Analytic focus"]
+            role: "AI ENGINEER",
+            details: ["2+ years", "Software & AI Solutions", "Full-stack developer", "Web Designer", "AI & Analytic focus"]
         },
         {
             img: Immagine9,
             name: "Francesco Balsamo",
-            role: "Software Developer",
-            details: ["Full Stack Developer", "Software & Data Integration focus"]
+            role: "SOFTWARE DEVELOPER",
+            details: ["2+ years", "IT Support & Testing", "Full Stack Developer", "Software & Data Integration", "Focus"]
         }
     ];
 
@@ -133,7 +133,7 @@ const AboutUs = () => {
                                 <div className="text-orange-600 font-bold text-sm uppercase tracking-wide mb-4">{member.role}</div>
                                 <div className="text-slate-500 font-medium leading-relaxed">
                                     {member.details.map((line, idx) => (
-                                        <div key={idx} className={idx === 0 && (member.name === "Alfredo Ambruoso" || member.name === "Daniele Paciotti") ? "font-bold" : ""}>{line}</div>
+                                        <div key={idx} className={idx === 0 ? "font-bold text-slate-700" : ""}>{line}</div>
                                     ))}
                                 </div>
                             </div>
@@ -174,8 +174,8 @@ const AboutUs = () => {
                             <ul className="space-y-4 font-medium">
                                 <li><Link to="/partners" className="hover:text-orange-500 transition-colors">Partners</Link></li>
                                 <li><Link to="/about" className="hover:text-orange-500 transition-colors text-orange-500">About Us</Link></li>
-                                <li><a href="#" className="hover:text-orange-500 transition-colors">Contact</a></li>
-                                <li><a href="#" className="hover:text-orange-500 transition-colors">Privacy Policy</a></li>
+                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">Contact</Link></li>
+                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link></li>
                             </ul>
                         </div>
 

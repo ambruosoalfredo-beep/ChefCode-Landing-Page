@@ -9,6 +9,8 @@ import Register from './Register';
 import Login from './Login';
 import BecomePartner from './BecomePartner';
 import PrivacyPolicy from './PrivacyPolicy';
+import ComingSoonPage from './ComingSoonPage';
+import HaccpPage from './HaccpPage';
 import ScrollToTop from './ScrollToTop';
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/coming-soon" element={<ComingSoonPage />} />
+        <Route path="/haccp" element={<HaccpPage />} />
       </Routes>
     </Router>
   );
