@@ -53,9 +53,13 @@ const LandingPage = () => {
     setAnalyticsAnimationDone(false);
     setAnimationKey(prev => prev + 1); // Force image reload to restart animation
     if (animationTimer.current) clearTimeout(animationTimer.current);
+  };
+
+  const handleImageLoad = () => {
+    if (animationTimer.current) clearTimeout(animationTimer.current);
     animationTimer.current = setTimeout(() => {
       setAnalyticsAnimationDone(true);
-    }, 500);
+    }, 450);
   };
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -495,19 +499,28 @@ const LandingPage = () => {
               viewport={{ once: true }}
             >
 
-              {/* Animated WebP (Overlay) */}
+              {/* Ghost Iamge (Invisible Layout Anchor) - Defines container size */}
+              <img
+                src={mockupStop}
+                alt=""
+                aria-hidden="true"
+                className="relative opacity-0 pointer-events-none transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain"
+              />
+
+              {/* Animated WebP (Absolute Layer 1 - Always Visible underneath) */}
               <img
                 key={animationKey}
                 src={mockup}
+                onLoad={handleImageLoad}
                 alt="ChefCode Analytics Dashboard Animation"
                 className={`absolute inset-0 z-20 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'invisible' : 'visible'}`}
               />
 
-              {/* Static PNG (Layout Anchor) */}
+              {/* Static PNG (Absolute Layer 2 - Appears on top) */}
               <img
                 src={mockupStop}
                 alt="ChefCode Analytics Dashboard Static"
-                className={`relative z-10 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain ${analyticsAnimationDone ? 'visible' : 'invisible'}`}
+                className={`absolute inset-0 z-30 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'visible' : 'invisible'}`}
               />
 
               <p className="mt-20 text-center text-orange-600 font-bold text-2xl italic tracking-wide opacity-90">
