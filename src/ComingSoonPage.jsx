@@ -24,10 +24,10 @@ const ComingSoonPage = () => {
                 {/* Header */}
                 <div className="max-w-4xl mx-auto text-center mb-20">
                     <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight text-slate-900">
-                        The Kitchen <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Evolved</span>
+                        The Kitchen, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Reimagined</span>
                     </h1>
                     <p className="text-lg text-slate-600 leading-relaxed max-w-xl mx-auto font-medium">
-                        We are building a connected ecosystem to empower your culinary vision. Here is a glimpse of what is coming next to ChefCode.
+                        ChefCode is building a connected ecosystem that transforms how restaurants operate, collaborate, and grow. What you see today is just the beginning.
                     </p>
                 </div>
 
@@ -43,17 +43,22 @@ const ComingSoonPage = () => {
                         </div>
                         <h2 className="text-3xl font-black mb-4 text-slate-900 relative z-10">Supplier Marketplace</h2>
                         <p className="text-slate-600 mb-8 text-lg leading-relaxed flex-grow relative z-10">
-                            A unified platform to connect directly with your suppliers. Order instantly, track deliveries, and sync invoices automatically with your inventory.
+                            <strong className="text-slate-900 block mb-2">A direct bridge between restaurants and suppliers.</strong>
+                            Order ingredients in real time, sync prices automatically, and keep inventory aligned without manual work. ChefCode turns purchasing into a smart, connected workflow.
                         </p>
 
                         <ul className="space-y-3 mt-auto relative z-10">
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-blue-500 shrink-0" />
-                                <span>Real-time price syncing</span>
+                                <span>Real-time price synchronization</span>
                             </li>
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-blue-500 shrink-0" />
-                                <span>Automated restocking</span>
+                                <span>Automated restocking suggestions</span>
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-700 font-bold">
+                                <CheckCircle2 size={20} className="text-blue-500 shrink-0" />
+                                <span>Inventory-linked purchasing</span>
                             </li>
                         </ul>
                     </div>
@@ -65,19 +70,24 @@ const ComingSoonPage = () => {
                         <div className="w-20 h-20 bg-emerald-50 rounded-3xl flex items-center justify-center text-emerald-600 mb-8 border border-emerald-100 group-hover:scale-110 transition-transform duration-300 relative z-10 shadow-sm">
                             <Handshake size={40} />
                         </div>
-                        <h2 className="text-3xl font-black mb-4 text-slate-900 relative z-10">Partner Integration</h2>
+                        <h2 className="text-3xl font-black mb-4 text-slate-900 relative z-10">Partner Integrations</h2>
                         <p className="text-slate-600 mb-8 text-lg leading-relaxed flex-grow relative z-10">
-                            Collaboration is in our DNA. Just as we partner with scientific leaders like <strong className="text-slate-900 font-black">Food & Diet Goal</strong> and culinary experts like <strong className="text-slate-900 font-black">Chef Teodori</strong>, we are integrating with top-tier technology providers to create a seamless kitchen operating system.
+                            <strong className="text-slate-900 block mb-2">One kitchen. One data layer.</strong>
+                            ChefCode connects with POS systems, ERPs, and technology partners to create a unified operating system for modern kitchens.
                         </p>
 
                         <ul className="space-y-3 mt-auto relative z-10">
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                                <span>Seamless POS & ERP connection</span>
+                                <span>Seamless POS & ERP connections</span>
                             </li>
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
                                 <span>Unified data ecosystem</span>
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-700 font-bold">
+                                <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+                                <span>Scalable API-first architecture</span>
                             </li>
                         </ul>
                     </div>
@@ -91,17 +101,22 @@ const ComingSoonPage = () => {
                         </div>
                         <h2 className="text-3xl font-black mb-4 text-slate-900 relative z-10">Blockchain Integrity</h2>
                         <p className="text-slate-600 mb-8 text-lg leading-relaxed flex-grow relative z-10">
-                            Immutable traceability for every ingredient. Verify provenance and quality across your supply chain, building total trust with your guests.
+                            <strong className="text-slate-900 block mb-2">Trust built into every ingredient.</strong>
+                            ChefCode is preparing blockchain-based traceability to verify provenance, quality, and compliance across the supply chain.
                         </p>
 
                         <ul className="space-y-3 mt-auto relative z-10">
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-orange-500 shrink-0" />
-                                <span>Verified provenance</span>
+                                <span>Verified ingredient provenance</span>
                             </li>
                             <li className="flex items-center gap-3 text-slate-700 font-bold">
                                 <CheckCircle2 size={20} className="text-orange-500 shrink-0" />
-                                <span>Tamper-proof history</span>
+                                <span>Tamper-proof records</span>
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-700 font-bold">
+                                <CheckCircle2 size={20} className="text-orange-500 shrink-0" />
+                                <span>End-to-end supply transparency</span>
                             </li>
                         </ul>
                     </div>
@@ -112,8 +127,8 @@ const ComingSoonPage = () => {
                 <div className="text-center max-w-xl mx-auto">
                     <div className="bg-slate-900 rounded-[2rem] p-10 shadow-2xl relative overflow-hidden group">
                         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <h3 className="text-2xl font-black mb-4 text-white relative z-10">Ready to join the revolution?</h3>
-                        <p className="text-slate-400 mb-8 relative z-10">Secure your spot in our beta program.</p>
+                        <h3 className="text-2xl font-black mb-4 text-white relative z-10">Ready to join the evolution?</h3>
+                        <p className="text-slate-400 mb-8 relative z-10">Be among the first to access upcoming ChefCode features.</p>
                         <a href="/#demo-signup" className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg shadow-orange-900/50 hover:scale-[1.02] relative z-10 text-lg">
                             Join Information List <ArrowRight size={24} />
                         </a>
