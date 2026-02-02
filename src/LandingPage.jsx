@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import logo from './assets/logo.svg';
 import { Link } from 'react-router-dom';
 import videoDemo from './assets/chef-video.webm';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import mockup from './assets/mockup.webp';
 import mockupStop from './assets/animationstop.png';
 
@@ -207,10 +207,40 @@ const LandingPage = () => {
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 md:py-6'}`}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
           {/* Link logo to home */}
-          <div className="flex items-center gap-2 group cursor-pointer">
+          <div className="flex items-center gap-2 group cursor-pointer shrink-0">
             <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+              <img src={logo} alt="ChefCode" className="h-12 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
             </Link>
+          </div>
+
+          {/* MOBILE PAGE INDICATOR (Center) */}
+          <div className="md:hidden flex-1 flex justify-center items-center px-4 overflow-hidden">
+            <AnimatePresence mode='wait'>
+              {activeSection && activeSection !== 'hero' && (
+                <motion.div
+                  key={activeSection}
+                  initial={{ opacity: 0, scale: 0.8, y: 10, backgroundColor: "#f97316" }}
+                  animate={{ opacity: 1, scale: 1, y: 0, backgroundColor: "rgba(30, 41, 59, 0.95)" }}
+                  exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 25,
+                    backgroundColor: { duration: 0.8, ease: "easeOut" }
+                  }}
+                  className="flex items-center justify-center border border-slate-700/50 px-5 py-1.5 rounded-full shadow-lg shadow-orange-500/20 backdrop-blur-md"
+                >
+                  <span className="text-white font-bold text-xs sm:text-sm tracking-wide truncate">
+                    {activeSection === 'how-it-works' && 'How it Works'}
+                    {activeSection === 'features' && 'Features'}
+                    {activeSection === 'dr-ai' && 'Dr.AI'}
+                    {activeSection === 'testimonials' && 'Testimonials'}
+                    {activeSection === 'faq' && 'FAQ'}
+                    {activeSection === 'demo-signup' && 'Book Demo'}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Desktop Menu */}
@@ -1353,15 +1383,12 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-5xl font-black text-white mb-8">Building the Future Kitchen</h2>
           <p className="text-slate-400 max-w-2xl mx-auto mb-10 text-lg">
-            Explore our <span className="text-white font-bold">future features</span> including HACCP automation, Blockchain integrity, and the Supplier Marketplace.
+            Explore our <span className="text-white font-bold">future features</span> including Blockchain integrity and the Supplier Marketplace.
           </p>
 
           {/* Feature Badges - Visual but Compact */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="bg-slate-800/80 backdrop-blur border border-slate-700 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-lg hover:border-blue-500/50 transition-colors">
-              <ClipboardCheck className="text-blue-500 shrink-0" size={20} />
-              <span className="font-bold text-slate-200 text-sm md:text-base">HACCP Automation</span>
-            </div>
+
             <div className="bg-slate-800/80 backdrop-blur border border-slate-700 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-lg hover:border-emerald-500/50 transition-colors">
               <ShieldCheck className="text-emerald-500 shrink-0" size={20} />
               <span className="font-bold text-slate-200 text-sm md:text-base">Blockchain Integrity</span>
@@ -1526,7 +1553,7 @@ const LandingPage = () => {
       {/* --- FOOTER (Dark Anchoring) --- */}
       < footer className="bg-slate-950 border-t border-slate-900 pt-20 pb-10 text-sm text-slate-500" >
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-16">
+          <div className="grid md:grid-cols-3 gap-12 mb-16">
             <div>
               <div className="flex items-center gap-2 mb-6 text-white">
                 <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain" />
@@ -1561,13 +1588,7 @@ const LandingPage = () => {
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-white font-bold mb-6 text-base">Newsletter</h4>
-              <div className="flex gap-2">
-                <input type="email" placeholder="Email" className="bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-orange-500 transition-colors text-white" />
-                <button className="bg-orange-600 text-white px-5 py-3 rounded-lg font-bold hover:bg-orange-500 transition-colors">Go</button>
-              </div>
-            </div>
+
           </div>
 
           <div className="border-t border-slate-900 pt-10 flex flex-col md:flex-row justify-between items-center text-slate-600 font-medium">
