@@ -432,7 +432,7 @@ const LandingPage = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-            className="border-t border-slate-800/60 pt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-left"
+            className="border-t border-slate-800/60 pt-10 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4"
           >
             {[
               { val: "6%", label: "Net Profit", desc: "Improvement", color: "text-emerald-400" },
@@ -441,14 +441,14 @@ const LandingPage = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                className="bg-slate-800/30 border border-slate-700/50 p-6 rounded-2xl backdrop-blur-sm flex items-center gap-4  transition-colors group"
+                className="bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl backdrop-blur-sm flex flex-col items-center justify-center text-center gap-0.5 transition-colors group h-full mx-auto w-full max-w-[220px] md:max-w-none"
                 whileHover={{
                   scale: 1.05,
                   y: -5,
                   transition: { type: "spring", stiffness: 400, damping: 17 }
                 }}
               >
-                <div className={`text-4xl font-black ${stat.color} group-hover:scale-110 transition-transform origin-left`}>{stat.val}</div>
+                <div className={`text-4xl md:text-5xl font-black ${stat.color} group-hover:scale-110 transition-transform mb-2`}>{stat.val}</div>
                 <div>
                   <div className="text-white font-bold leading-tight">{stat.label}</div>
                   <div className="text-slate-500 text-xs font-medium uppercase tracking-wide">{stat.desc}</div>
