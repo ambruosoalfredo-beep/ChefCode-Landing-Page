@@ -128,42 +128,44 @@ const Partners = () => {
 
 
 
-            {/* --- PARTNER 0: Di Marco --- */}
-            <section className="py-24 bg-white border-b border-slate-100">
-                <div className="container mx-auto px-4 md:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">Strategic Partner</h2>
-                        <p className="text-slate-500 max-w-2xl mx-auto text-lg">The visionary behind the Pinsa Romana revolution.</p>
-                    </div>
+            {/* --- PARTNER 0: Di Marco (HIDDEN) --- */}
+            {false && (
+                <section className="py-24 bg-white border-b border-slate-100">
+                    <div className="container mx-auto px-4 md:px-8">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">Strategic Partner</h2>
+                            <p className="text-slate-500 max-w-2xl mx-auto text-lg">The visionary behind the Pinsa Romana revolution.</p>
+                        </div>
 
-                    <div className="flex flex-wrap justify-center gap-12 text-center max-w-5xl mx-auto">
-                        {partnersDiMarco.map((member, i) => (
-                            <div key={i} className="flex flex-col items-center group w-full md:w-[40%] min-w-[280px]">
-                                <div className="relative mb-8">
-                                    <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-slate-100 shadow-xl group-hover:scale-105 transition-all duration-300 bg-slate-100">
-                                        <img src={member.img} alt={member.name} className="w-full h-full object-cover scale-125" />
-                                    </div>
-                                    {member.logo && (
-                                        <div className="absolute -bottom-5 -right-5 w-28 h-28 bg-white rounded-full border-2 border-slate-100 shadow-md flex items-center justify-center overflow-hidden z-10 group-hover:scale-110 transition-transform p-1.5">
-                                            <img src={member.logo} alt="Brand Logo" className="w-full h-full object-contain scale-150" />
+                        <div className="flex flex-wrap justify-center gap-12 text-center max-w-5xl mx-auto">
+                            {partnersDiMarco.map((member, i) => (
+                                <div key={i} className="flex flex-col items-center group w-full md:w-[40%] min-w-[280px]">
+                                    <div className="relative mb-8">
+                                        <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-slate-100 shadow-xl group-hover:scale-105 transition-all duration-300 bg-slate-100">
+                                            <img src={member.img} alt={member.name} className="w-full h-full object-cover scale-125" />
                                         </div>
-                                    )}
+                                        {member.logo && (
+                                            <div className="absolute -bottom-5 -right-5 w-28 h-28 bg-white rounded-full border-2 border-slate-100 shadow-md flex items-center justify-center overflow-hidden z-10 group-hover:scale-110 transition-transform p-1.5">
+                                                <img src={member.logo} alt="Brand Logo" className="w-full h-full object-contain scale-150" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{member.name}</h3>
+                                    <div className="text-orange-600 font-bold text-sm uppercase tracking-wide mb-4">{member.role}</div>
+                                    <div className="text-slate-500 font-medium leading-relaxed mb-6">
+                                        {member.details.map((line, idx) => (
+                                            <div key={idx} className="mb-1">{line}</div>
+                                        ))}
+                                    </div>
+                                    <a href="https://www.pinsadimarco.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange-600 font-bold hover:underline text-sm mt-4">
+                                        Visit Official Website <ExternalLink size={16} />
+                                    </a>
                                 </div>
-                                <h3 className="text-2xl font-bold text-slate-900 mb-2">{member.name}</h3>
-                                <div className="text-orange-600 font-bold text-sm uppercase tracking-wide mb-4">{member.role}</div>
-                                <div className="text-slate-500 font-medium leading-relaxed mb-6">
-                                    {member.details.map((line, idx) => (
-                                        <div key={idx} className="mb-1">{line}</div>
-                                    ))}
-                                </div>
-                                <a href="https://www.pinsadimarco.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange-600 font-bold hover:underline text-sm mt-4">
-                                    Visit Official Website <ExternalLink size={16} />
-                                </a>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* --- PARTNER 1: Food & Diet Goal --- */}
             <section className="py-24 bg-white border-b border-slate-100">
@@ -180,7 +182,7 @@ const Partners = () => {
                                         <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
                                     </div>
                                     {member.logo && (
-                                        <div className="absolute -bottom-5 -right-5 w-28 h-28 bg-white rounded-full border-2 border-slate-100 shadow-md flex items-center justify-center overflow-hidden z-10 group-hover:scale-110 transition-transform p-1.5">
+                                        <div className="absolute -bottom-5 -right-5 w-28 h-28 bg-black rounded-full border-2 border-slate-100 shadow-md flex items-center justify-center overflow-hidden z-10 group-hover:scale-110 transition-transform p-1.5">
                                             <img src={member.logo} alt="Brand Logo" className="w-full h-full object-contain scale-110" />
                                         </div>
                                     )}
