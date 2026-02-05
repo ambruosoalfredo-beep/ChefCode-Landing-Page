@@ -7,7 +7,7 @@ const ComingSoonPage = () => {
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-500/30">
             {/* Navbar - Dark for consistency with brand identity */}
-            <nav className="fixed top-0 w-full px-6 md:px-8 flex justify-between items-center z-50 bg-slate-900 shadow-lg py-4 md:py-6">
+            <nav className="fixed top-0 w-full px-6 md:px-8 flex justify-between items-center z-50 bg-slate-900 shadow-lg py-4 lg:py-6">
                 <Link to="/" className="flex items-center gap-2 group">
                     <div className="bg-slate-800 p-2 rounded-xl group-hover:bg-slate-700 transition-colors border border-slate-700 hover:border-slate-500">
                         <ArrowLeft size={20} className="text-slate-400 group-hover:text-white transition-colors" />
@@ -15,12 +15,12 @@ const ComingSoonPage = () => {
                 </Link>
                 {/* Bigger Logo - Home Link */}
                 <Link to="/" className="flex items-center justify-center group cursor-pointer">
-                    <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain transition-transform group-hover:scale-105" />
+                    <img src={logo} alt="ChefCode" className="h-16 lg:h-24 w-auto object-contain transition-transform group-hover:scale-105" />
                 </Link>
                 <div className="w-10"></div> {/* Spacer for center alignment effect */}
             </nav>
 
-            <div className="container mx-auto px-4 pt-48 pb-24">
+            <div className="container mx-auto px-4 pt-32 lg:pt-48 pb-24">
                 {/* Header */}
                 <div className="max-w-4xl mx-auto text-center mb-20">
                     <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight text-slate-900">

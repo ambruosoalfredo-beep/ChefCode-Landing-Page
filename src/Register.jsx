@@ -46,13 +46,13 @@ const Register = () => {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
             {/* --- NAVBAR --- */}
-            <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/90 backdrop-blur-lg shadow-lg py-3 border-b border-white/5' : 'bg-slate-900 py-4 md:py-6'}`}>
+            <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/90 backdrop-blur-lg shadow-lg py-3 border-b border-white/5' : 'bg-slate-900 py-4 lg:py-6'}`}>
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-                        <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+                        <img src={logo} alt="ChefCode" className="h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
                     </Link>
 
-                    <div className="hidden md:flex items-center gap-8">
+                    <div className="hidden lg:flex items-center gap-8">
                         <NavLink to="/#how-it-works">How it Works</NavLink>
                         <NavLink to="/#features">Features</NavLink>
                         <NavLink to="/#dr-ai">Dr.AI</NavLink>
@@ -61,7 +61,7 @@ const Register = () => {
                         <NavLink to="/about">About Us</NavLink>
                     </div>
 
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="hidden lg:flex items-center gap-4">
                         <Link to="/">
                             <button className="bg-white hover:bg-orange-500 hover:text-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 duration-300">
                                 Back to Home
@@ -69,13 +69,13 @@ const Register = () => {
                         </Link>
                     </div>
 
-                    <button className="md:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <button className="lg:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
 
                 {isMenuOpen && (
-                    <div className="md:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
+                    <div className="lg:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
                         <NavLink to="/" mobile>Home</NavLink>
                         <NavLink to="/partners" mobile>Partners</NavLink>
                         <NavLink to="/about" mobile>About Us</NavLink>
@@ -84,7 +84,7 @@ const Register = () => {
             </nav>
 
             {/* --- HEADER --- */}
-            <section className="pt-48 pb-20 bg-slate-900 text-white text-center">
+            <section className="pt-32 lg:pt-48 pb-20 bg-slate-900 text-white text-center">
                 <div className="container mx-auto px-4">
                     <h1 className="text-4xl md:text-6xl font-black mb-6">Join Beta Testing</h1>
                     <p className="text-xl text-slate-400 max-w-2xl mx-auto">Register now to get exclusive early access and help shape the future of AI-powered kitchen management.</p>

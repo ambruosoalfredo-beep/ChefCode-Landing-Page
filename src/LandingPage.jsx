@@ -204,17 +204,17 @@ const LandingPage = () => {
       </div>
 
       {/* --- NAVBAR --- */}
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 md:py-6'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-6'}`}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center relative">
           {/* Link logo to home */}
           <div className="flex items-center gap-2 group cursor-pointer shrink-0">
             <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="ChefCode" className="h-12 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+              <img src={logo} alt="ChefCode" className="h-12 md:h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
             </Link>
           </div>
 
           {/* MOBILE PAGE INDICATOR (Absolute Center) */}
-          <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="lg:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
             <AnimatePresence mode='wait'>
               {activeSection && activeSection !== 'hero' && (
                 <motion.div
@@ -244,7 +244,7 @@ const LandingPage = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             <NavLink href="/#how-it-works" scrolled={scrolled}>How it Works</NavLink>
             <NavLink href="/#features" scrolled={scrolled}>Features</NavLink>
             <NavLink href="/#dr-ai" scrolled={scrolled}>Dr.AI</NavLink>
@@ -254,7 +254,7 @@ const LandingPage = () => {
             <NavLink href="/about" scrolled={scrolled}>About Us</NavLink>
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <button
               id="nav-link-demo-signup"
               onClick={scrollToDemo}
@@ -266,14 +266,14 @@ const LandingPage = () => {
 
 
           {/* Mobile Toggle */}
-          <button className="md:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="lg:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
             <NavLink href="/#how-it-works" mobile>How it Works</NavLink>
             <NavLink href="/#features" mobile>Features</NavLink>
             <NavLink href="/#dr-ai" mobile>Dr.AI</NavLink>
@@ -315,7 +315,7 @@ const LandingPage = () => {
       )}
 
       {/* --- HERO SECTION (Hypnotic Dark Theme) --- */}
-      <section className="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden bg-slate-900 border-b border-slate-800">
+      <section className="relative pt-32 pb-24 md:pt-36 lg:pt-44 md:pb-36 overflow-hidden bg-slate-900 border-b border-slate-800">
         {/* Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
