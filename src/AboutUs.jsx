@@ -6,10 +6,11 @@ import logo from './assets/logo.svg';
 import { Menu, X } from 'lucide-react';
 import Immagine1 from './assets/Immagine1.png';
 import Immagine2 from './assets/Immagine2.jpg';
-import Immagine3 from './assets/Immagine3.jpg';
+
 import Immagine4 from './assets/Immagine4.jpg';
 import Immagine5 from './assets/Immagine5.jpg';
 import Immagine9 from './assets/Immagine9.jpg';
+import met from './assets/met.png';
 
 const AboutUs = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +44,7 @@ const AboutUs = () => {
             details: ["10+ years", "Digital Innovation", "Product Management", "Solution Designer", "Digital Innovation"]
         },
         {
-            img: Immagine3,
+            img: met,
             name: "Valerio Cortese",
             role: "VIDEO EDITOR, VFX & UI",
             details: ["20+ years", "Film Making", "Multi-disciplinary creative", "UI & branding specialist"]
