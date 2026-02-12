@@ -9,9 +9,12 @@ import Immagine8 from './assets/Immagine8.png';
 import dimarcoImg from './assets/di marco.webp';
 import dimarcoPersona from './assets/dimarcopersona.png';
 import fdgLogo from './assets/fdg.png';
+import { useLanguage } from './context/LanguageContext';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import carlaLogo from './assets/logocarla.png';
 
 const Partners = () => {
+    const { t } = useLanguage();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -28,14 +31,14 @@ const Partners = () => {
             img: Immagine6,
             logo: fdgLogo,
             name: "Flavio Di Gregorio",
-            role: "Founder Food & Diet Goal",
-            details: ["University Researcher", "Doctor & Nutritionist"]
+            role: t('partnersPage.fdg.flavio.role'),
+            details: t('partnersPage.fdg.flavio.details')
         },
         {
             img: Immagine7,
             name: "Maria Teresa Lombardi",
-            role: "Collaborating Nutritionist",
-            details: ["Biologist Nutritionist"]
+            role: t('partnersPage.fdg.maria.role'),
+            details: t('partnersPage.fdg.maria.details')
         }
     ];
 
@@ -44,8 +47,8 @@ const Partners = () => {
             img: Immagine8,
             logo: carlaLogo,
             name: "Carla Teodori",
-            role: "Chef & Restaurant Consultant",
-            details: ["2★ Michelin Training", "International Restaurant Opening & Management"]
+            role: t('partnersPage.teodori.role'),
+            details: t('partnersPage.teodori.details')
         }
     ];
 
@@ -54,8 +57,8 @@ const Partners = () => {
             img: dimarcoPersona,
             logo: dimarcoImg,
             name: "Corrado Di Marco",
-            role: "Founder Di Marco & Inventor of Original Pinsa Romana",
-            details: ["Revolutionizing pizza since 2001", "Creator of the high-digestibility flour blend"]
+            role: t('partnersPage.dimarco.role'),
+            details: t('partnersPage.dimarco.details')
         }
     ];
 
@@ -79,18 +82,19 @@ const Partners = () => {
                     </Link>
 
                     <div className="hidden lg:flex items-center gap-8">
-                        <NavLink to="/#how-it-works">How it Works</NavLink>
-                        <NavLink to="/#features">Features</NavLink>
-                        <NavLink to="/#dr-ai">Dr.AI</NavLink>
-                        <NavLink to="/#testimonials">Testimonials</NavLink>
-                        <NavLink to="/partners">Partners</NavLink>
-                        <NavLink to="/about">About Us</NavLink>
+                        <NavLink to="/#how-it-works">{t('navbar.howItWorks')}</NavLink>
+                        <NavLink to="/#features">{t('navbar.features')}</NavLink>
+                        <NavLink to="/#dr-ai">{t('navbar.drAi')}</NavLink>
+                        <NavLink to="/#testimonials">{t('navbar.testimonials')}</NavLink>
+                        <NavLink to="/partners">{t('navbar.partners')}</NavLink>
+                        <NavLink to="/about">{t('navbar.aboutUs')}</NavLink>
                     </div>
 
                     <div className="hidden lg:flex items-center gap-4">
+                        <LanguageSwitcher />
                         <Link to="/">
                             <button className="bg-white hover:bg-orange-500 hover:text-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 duration-300">
-                                Back to Home
+                                {t('navbar.backToHome')}
                             </button>
                         </Link>
                     </div>
@@ -102,9 +106,12 @@ const Partners = () => {
 
                 {isMenuOpen && (
                     <div className="lg:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
-                        <NavLink to="/" mobile>Home</NavLink>
-                        <NavLink to="/partners" mobile>Partners</NavLink>
-                        <NavLink to="/about" mobile>About Us</NavLink>
+                        <NavLink to="/" mobile>{t('navbar.home')}</NavLink>
+                        <NavLink to="/partners" mobile>{t('navbar.partners')}</NavLink>
+                        <NavLink to="/about" mobile>{t('navbar.aboutUs')}</NavLink>
+                        <div className="pt-4 border-t border-slate-800">
+                            <LanguageSwitcher />
+                        </div>
                     </div>
                 )}
             </nav>
@@ -112,17 +119,17 @@ const Partners = () => {
             {/* --- HEADER --- */}
             <section className="pt-32 lg:pt-48 pb-20 bg-slate-900 text-white text-center">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-6xl font-black mb-6">Our Partners</h1>
-                    <p className="text-xl text-slate-400 max-w-2xl mx-auto">Collaborating with the best to deliver excellence.</p>
-                    <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8 mt-2">Partners supporting validation and pilot activities.</p>
+                    <h1 className="text-4xl md:text-6xl font-black mb-6">{t('partnersPage.title')}</h1>
+                    <p className="text-xl text-slate-400 max-w-2xl mx-auto">{t('partnersPage.subtitle')}</p>
+                    <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8 mt-2">{t('partnersPage.desc')}</p>
 
                     {/* Partner CTA */}
                     <div className="max-w-6xl mx-auto mt-12 p-8 bg-slate-800/50 rounded-2xl border border-slate-700 flex flex-col items-center justify-center gap-6">
                         <p className="text-lg text-slate-300 leading-relaxed text-center">
-                            <span className="text-orange-500 font-bold">Join the revolution.</span> We're building the future of food tech and looking for visionary partners who share our mission to transform the culinary industry through innovation and sustainability.
+                            <span className="text-orange-500 font-bold">{t('partnersPage.cta.highlight')}</span> {t('partnersPage.cta.text')}
                         </p>
                         <Link to="/become-partner" className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-orange-500/50 transition-all hover:scale-105">
-                            Become a Partner
+                            {t('partnersPage.cta.button')}
                             <ArrowRight size={20} />
                         </Link>
                     </div>
@@ -137,8 +144,8 @@ const Partners = () => {
             <section className="py-24 bg-white border-b border-slate-100">
                 <div className="container mx-auto px-4 md:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">Strategic Partner</h2>
-                        <p className="text-slate-500 max-w-2xl mx-auto text-lg">The visionary behind the Pinsa Romana revolution.</p>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">{t('partnersPage.dimarco.title')}</h2>
+                        <p className="text-slate-500 max-w-2xl mx-auto text-lg">{t('partnersPage.dimarco.subtitle')}</p>
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-12 text-center max-w-5xl mx-auto">
@@ -162,7 +169,7 @@ const Partners = () => {
                                     ))}
                                 </div>
                                 <a href="https://www.pinsadimarco.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange-600 font-bold hover:underline text-sm mt-4">
-                                    Visit Official Website <ExternalLink size={16} />
+                                    {t('partnersPage.dimarco.website')} <ExternalLink size={16} />
                                 </a>
                             </div>
                         ))}
@@ -174,7 +181,7 @@ const Partners = () => {
             <section className="py-24 bg-slate-50 border-b border-slate-100">
                 <div className="container mx-auto px-4 md:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">Professional Chef</h2>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">{t('partnersPage.teodori.title')}</h2>
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-12 text-center max-w-5xl mx-auto">
@@ -208,7 +215,7 @@ const Partners = () => {
             <section className="py-24 bg-white border-b border-slate-100">
                 <div className="container mx-auto px-4 md:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">Food & Diet Goal</h2>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">{t('partnersPage.fdg.title')}</h2>
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-12 text-center max-w-5xl mx-auto">
@@ -233,7 +240,7 @@ const Partners = () => {
                                 </div>
                                 {member.name === "Flavio Di Gregorio" && (
                                     <a href="https://foodanddietgoal.it/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange-600 font-bold hover:underline text-sm mt-4">
-                                        Visit Website <ExternalLink size={16} />
+                                        {t('partnersPage.fdg.website')} <ExternalLink size={16} />
                                     </a>
                                 )}
                             </div>
@@ -254,7 +261,7 @@ const Partners = () => {
                                 <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain" />
                             </div>
                             <p className="mb-6 max-w-xs leading-relaxed font-medium text-slate-500">
-                                Smart Solutions for Smarter Kitchens
+                                {t('aboutUs.footer.tagline')}
                             </p>
                             <div className="flex gap-6">
                                 <a href="#" className="text-slate-400 hover:text-orange-500 transition-colors font-bold">LinkedIn</a>
@@ -263,22 +270,22 @@ const Partners = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-white font-bold mb-6 text-base">Product</h4>
+                            <h4 className="text-white font-bold mb-6 text-base">{t('aboutUs.footer.product')}</h4>
                             <ul className="space-y-4 font-medium">
-                                <li><Link to="/#features" className="hover:text-orange-500 transition-colors">Features</Link></li>
-                                <li><Link to="/#how-it-works" className="hover:text-orange-500 transition-colors">How it Works</Link></li>
-                                <li><Link to="/#dr-ai" className="hover:text-orange-500 transition-colors">Dr.AI</Link></li>
-                                <li><Link to="/#testimonials" className="hover:text-orange-500 transition-colors">Integrations</Link></li>
+                                <li><Link to="/#features" className="hover:text-orange-500 transition-colors">{t('navbar.features')}</Link></li>
+                                <li><Link to="/#how-it-works" className="hover:text-orange-500 transition-colors">{t('navbar.howItWorks')}</Link></li>
+                                <li><Link to="/#dr-ai" className="hover:text-orange-500 transition-colors">{t('navbar.drAi')}</Link></li>
+                                <li><Link to="/#testimonials" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.integrations')}</Link></li>
                             </ul>
                         </div>
 
                         <div>
-                            <h4 className="text-white font-bold mb-6 text-base">Company</h4>
+                            <h4 className="text-white font-bold mb-6 text-base">{t('aboutUs.footer.company')}</h4>
                             <ul className="space-y-4 font-medium">
-                                <li><Link to="/partners" className="hover:text-orange-500 transition-colors text-orange-500">Partners</Link></li>
-                                <li><Link to="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">Contact</Link></li>
-                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link></li>
+                                <li><Link to="/partners" className="hover:text-orange-500 transition-colors text-orange-500">{t('navbar.partners')}</Link></li>
+                                <li><Link to="/about" className="hover:text-orange-500 transition-colors">{t('navbar.aboutUs')}</Link></li>
+                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.contact')}</Link></li>
+                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.privacy')}</Link></li>
                             </ul>
                         </div>
 
@@ -286,7 +293,7 @@ const Partners = () => {
                     </div>
 
                     <div className="border-t border-slate-900 pt-10 flex flex-col md:flex-row justify-between items-center text-slate-600 font-medium">
-                        <p>&copy; 2025 ChefCode. All rights reserved.</p>
+                        <p>{t('aboutUs.footer.copyright')}</p>
                     </div>
                 </div>
             </footer >

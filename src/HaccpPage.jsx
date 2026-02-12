@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck, CheckCircle2, ClipboardCheck, AlertTriangle, Thermometer, FileCheck, Layers } from 'lucide-react';
 import logo from './assets/logo.svg';
 
+import { useLanguage } from './context/LanguageContext';
+
 const HaccpPage = () => {
+    const { t } = useLanguage();
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
             {/* Header */}
@@ -18,7 +21,7 @@ const HaccpPage = () => {
                             className="flex items-center gap-2 text-slate-300 hover:text-orange-500 font-bold transition-colors"
                         >
                             <ArrowLeft size={20} />
-                            <span>Back to Home</span>
+                            <span>{t('haccpPage.header.backToHome')}</span>
                         </Link>
                     </div>
                 </div>
@@ -30,11 +33,11 @@ const HaccpPage = () => {
                         <ShieldCheck size={48} />
                     </div>
                     <h1 className="text-4xl md:text-6xl font-black mb-6 text-slate-900 leading-tight">
-                        AI-Assisted Food Safety.<br />
-                        <span className="text-orange-600">Built for Real Kitchens.</span>
+                        {t('haccpPage.hero.title')}<br />
+                        <span className="text-orange-600">{t('haccpPage.hero.subtitle')}</span>
                     </h1>
                     <p className="text-xl text-slate-600 mb-16 leading-relaxed max-w-2xl mx-auto">
-                        We are building the next generation of HACCP compliance. Automated logging, intelligent checks, and effortless documentation — designed to reduce risk and save time.
+                        {t('haccpPage.hero.desc')}
                     </p>
 
                     {/* Main Content - Premium Dark Tech Style */}
@@ -45,17 +48,17 @@ const HaccpPage = () => {
 
                         <div className="relative z-10">
                             <h2 className="text-3xl md:text-4xl font-black mb-6 text-white leading-tight">
-                                What <span className="text-orange-500">HACCP 2.0</span> Will Deliver
+                                {t('haccpPage.main.title')}
                             </h2>
                             <p className="text-slate-400 text-lg leading-relaxed mb-10 max-w-3xl mx-auto">
-                                ChefCode HACCP is designed to go beyond static checklists and paperwork. The system actively supports kitchens in maintaining daily compliance while reducing manual effort.
+                                {t('haccpPage.main.desc')}
                             </p>
 
                             <div className="grid gap-6 max-w-4xl mx-auto">
                                 {/* Planned Capabilities Header */}
                                 <div className="flex items-center gap-3 mb-2 justify-center">
                                     <div className="h-px bg-slate-700 w-12 md:w-24"></div>
-                                    <span className="text-slate-500 font-bold uppercase tracking-widest text-xs">Planned Capabilities</span>
+                                    <span className="text-slate-500 font-bold uppercase tracking-widest text-xs">{t('haccpPage.main.planned')}</span>
                                     <div className="h-px bg-slate-700 w-12 md:w-24"></div>
                                 </div>
 
@@ -66,8 +69,8 @@ const HaccpPage = () => {
                                             <ClipboardCheck size={28} />
                                         </div>
                                         <div>
-                                            <h5 className="font-bold text-white text-lg mb-2">Automated Checks</h5>
-                                            <p className="text-slate-400 text-sm leading-relaxed">Automated daily HACCP checks and logs</p>
+                                            <h5 className="font-bold text-white text-lg mb-2">{t('haccpPage.main.features.checks.title')}</h5>
+                                            <p className="text-slate-400 text-sm leading-relaxed">{t('haccpPage.main.features.checks.desc')}</p>
                                         </div>
                                     </div>
 
@@ -77,8 +80,8 @@ const HaccpPage = () => {
                                             <AlertTriangle size={28} />
                                         </div>
                                         <div>
-                                            <h5 className="font-bold text-white text-lg mb-2">Smart Detection</h5>
-                                            <p className="text-slate-400 text-sm leading-relaxed">AI-assisted anomaly detection</p>
+                                            <h5 className="font-bold text-white text-lg mb-2">{t('haccpPage.main.features.detection.title')}</h5>
+                                            <p className="text-slate-400 text-sm leading-relaxed">{t('haccpPage.main.features.detection.desc')}</p>
                                         </div>
                                     </div>
 
@@ -88,8 +91,8 @@ const HaccpPage = () => {
                                             <Thermometer size={28} />
                                         </div>
                                         <div>
-                                            <h5 className="font-bold text-white text-lg mb-2">Digital Records</h5>
-                                            <p className="text-slate-400 text-sm leading-relaxed">Digital temperature and hygiene records</p>
+                                            <h5 className="font-bold text-white text-lg mb-2">{t('haccpPage.main.features.records.title')}</h5>
+                                            <p className="text-slate-400 text-sm leading-relaxed">{t('haccpPage.main.features.records.desc')}</p>
                                         </div>
                                     </div>
 
@@ -99,8 +102,8 @@ const HaccpPage = () => {
                                             <FileCheck size={28} />
                                         </div>
                                         <div>
-                                            <h5 className="font-bold text-white text-lg mb-2">Audit Ready</h5>
-                                            <p className="text-slate-400 text-sm leading-relaxed">Secure audit-ready documentation</p>
+                                            <h5 className="font-bold text-white text-lg mb-2">{t('haccpPage.main.features.audit.title')}</h5>
+                                            <p className="text-slate-400 text-sm leading-relaxed">{t('haccpPage.main.features.audit.desc')}</p>
                                         </div>
                                     </div>
 
@@ -110,8 +113,8 @@ const HaccpPage = () => {
                                             <Layers size={32} />
                                         </div>
                                         <div>
-                                            <h5 className="font-bold text-white text-lg mb-2">Seamless Integration</h5>
-                                            <p className="text-slate-300 text-sm">Integration with kitchen workflows and inventory</p>
+                                            <h5 className="font-bold text-white text-lg mb-2">{t('haccpPage.main.features.integration.title')}</h5>
+                                            <p className="text-slate-300 text-sm">{t('haccpPage.main.features.integration.desc')}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -119,17 +122,17 @@ const HaccpPage = () => {
                         </div>
 
                         <p className="relative z-10 text-slate-500 text-xs text-center border-t border-slate-800 pt-6 mt-8 max-w-2xl mx-auto">
-                            All data is designed to be securely stored, easily retrievable, and aligned with EU food safety standards.
+                            {t('haccpPage.main.disclaimer')}
                         </p>
                     </div>
 
                     {/* Early Access */}
                     <div className="p-8 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl shadow-xl relative overflow-hidden text-white">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500 rounded-full blur-3xl -mr-32 -mt-32 opacity-20"></div>
-                        <h3 className="text-2xl font-bold mb-4 relative z-10 text-white">Want early access?</h3>
-                        <p className="text-slate-300 mb-8 relative z-10 text-lg">Join the waitlist and be notified when HACCP 2.0 launches.</p>
+                        <h3 className="text-2xl font-bold mb-4 relative z-10 text-white">{t('haccpPage.earlyAccess.title')}</h3>
+                        <p className="text-slate-300 mb-8 relative z-10 text-lg">{t('haccpPage.earlyAccess.desc')}</p>
                         <Link to="/#demo-signup" className="inline-block bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1 relative z-10">
-                            Join Beta List
+                            {t('haccpPage.earlyAccess.button')}
                         </Link>
                     </div>
                 </div>
@@ -137,7 +140,7 @@ const HaccpPage = () => {
 
             {/* Footer Minimal */}
             <footer className="bg-slate-900 py-10 mt-24 text-center text-slate-500 text-sm border-t border-slate-800">
-                <p>&copy; 2025 ChefCode. All rights reserved.</p>
+                <p>{t('haccpPage.footer.copyright')}</p>
             </footer>
         </div>
     );

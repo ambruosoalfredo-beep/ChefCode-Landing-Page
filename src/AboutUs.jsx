@@ -11,8 +11,11 @@ import Immagine4 from './assets/Immagine4.jpg';
 import Immagine5 from './assets/Immagine5.jpg';
 import Immagine9 from './assets/Immagine9.jpg';
 import met from './assets/met.png';
+import { useLanguage } from './context/LanguageContext';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 const AboutUs = () => {
+    const { t } = useLanguage();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -28,38 +31,38 @@ const AboutUs = () => {
         {
             img: Immagine2,
             name: "Alfredo Ambruoso",
-            role: "COO & CO-FOUNDER CHEFCODE",
-            details: ["20+ years", "Kitchen leadership", "Menu & workflow designer", "Food-cost & HACCP specialist"]
+            role: t('aboutUs.team.alfredo.role'),
+            details: t('aboutUs.team.alfredo.details')
         },
         {
             img: Immagine1,
             name: "Daniele Paciotti",
-            role: "CPO & CO-FOUNDER CHEFCODE",
-            details: ["26+ years", "Automotive Leadership", "Product Management", "Business Development", "Sales Management"]
+            role: t('aboutUs.team.daniele.role'),
+            details: t('aboutUs.team.daniele.details')
         },
         {
             img: Immagine4,
             name: "Kshama Tupe",
-            role: "SENIOR BUSINESS ANALYST",
-            details: ["10+ years", "Digital Innovation", "Product Management", "Solution Designer", "Digital Innovation"]
+            role: t('aboutUs.team.kshama.role'),
+            details: t('aboutUs.team.kshama.details')
         },
         {
             img: met,
             name: "Valerio Cortese",
-            role: "VIDEO EDITOR, VFX & UI",
-            details: ["20+ years", "Film Making", "Multi-disciplinary creative", "UI & branding specialist"]
+            role: t('aboutUs.team.valerio.role'),
+            details: t('aboutUs.team.valerio.details')
         },
         {
             img: Immagine5,
             name: "Mariem Daha",
-            role: "AI ENGINEER",
-            details: ["2+ years", "Software & AI Solutions", "Full-stack developer", "Web Designer", "AI & Analytic focus"]
+            role: t('aboutUs.team.mariem.role'),
+            details: t('aboutUs.team.mariem.details')
         },
         {
             img: Immagine9,
             name: "Francesco Balsamo",
-            role: "SOFTWARE DEVELOPER",
-            details: ["2+ years", "IT Support & Testing", "Full Stack Developer", "Software & Data Integration", "Focus"]
+            role: t('aboutUs.team.francesco.role'),
+            details: t('aboutUs.team.francesco.details')
         }
     ];
 
@@ -83,32 +86,34 @@ const AboutUs = () => {
                     </Link>
 
                     <div className="hidden lg:flex items-center gap-8">
-                        <NavLink to="/#how-it-works">How it Works</NavLink>
-                        <NavLink to="/#features">Features</NavLink>
-                        <NavLink to="/#dr-ai">Dr.AI</NavLink>
-                        <NavLink to="/#testimonials">Testimonials</NavLink>
-                        <NavLink to="/partners">Partners</NavLink>
-                        <NavLink to="/about">About Us</NavLink>
+                        <NavLink to="/#how-it-works">{t('navbar.howItWorks')}</NavLink>
+                        <NavLink to="/#features">{t('navbar.features')}</NavLink>
+                        <NavLink to="/#dr-ai">{t('navbar.drAi')}</NavLink>
+                        <NavLink to="/#testimonials">{t('navbar.testimonials')}</NavLink>
+                        <NavLink to="/partners">{t('navbar.partners')}</NavLink>
+                        <NavLink to="/about">{t('navbar.aboutUs')}</NavLink>
                     </div>
 
-                    <div className="hidden lg:flex items-center gap-4">
-                        <Link to="/">
-                            <button className="btn-aggressive-primary bg-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm">
-                                Back to Home
-                            </button>
-                        </Link>
-                    </div>
+                    <Link to="/">
+                        <button className="btn-aggressive-primary bg-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm">
+                            {t('navbar.backToHome')}
+                        </button>
+                    </Link>
+                    <LanguageSwitcher />
 
                     <button className="lg:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
+                    <div className="lg:hidden">
+                        <LanguageSwitcher mobile={true} />
+                    </div>
                 </div>
 
                 {isMenuOpen && (
                     <div className="lg:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
-                        <NavLink to="/" mobile>Home</NavLink>
-                        <NavLink to="/partners" mobile>Partners</NavLink>
-                        <NavLink to="/about" mobile>About Us</NavLink>
+                        <NavLink to="/" mobile>{t('navbar.home')}</NavLink>
+                        <NavLink to="/partners" mobile>{t('navbar.partners')}</NavLink>
+                        <NavLink to="/about" mobile>{t('navbar.aboutUs')}</NavLink>
                     </div>
                 )}
             </nav>
@@ -116,8 +121,8 @@ const AboutUs = () => {
             {/* --- HEADER --- */}
             <section className="pt-32 lg:pt-48 pb-20 bg-slate-900 text-white text-center">
                 <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-6xl font-black mb-6">Our Team</h1>
-                    <p className="text-xl text-slate-400 max-w-2xl mx-auto">The minds behind the kitchen revolution.</p>
+                    <h1 className="text-4xl md:text-6xl font-black mb-6">{t('aboutUs.hero.title')}</h1>
+                    <p className="text-xl text-slate-400 max-w-2xl mx-auto">{t('aboutUs.hero.subtitle')}</p>
                 </div>
             </section>
 
@@ -148,13 +153,13 @@ const AboutUs = () => {
             {/* --- JOIN US CTA --- */}
             <section className="py-24 bg-slate-900 border-t border-slate-800 text-center">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Join the Revolution</h2>
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{t('aboutUs.join.title')}</h2>
                     <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
-                        We are building the intelligence that will run tomorrow's kitchens. Ready to leave your mark?
+                        {t('aboutUs.join.subtitle')}
                     </p>
                     <Link to="/join-us">
                         <button className="bg-orange-600 hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-orange-500/30 transition-all hover:scale-105">
-                            Join the Team
+                            {t('aboutUs.join.button')}
                         </button>
                     </Link>
                 </div>
@@ -169,7 +174,7 @@ const AboutUs = () => {
                                 <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain" />
                             </div>
                             <p className="mb-6 max-w-xs leading-relaxed font-medium text-slate-500">
-                                Smart Solutions for Smarter Kitchens
+                                {t('aboutUs.footer.tagline')}
                             </p>
                             <div className="flex gap-6">
                                 <a href="#" className="text-slate-400 hover:text-orange-500 transition-colors font-bold">LinkedIn</a>
@@ -178,22 +183,22 @@ const AboutUs = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-white font-bold mb-6 text-base">Product</h4>
+                            <h4 className="text-white font-bold mb-6 text-base">{t('aboutUs.footer.product')}</h4>
                             <ul className="space-y-4 font-medium">
-                                <li><Link to="/#features" className="hover:text-orange-500 transition-colors">Features</Link></li>
-                                <li><Link to="/#how-it-works" className="hover:text-orange-500 transition-colors">How it Works</Link></li>
-                                <li><Link to="/#dr-ai" className="hover:text-orange-500 transition-colors">Dr.AI</Link></li>
-                                <li><Link to="/#testimonials" className="hover:text-orange-500 transition-colors">Integrations</Link></li>
+                                <li><Link to="/#features" className="hover:text-orange-500 transition-colors">{t('navbar.features')}</Link></li>
+                                <li><Link to="/#how-it-works" className="hover:text-orange-500 transition-colors">{t('navbar.howItWorks')}</Link></li>
+                                <li><Link to="/#dr-ai" className="hover:text-orange-500 transition-colors">{t('navbar.drAi')}</Link></li>
+                                <li><Link to="/#testimonials" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.integrations')}</Link></li>
                             </ul>
                         </div>
 
                         <div>
-                            <h4 className="text-white font-bold mb-6 text-base">Company</h4>
+                            <h4 className="text-white font-bold mb-6 text-base">{t('aboutUs.footer.company')}</h4>
                             <ul className="space-y-4 font-medium">
-                                <li><Link to="/partners" className="hover:text-orange-500 transition-colors">Partners</Link></li>
-                                <li><Link to="/about" className="hover:text-orange-500 transition-colors text-orange-500">About Us</Link></li>
-                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">Contact</Link></li>
-                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link></li>
+                                <li><Link to="/partners" className="hover:text-orange-500 transition-colors">{t('navbar.partners')}</Link></li>
+                                <li><Link to="/about" className="hover:text-orange-500 transition-colors text-orange-500">{t('navbar.aboutUs')}</Link></li>
+                                <li><Link to="/#demo-signup" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.contact')}</Link></li>
+                                <li><Link to="/privacy" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.privacy')}</Link></li>
                             </ul>
                         </div>
 
@@ -201,7 +206,7 @@ const AboutUs = () => {
                     </div>
 
                     <div className="border-t border-slate-900 pt-10 flex flex-col md:flex-row justify-between items-center text-slate-600 font-medium">
-                        <p>&copy; 2025 ChefCode. All rights reserved.</p>
+                        <p>{t('aboutUs.footer.copyright')}</p>
                     </div>
                 </div>
             </footer >
