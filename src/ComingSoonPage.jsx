@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingBasket, Handshake, ArrowRight, CheckCircle2, Database } from 'lucide-react';
 import logo from './assets/logo.svg';
@@ -7,20 +7,33 @@ import { useLanguage } from './context/LanguageContext';
 
 const ComingSoonPage = () => {
     const { t } = useLanguage();
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-500/30">
             {/* Navbar - Dark for consistency with brand identity */}
-            <nav className="fixed top-0 w-full px-6 md:px-8 flex justify-between items-center z-50 bg-slate-900 shadow-lg py-4 lg:py-6">
-                <Link to="/" className="flex items-center gap-2 group">
-                    <div className="bg-slate-800 p-2 rounded-xl group-hover:bg-slate-700 transition-colors border border-slate-700 hover:border-slate-500">
-                        <ArrowLeft size={20} className="text-slate-400 group-hover:text-white transition-colors" />
-                    </div>
+            {/* Navbar - Fixed and Consistent with LandingPage behavior */}
+            <nav className={`fixed top-0 w-full z-50 transition-all duration-300 px-6 md:px-8 flex justify-between items-center ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-6'}`}>
+                {/* Logo - Left aligned, resizes on scroll */}
+                <Link to="/" className="flex items-center gap-2 group cursor-pointer">
+                    <img src={logo} alt="ChefCode" className={`w-auto object-contain transition-transform group-hover:scale-105 ${scrolled ? 'h-12' : 'h-16 lg:h-24'}`} />
                 </Link>
-                {/* Bigger Logo - Home Link */}
-                <Link to="/" className="flex items-center justify-center group cursor-pointer">
-                    <img src={logo} alt="ChefCode" className="h-16 lg:h-24 w-auto object-contain transition-transform group-hover:scale-105" />
+
+                {/* Back Button - Right aligned - HaccpPage Style */}
+                <Link
+                    to="/"
+                    className="flex items-center gap-2 text-slate-300 hover:text-orange-500 font-bold transition-colors"
+                >
+                    <ArrowLeft size={20} />
+                    <span>{t('navbar.backToHome')}</span>
                 </Link>
-                <div className="w-10"></div> {/* Spacer for center alignment effect */}
             </nav>
 
             <div className="container mx-auto px-4 pt-32 lg:pt-48 pb-24">

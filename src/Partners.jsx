@@ -204,6 +204,9 @@ const Partners = () => {
                                         <div key={idx} className="mb-1">{line}</div>
                                     ))}
                                 </div>
+                                <a href="https://www.chefteodori.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange-600 font-bold hover:underline text-sm mt-4">
+                                    {t('partnersPage.teodori.website')} <ExternalLink size={16} />
+                                </a>
 
                             </div>
                         ))}

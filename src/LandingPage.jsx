@@ -9,6 +9,7 @@ import { useLanguage } from './context/LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
 
 import analyticsDashboard from './assets/interfacciaoffy.png';
+import ocrScanImg from './assets/ocr_scan.png';
 import {
   Mic,
   ScanLine,
@@ -603,7 +604,7 @@ const LandingPage = () => {
                 src={mockupStop}
                 alt=""
                 aria-hidden="true"
-                className="relative opacity-0 pointer-events-none transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full object-contain"
+                className="relative opacity-0 pointer-events-none transform scale-100 transition-transform duration-500 w-full object-contain"
               />
 
               {/* Animated WebP (Absolute Layer 1 - Always Visible underneath) */}
@@ -612,14 +613,14 @@ const LandingPage = () => {
                 src={mockup}
                 onLoad={handleImageLoad}
                 alt="ChefCode Analytics Dashboard Animation"
-                className={`absolute inset-0 z-20 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'invisible' : 'visible'}`}
+                className={`absolute inset-0 z-20 transform scale-100 transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'invisible' : 'visible'}`}
               />
 
               {/* Static PNG (Absolute Layer 2 - Appears on top) */}
               <img
                 src={mockupStop}
                 alt="ChefCode Analytics Dashboard Static"
-                className={`absolute inset-0 z-30 transform scale-100 lg:scale-[1.15] group-hover/image:scale-105 lg:group-hover/image:scale-[1.2] transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'visible' : 'invisible'}`}
+                className={`absolute inset-0 z-30 transform scale-100 transition-transform duration-500 w-full h-full object-contain ${analyticsAnimationDone ? 'visible' : 'invisible'}`}
               />
 
               <p className="mt-20 text-center text-orange-600 font-bold text-2xl italic tracking-wide opacity-90">
@@ -827,126 +828,121 @@ const LandingPage = () => {
         </div>
       </motion.section >
 
-      {/* --- GRID FEATURES (OCR & POS - More Visual) --- */}
-      < section className="py-24 bg-white" >
+      {/* --- FEATURE: OCR (Full Width Centered) --- */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-5xl mx-auto"
+          >
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-200 mx-auto mb-8 text-orange-600 border border-slate-100">
+              <FileText size={32} />
+            </div>
 
-            {/* Feature 1: OCR - High Contrast White on Light */}
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-slate-50 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-orange-200 group relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-40 h-40 bg-orange-100/50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+            <h3 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 leading-tight">{t('ocr.title')}</h3>
+            <h4 className="text-xl md:text-2xl font-bold text-orange-600 mb-6">{t('ocr.subtitle')}</h4>
 
-              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-200 mb-8 text-orange-600 group-hover:scale-110 transition-transform duration-300 border border-slate-100">
-                <FileText size={32} />
-              </div>
-              <h3 className="text-3xl font-black mb-4 text-slate-900">{t('ocr.title')}</h3>
-              <h4 className="text-xl font-bold text-orange-600 mb-4">{t('ocr.subtitle')}</h4>
-              <p className="text-slate-600 mb-6 leading-relaxed font-medium">
-                {t('ocr.desc')}
-              </p>
+            <p className="text-slate-600 mb-10 leading-relaxed font-medium text-lg max-w-3xl mx-auto">
+              {t('ocr.desc')}
+            </p>
 
-              <div className="space-y-3 mb-8">
-                {t('ocr.items').map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-slate-700 font-bold">
-                    <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-slate-500 font-bold italic border-l-4 border-orange-500 pl-4">
-                {t('ocr.quote')}
-              </p>
-
-              {/* Visual Element for OCR */}
-              <div className="mt-10 bg-white rounded-2xl p-4 shadow-lg border border-slate-100 relative max-w-sm mx-auto transform rotate-1 group-hover:rotate-0 transition-transform">
-                <div className="flex justify-between border-b border-dashed border-slate-200 pb-2 mb-2">
-                  <div className="text-xs font-bold text-slate-400">INVOICE #4029</div>
-                  <div className="text-xs font-bold text-emerald-500 flex items-center gap-1"><CheckCircle2 size={12} /> {t('ocr.scanned')}</div>
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {t('ocr.items').map((item, i) => (
+                <div key={i} className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-100 text-slate-700 font-bold">
+                  <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                  <span>{item}</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-2 bg-slate-100 rounded w-3/4"></div>
-                  <div className="h-2 bg-slate-100 rounded w-1/2"></div>
-                  <div className="h-2 bg-slate-100 rounded w-full"></div>
-                </div>
-                <div className="absolute -right-3 -bottom-3 bg-orange-600 text-white p-2 rounded-lg shadow-lg">
-                  <ScanLine size={20} />
-                </div>
+              ))}
+            </div>
+
+            <p className="text-slate-500 font-bold italic mb-12 max-w-2xl mx-auto opacity-80">
+              {t('ocr.quote')}
+            </p>
+
+            {/* Large Visual Element for OCR */}
+            {/* Large Visual Element for OCR */}
+            <div className="relative rounded-3xl max-w-4xl mx-auto group">
+              <div className="absolute inset-0 bg-orange-100/50 rounded-3xl transform rotate-1 scale-[1.02] -z-10 group-hover:rotate-2 transition-transform duration-500"></div>
+              <img src={ocrScanImg} alt="AI OCR Scan" className="w-full h-auto rounded-3xl shadow-2xl" />
+
+              <div className="absolute -right-4 -bottom-4 md:-right-8 md:-bottom-8 bg-orange-600 text-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow">
+                <ScanLine size={28} />
+                <span className="font-bold text-sm hidden md:inline-block">AI Processing Active</span>
               </div>
-            </motion.div>
-
-            {/* Feature 2: POS - Dark Elegant Card */}
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-slate-900 rounded-[2.5rem] p-10 shadow-2xl text-white relative overflow-hidden group"
-            >
-              {/* Abstract decorative graphic */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-slate-800 to-slate-900 rounded-bl-full opacity-80 -mr-20 -mt-20 group-hover:scale-105 transition-transform duration-700"></div>
-
-              <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center shadow-inner mb-8 text-orange-400 relative z-10 border border-slate-700">
-                <TrendingUp size={32} />
-              </div>
-              <h3 className="text-3xl font-black mb-4 text-white relative z-10">{t('pos.title')}</h3>
-              <p className="text-slate-400 mb-8 leading-relaxed relative z-10 font-medium">{t('pos.desc')}</p>
-
-              <ul className="space-y-2 mb-8 text-slate-300 font-medium">
-                {t('pos.items').map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 backdrop-blur-md relative z-10 shadow-2xl">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-sm font-bold text-slate-300">{t('pos.analysis')}</span>
-                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full uppercase tracking-wide font-bold">{t('pos.liveData')}</span>
-                </div>
-                {/* Mockup Chart Bars */}
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-xs mb-1.5 text-slate-400 font-semibold">
-                      <span>{t('pos.example.burger')}</span>
-                      <span className="text-white">72% {t('pos.example.margin')}</span>
-                    </div>
-                    <div className="h-2.5 w-full bg-slate-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[72%] shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-xs mb-1.5 text-slate-400 font-semibold">
-                      <span>{t('pos.example.pasta')}</span>
-                      <span className="text-white">64% {t('pos.example.margin')}</span>
-                    </div>
-                    <div className="h-2.5 w-full bg-slate-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-orange-600 to-orange-400 w-[64%]"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* GDPR Data Privacy Notice */}
-              <p className="mt-6 text-slate-400 text-xs leading-relaxed text-center">
-                <strong className="text-white">🔒 {t('pos.privacy')}</strong> {t('pos.privacyDesc')}
-              </p>
-
-              <p className="mt-8 text-orange-400 font-bold text-lg tracking-wide uppercase opacity-90 text-center border-t border-slate-800 pt-6">
-                "{t('pos.quote')}"
-              </p>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
-      </section >
+      </section>
+
+      {/* --- FEATURE: POS (Full Width Dark) --- */}
+      <section className="py-24 bg-slate-900 border-t border-slate-800">
+        <div className="container mx-auto px-4 md:px-8">
+          {/* Feature 2: POS - Dark Elegant Card - Now Full Width Wrapper */}
+
+          {/* OCR Content Removed from here effectively by previous chunk replacement structure - clean up opening grid div */}
+
+          {/* Feature 2: POS - Now Full Width Centered Dark */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl mx-auto rounded-[2.5rem] p-10 md:p-16 text-white relative overflow-hidden group border border-slate-800 bg-slate-950/50 backdrop-blur"
+          >
+            {/* Abstract decorative graphic */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-slate-800 to-slate-900 rounded-bl-full opacity-80 -mr-20 -mt-20 group-hover:scale-105 transition-transform duration-700"></div>
+
+            <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center shadow-inner mb-8 text-orange-400 relative z-10 border border-slate-700">
+              <TrendingUp size={32} />
+            </div>
+            <h3 className="text-3xl font-black mb-4 text-white relative z-10">{t('pos.title')}</h3>
+            <p className="text-slate-400 mb-8 leading-relaxed relative z-10 font-medium">{t('pos.desc')}</p>
+
+            <ul className="space-y-2 mb-8 text-slate-300 font-medium">
+              {t('pos.items').map((item, i) => (
+                <li key={i} className="flex items-center gap-2">
+                  <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 backdrop-blur-md relative z-10 shadow-2xl">
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-sm font-bold text-slate-300">{t('pos.analysis')}</span>
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full uppercase tracking-wide font-bold">{t('pos.liveData')}</span>
+              </div>
+              {/* Mockup Chart Bars */}
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-xs mb-1.5 text-slate-400 font-semibold">
+                    <span>{t('pos.example.burger')}</span>
+                    <span className="text-white">72% {t('pos.example.margin')}</span>
+                  </div>
+                  <div className="h-2.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[72%] shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs mb-1.5 text-slate-400 font-semibold">
+                    <span>{t('pos.example.pasta')}</span>
+                    <span className="text-white">64% {t('pos.example.margin')}</span>
+                  </div>
+                  <div className="h-2.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-orange-600 to-orange-400 w-[64%]"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="mt-8 text-orange-400 font-bold text-lg tracking-wide uppercase opacity-90 text-center border-t border-slate-800 pt-6">
+              "{t('pos.quote')}"
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* --- PREP & HACCP (Clean Light Layout with Stacking Cards) --- */}
       < section className="py-24 bg-white border-t border-slate-100" >
@@ -1011,10 +1007,10 @@ const LandingPage = () => {
 
 
         </div>
-      </section>
+      </section >
 
       {/* HACCP SECTION */}
-      <section className="bg-white px-4 md:px-8 py-24">
+      < section className="bg-white px-4 md:px-8 py-24" >
         <div className="bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white text-center relative overflow-hidden shadow-2xl max-w-7xl mx-auto border border-slate-800">
           {/* Background glow */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px] bg-orange-900/20 rounded-full blur-3xl -z-10 -mt-40"></div>
@@ -1060,10 +1056,10 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* --- DR. AI (Modern Card Style - Pop-up Effect) --- */}
-      <section id="dr-ai" className="py-24 bg-orange-50/50">
+      < section id="dr-ai" className="py-24 bg-white" >
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-black mb-6 text-slate-900">{t('drAi.title')} <br /> <span className="text-orange-600">{t('drAi.subtitle')}</span></h2>
@@ -1159,7 +1155,7 @@ const LandingPage = () => {
             {t('drAi.quote')}
           </p>
         </div>
-      </section>
+      </section >
 
 
 

@@ -334,7 +334,8 @@ export const translations = {
             teodori: {
                 title: "Professional Chef",
                 role: "Chef & Restaurant Consultant",
-                details: ["2★ Michelin Training", "International Restaurant Opening & Management"]
+                details: ["2★ Michelin Training", "International Restaurant Opening & Management"],
+                website: "Visit Official Website"
             },
             fdg: {
                 title: "Food & Diet Goal",
@@ -905,7 +906,8 @@ export const translations = {
             teodori: {
                 title: "Chef Professionista",
                 role: "Chef & Consulente Ristorazione",
-                details: ["Formazione 2★ Michelin", "Apertura e Gestione Ristoranti Internazionali"]
+                details: ["Formazione 2★ Michelin", "Apertura e Gestione Ristoranti Internazionali"],
+                website: "Visita Sito Ufficiale"
             },
             fdg: {
                 title: "Food & Diet Goal",
