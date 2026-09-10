@@ -9,7 +9,9 @@ import Immagine2 from './assets/Immagine2.jpg';
 
 import Immagine4 from './assets/Immagine4.jpg';
 import Immagine5 from './assets/Immagine5.jpg';
-import Immagine9 from './assets/Immagine9.jpg';
+import chiaraImg from './assets/chiara.png';
+import rajaImg from './assets/Raja.jpeg';
+import micheleImg from './assets/michele.png';
 import met from './assets/met.png';
 import { useLanguage } from './context/LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -59,10 +61,22 @@ const AboutUs = () => {
             details: t('aboutUs.team.mariem.details')
         },
         {
-            img: Immagine9,
-            name: "Francesco Balsamo",
-            role: t('aboutUs.team.francesco.role'),
-            details: t('aboutUs.team.francesco.details')
+            img: rajaImg,
+            name: "Raja Rajeshwari",
+            role: t('aboutUs.team.raja.role'),
+            details: t('aboutUs.team.raja.details')
+        },
+        {
+            img: micheleImg,
+            name: "Michele Tassone",
+            role: t('aboutUs.team.michele.role'),
+            details: t('aboutUs.team.michele.details')
+        },
+        {
+            img: chiaraImg,
+            name: "Chiara Censi",
+            role: t('aboutUs.team.chiara.role'),
+            details: t('aboutUs.team.chiara.details')
         }
     ];
 

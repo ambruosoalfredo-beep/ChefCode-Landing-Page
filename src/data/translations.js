@@ -275,7 +275,9 @@ export const translations = {
                 kshama: { role: "SENIOR BUSINESS ANALYST", details: ["10+ years", "Digital Innovation", "Product Management", "Solution Designer", "Digital Innovation"] },
                 valerio: { role: "VIDEO EDITOR, VFX & UI", details: ["20+ years", "Film Making", "Multi-disciplinary creative", "UI & branding specialist"] },
                 mariem: { role: "AI ENGINEER", details: ["2+ years", "Software & AI Solutions", "Full-stack developer", "Web Designer", "AI & Analytic focus"] },
-                francesco: { role: "SOFTWARE DEVELOPER", details: ["2+ years", "IT Support & Testing", "Full Stack Developer", "Software & Data Integration", "Focus"] }
+                raja: { role: "DIGITAL PROJECT MANAGER", details: ["PMP® Certified", "Digital Business & Solution Analyst", "Agile Change & Release", "AI Governance Specialist", "Cross-functional Collaboration"] },
+                michele: { role: "STRATEGIC CONSULTANT & TRAINER", details: ["25+ years experience", "Process Digitalization", "Technical Training Expert", "Operations Optimization"] },
+                chiara: { role: "SOFTWARE DEVELOPER", details: ["Software Development", "System Integration", "Coding & Testing", "Front-end & Back-end Support"] }
             }
         },
         future: {
@@ -847,7 +849,9 @@ export const translations = {
                 kshama: { role: "SENIOR BUSINESS ANALYST", details: ["10+ anni", "Innovazione Digitale", "Product Management", "Solution Designer", "Digital Innovation"] },
                 valerio: { role: "VIDEO EDITOR, VFX & UI", details: ["20+ anni", "Filmmaking", "Creativo multidisciplinare", "Specialista UI & branding"] },
                 mariem: { role: "AI ENGINEER", details: ["2+ anni", "Soluzioni Software & AI", "Sviluppatore Full-stack", "Web Designer", "Focus AI & Analitica"] },
-                francesco: { role: "SOFTWARE DEVELOPER", details: ["2+ anni", "Supporto IT & Testing", "Sviluppatore Full Stack", "Integrazione Software & Dati", "Focus"] }
+                raja: { role: "DIGITAL PROJECT MANAGER", details: ["Certificazione PMP®", "Analista Business & Soluzioni", "Agile Change & Release", "Specialista Governance AI", "Collaborazione Cross-funzionale"] },
+                michele: { role: "FORMATORE E CONSULENTE STRATEGICO", details: ["+25 anni di esperienza", "Digitalizzazione Processi", "Formatore Tecnico Esperto", "Ottimizzazione Operativa"] },
+                chiara: { role: "SOFTWARE DEVELOPER", details: ["Sviluppo Software", "Integrazione Sistemi", "Coding & Testing", "Supporto Front-end & Back-end"] }
             }
         },
         future: {
