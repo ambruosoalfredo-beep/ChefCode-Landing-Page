@@ -209,21 +209,34 @@ const LandingPage = () => {
 
       {/* --- NAVBAR --- */}
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-6'}`}>
-        <div className="container mx-auto px-4 md:px-8 flex justify-between items-center relative">
-          {/* Link logo to home */}
-          <div className="flex items-center gap-2 group cursor-pointer shrink-0">
+        <div className="container mx-auto px-4 md:px-8 grid grid-cols-3 lg:flex lg:justify-between items-center relative min-h-[60px]">
+          
+          {/* Mobile Menu Toggle (Left on mobile, hidden on desktop) */}
+          <div className="lg:hidden flex justify-start items-center">
+            <button className="p-2 -ml-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
+          </div>
+
+          {/* Logo (Center on mobile, Left on desktop) */}
+          <div className="flex justify-center lg:justify-start items-center group cursor-pointer shrink-0">
             <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="ChefCode" className="h-12 md:h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+              <img src={logo} alt="ChefCode" className="h-10 sm:h-12 md:h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
             </Link>
           </div>
 
-          {/* MOBILE PAGE INDICATOR (Absolute Center) */}
-          <div className="lg:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          {/* Mobile Language Switcher (Right on mobile, hidden on desktop) */}
+          <div className="lg:hidden flex justify-end items-center">
+            <LanguageSwitcher mobile={true} />
+          </div>
+
+          {/* MOBILE PAGE INDICATOR (Below navbar) */}
+          <div className="lg:hidden absolute left-1/2 top-[120%] -translate-x-1/2 pointer-events-none z-50">
             <AnimatePresence mode='wait'>
               {activeSection && activeSection !== 'hero' && (
                 <motion.div
                   key={activeSection}
-                  initial={{ opacity: 0, scale: 0.8, y: 10, backgroundColor: "#f97316" }}
+                  initial={{ opacity: 0, scale: 0.8, y: -10, backgroundColor: "#f97316" }}
                   animate={{ opacity: 1, scale: 1, y: 0, backgroundColor: "rgba(30, 41, 59, 0.95)" }}
                   exit={{ opacity: 0, scale: 0.9, y: -10 }}
                   transition={{
@@ -247,8 +260,8 @@ const LandingPage = () => {
             </AnimatePresence>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Menu (Center) */}
+          <div className="hidden lg:flex items-center justify-center gap-8 lg:flex-1">
             <NavLink href="/#how-it-works" scrolled={scrolled}>{t('navbar.howItWorks')}</NavLink>
             <NavLink href="/#features" scrolled={scrolled}>{t('navbar.features')}</NavLink>
             <NavLink href="/#dr-ai" scrolled={scrolled}>{t('navbar.drAi')}</NavLink>
@@ -256,9 +269,11 @@ const LandingPage = () => {
             <NavLink href="/#faq" scrolled={scrolled}>{t('navbar.faq')}</NavLink>
             <NavLink href="/partners" scrolled={scrolled}>{t('navbar.partners')}</NavLink>
             <NavLink href="/about" scrolled={scrolled}>{t('navbar.aboutUs')}</NavLink>
+            <NavLink href="/guide" scrolled={scrolled}>Tester Guide</NavLink>
           </div>
 
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Desktop Right Side */}
+          <div className="hidden lg:flex items-center justify-end gap-4 shrink-0">
             <button
               id="nav-link-demo-signup"
               onClick={scrollToDemo}
@@ -267,15 +282,6 @@ const LandingPage = () => {
               {t('navbar.bookDemo')}
             </button>
             <LanguageSwitcher />
-          </div>
-
-
-          {/* Mobile Toggle */}
-          <button className="lg:hidden p-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-          <div className="lg:hidden">
-            <LanguageSwitcher mobile={true} />
           </div>
         </div>
 
@@ -289,6 +295,7 @@ const LandingPage = () => {
             <NavLink href="/#faq" mobile>{t('navbar.faq')}</NavLink>
             <NavLink href="/partners" mobile>{t('navbar.partners')}</NavLink>
             <NavLink href="/about" mobile>{t('navbar.aboutUs')}</NavLink>
+            <NavLink href="/guide" mobile>Tester Guide</NavLink>
             <div className="border-t border-slate-700 pt-6 flex flex-col gap-3">
               <button onClick={scrollToDemo} className="btn-aggressive-primary btn-pulse-orange w-full bg-orange-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50">
                 {t('navbar.bookDemo')}

@@ -7,7 +7,7 @@ const LanguageSwitcher = ({ mobile }) => {
     return (
         <button
             onClick={toggleLanguage}
-            className={`relative inline-flex items-center cursor-pointer transition-all duration-300 focus:outline-none ${mobile ? 'ml-0 mt-4' : 'ml-4'}`}
+            className={`relative inline-flex items-center cursor-pointer transition-all duration-300 focus:outline-none ${mobile ? 'ml-0' : 'ml-4'}`}
             aria-label="Toggle Language"
         >
             <div className={`w-20 h-9 rounded-full transition-colors duration-300 border border-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] ${language === 'it' ? 'bg-slate-800' : 'bg-slate-800'}`}>

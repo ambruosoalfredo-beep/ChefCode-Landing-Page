@@ -14,6 +14,7 @@ import ComingSoonPage from './ComingSoonPage';
 import HaccpPage from './HaccpPage';
 import ScrollToTop from './ScrollToTop';
 import JoinUs from './JoinUs';
+import UserGuide from './UserGuide';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/coming-soon" element={<ComingSoonPage />} />
           <Route path="/haccp" element={<HaccpPage />} />
           <Route path="/join-us" element={<JoinUs />} />
+          <Route path="/guide" element={<UserGuide />} />
         </Routes>
       </Router>
     </LanguageProvider>
