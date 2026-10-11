@@ -107,6 +107,7 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                              onTimeUpdate={(e) => {
                                if (step.loopAt && e.target.currentTime >= step.loopAt) {
                                  e.target.currentTime = 0;
+                                 e.target.play().catch(() => {});
                                }
                              }}
                              className={`w-full h-auto object-cover transition-transform duration-500 ${step.twoWideVideos ? 'aspect-[16/9] group-hover/vid1:scale-105' : 'aspect-[9/16] group-hover/vid1:scale-105'}`} 
@@ -255,7 +256,7 @@ const UserGuide = () => {
 
   const manualFlowSteps = [
     { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role.", hasVideo: true, videoSrc: videoDemo },
-    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion.", hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 8.47 },
+    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion.", hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 11.90 },
     { title: "Create Prepared or Semi-Prepared Recipe", content: "Create recipes for your menu. A Semi-Prepared recipe is a base preparation (e.g., Mayonnaise, Ragù) that can be reused as an ingredient in other recipes. A Prepared recipe is the final finished dish served to the customer.", hasVideo: true, videoSrc: addRecipeVideo },
     { title: "Map Ingredients & Review", content: "Link generic recipe ingredients (e.g., 'pork fillet') to your actual inventory items to calculate costs. This is only needed if the names differ; otherwise, it's automatic. Then, review yield, cost, allergens, and selling price.", hasVideo: true, videoSrc: mappingIngredientVideo },
     { title: "Create Production & Operational Tasks", content: "Create Production Tasks to generate finished items (deducting ingredients automatically) or Operational Tasks (e.g., 'change fryer oil') to deduct specific items. Finished products are added to your stock and deducted upon sales.", hasVideo: true, videoSrc: taskVideo },
