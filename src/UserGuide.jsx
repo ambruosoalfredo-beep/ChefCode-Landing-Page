@@ -102,7 +102,19 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                         className={`relative w-full ${step.twoWideVideos ? 'md:w-[48%]' : 'md:w-[30%]'} rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-700/50 z-10 hover:z-30 transition-all duration-300 cursor-pointer group/vid1`}
                       >
                          {step.videoSrc ? (
-                           <video src={step.videoSrc} className={`w-full h-auto object-cover transition-transform duration-500 ${step.twoWideVideos ? 'aspect-[16/9] group-hover/vid1:scale-105' : 'aspect-[9/16] scale-[1.15] group-hover/vid1:scale-[1.20]'}`} autoPlay muted loop playsInline />
+                           <video 
+                             src={step.videoSrc} 
+                             onTimeUpdate={(e) => {
+                               if (step.loopAt && e.target.currentTime >= step.loopAt) {
+                                 e.target.currentTime = 0;
+                               }
+                             }}
+                             className={`w-full h-auto object-cover transition-transform duration-500 ${step.twoWideVideos ? 'aspect-[16/9] group-hover/vid1:scale-105' : 'aspect-[9/16] group-hover/vid1:scale-105'}`} 
+                             autoPlay 
+                             muted 
+                             loop 
+                             playsInline 
+                           />
                          ) : (
                            <div className="w-full aspect-[16/9] bg-slate-100 flex flex-col items-center justify-center">
                              <Play className="w-12 h-12 text-slate-300 mb-2" />
@@ -243,7 +255,7 @@ const UserGuide = () => {
 
   const manualFlowSteps = [
     { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role.", hasVideo: true, videoSrc: videoDemo },
-    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion.", hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo },
+    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion.", hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 8.47 },
     { title: "Create Prepared or Semi-Prepared Recipe", content: "Create recipes for your menu. A Semi-Prepared recipe is a base preparation (e.g., Mayonnaise, Ragù) that can be reused as an ingredient in other recipes. A Prepared recipe is the final finished dish served to the customer.", hasVideo: true, videoSrc: addRecipeVideo },
     { title: "Map Ingredients & Review", content: "Link generic recipe ingredients (e.g., 'pork fillet') to your actual inventory items to calculate costs. This is only needed if the names differ; otherwise, it's automatic. Then, review yield, cost, allergens, and selling price.", hasVideo: true, videoSrc: mappingIngredientVideo },
     { title: "Create Production & Operational Tasks", content: "Create Production Tasks to generate finished items (deducting ingredients automatically) or Operational Tasks (e.g., 'change fryer oil') to deduct specific items. Finished products are added to your stock and deducted upon sales.", hasVideo: true, videoSrc: taskVideo },
