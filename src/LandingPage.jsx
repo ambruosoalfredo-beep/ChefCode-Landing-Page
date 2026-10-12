@@ -221,7 +221,7 @@ const LandingPage = () => {
           {/* Logo (Center on mobile, Left on desktop) */}
           <div className="flex justify-center lg:justify-start items-center group cursor-pointer shrink-0">
             <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="ChefCode" className="h-10 sm:h-12 md:h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+              <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
             </Link>
           </div>
 
@@ -1497,7 +1497,7 @@ const LandingPage = () => {
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <div>
               <div className="flex items-center gap-2 mb-6 text-white">
-                <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain" />
+                <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain" />
               </div>
               <p className="mb-6 max-w-xs leading-relaxed font-medium text-slate-500">
                 {t('aboutUs.footer.tagline')}

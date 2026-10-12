@@ -14,7 +14,7 @@ const HaccpPage = () => {
                 <div className="container mx-auto px-4 md:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+                            <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
                         </Link>
                         <Link
                             to="/"

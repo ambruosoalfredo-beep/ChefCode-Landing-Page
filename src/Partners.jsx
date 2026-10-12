@@ -84,7 +84,7 @@ const Partners = () => {
             <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-6'}`}>
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-                        <img src={logo} alt="ChefCode" className="h-16 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+                        <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
                     </Link>
 
                     <div className="hidden lg:flex items-center gap-8">
@@ -267,7 +267,7 @@ const Partners = () => {
                     <div className="grid md:grid-cols-3 gap-12 mb-16">
                         <div>
                             <div className="flex items-center gap-2 mb-6 text-white">
-                                <img src={logo} alt="ChefCode" className="h-24 w-auto object-contain" />
+                                <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain" />
                             </div>
                             <p className="mb-6 max-w-xs leading-relaxed font-medium text-slate-500">
                                 {t('aboutUs.footer.tagline')}

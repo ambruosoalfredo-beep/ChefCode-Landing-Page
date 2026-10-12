@@ -64,7 +64,7 @@ const BecomePartner = () => {
             <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900 py-4 md:py-6">
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-                        <img src={logo} alt="ChefCode" className="h-16 md:h-24 w-auto object-contain group-hover:scale-105 transition-transform" />
+                        <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
                     </Link>
                     <Link to="/partners" className="flex items-center gap-2 text-white hover:text-orange-500 transition-colors font-bold">
                         <ArrowLeft size={20} />

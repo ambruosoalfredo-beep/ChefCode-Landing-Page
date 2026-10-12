@@ -38,7 +38,7 @@ const Login = () => {
                 {/* Logo */}
                 <div className="text-center mb-10">
                     <Link to="/" className="inline-block">
-                        <img src={logo} alt="ChefCode" className="h-32 w-auto mx-auto hover:scale-105 transition-transform" />
+                        <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto mx-auto hover:scale-105 transition-transform" />
                     </Link>
                     <h1 className="text-3xl font-black text-white mt-6 mb-2">{t('login.welcome')}</h1>
                     <p className="text-slate-400 font-medium">{t('login.subtitle')}</p>

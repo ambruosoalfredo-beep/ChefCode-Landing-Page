@@ -23,7 +23,7 @@ const ComingSoonPage = () => {
             <nav className={`fixed top-0 w-full z-50 transition-all duration-300 px-6 md:px-8 flex justify-between items-center ${scrolled ? 'bg-slate-900 shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-6'}`}>
                 {/* Logo - Left aligned, resizes on scroll */}
                 <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-                    <img src={logo} alt="ChefCode" className={`w-auto object-contain transition-transform group-hover:scale-105 ${scrolled ? 'h-12' : 'h-16 lg:h-24'}`} />
+                    <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
                 </Link>
 
                 {/* Back Button - Right aligned - HaccpPage Style */}
