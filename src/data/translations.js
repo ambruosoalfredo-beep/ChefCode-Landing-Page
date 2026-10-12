@@ -579,6 +579,173 @@ export const translations = {
                 copyright: "© 2025 ChefCode. All rights reserved.",
                 back: "Back to ChefCode Home"
             }
+        },
+        userGuide: {
+            hero: {
+                tag: "AI Pilot Program",
+                title: "Tester Guide",
+                titleGradient: "& Guardrails",
+                description: "Welcome, and thank you for joining the ChefCode AI pilot. Over the next 4 weeks, you'll be one of 30 chefs testing ChefCode's AI-powered kitchen management app in real conditions."
+            },
+            quickStart: {
+                title: "Quick Start",
+                step1Title: "Open your browser (mobile or desktop) and go to:",
+                step2Text: "Sign in with your own account. We have created a ChefCode account for you, with some data already in it. On the Sign In tab, type the email and password your Pilot Manager gives you, then tap Sign In (box 1 in Figure 1).",
+                fig1Alt: "Figure 1 - The sign-in screen",
+                step3Intro: "Select your role when prompted — Waiter, Sub-Chef, Chef, or F&B Manager. Your role controls which sections you can see:",
+                roles: {
+                    waiter: { name: "Waiter", scope: "Operations" },
+                    subChef: { name: "Sub-Chef", scope: "Operations, Stock" },
+                    chef: { name: "Chef", scope: "Dashboard, Operations, Stock" },
+                    fbMgr: { name: "F&B Mgr", scope: "Dashboard, Operations, Stock, Compliance" }
+                },
+                roleNote: "You can always change your role. It isn't permanent, so feel free to explore different roles and see what each one can see. On a computer, click the role button in the top bar (it shows your current role, e.g. Chef). On a phone, open the ⋮ menu at the top right. Then choose \"Switch to ...\" or \"View All Roles\".",
+                step4Text: "Land in Operations — this is where most of the pilot testing happens: Recipe Library, Production Task Board, Task Execution, Team Members, and the AI Assistant.",
+                step5Text: "Try your first task: open the AI Assistant and ask a starter question about your stock, a recipe, or today's production tasks."
+            },
+            whatToTest: {
+                title: "What to Test in Operations",
+                subtitle: "Please spend time in each of these areas over the pilot and try to break things — that's the point:",
+                cards: {
+                    recipes: {
+                        title: "Recipe Library",
+                        desc: "Create, edit, and organize recipes; map ingredients to inventory."
+                    },
+                    tasks: {
+                        title: "Production Task",
+                        desc: "Create tasks, assign them, start/complete them, and check usage and cost."
+                    },
+                    team: {
+                        title: "Team Members",
+                        desc: "Add and edit the people you assign tasks to across your kitchen brigade."
+                    },
+                    aiAssistant: {
+                        title: "AI Assistant",
+                        desc: "Ask about stock, recipes, production, dashboards, margins, or forecasts."
+                    },
+                    confirm: {
+                        title: "Confirm / Cancel",
+                        desc: "Confirm AI-proposed data-changing actions before they apply. Test cancelling too."
+                    },
+                    dashboard: {
+                        title: "Dashboard & Stock",
+                        desc: "If your role includes Dashboard, Stock, or Compliance, explore them and provide feedback."
+                    }
+                }
+            },
+            suggestedTests: {
+                title: "Suggested First Test",
+                subtitle: "A common first-week journey helps the team compare feedback across all beta accounts. You can test through two workflows. Follow the interactive steps below.",
+                manualFlowTitle: "Manual Flow",
+                manualFlowSubtitle: "Learn the platform directly by completing these tasks manually.",
+                manualFlowHint: "💡 Click any step to open instructions and watch video demos.",
+                manualSteps: [
+                    { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role." },
+                    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion." },
+                    { title: "Create Prepared or Semi-Prepared Recipe", content: "Create recipes for your menu. A Semi-Prepared recipe is a base preparation (e.g., Mayonnaise, Ragù) that can be reused as an ingredient in other recipes. A Prepared recipe is the final finished dish served to the customer." },
+                    { title: "Map Ingredients & Review", content: "Link generic recipe ingredients (e.g., 'pork fillet') to your actual inventory items to calculate costs. This is only needed if the names differ; otherwise, it's automatic. Then, review yield, cost, allergens, and selling price." },
+                    { title: "Create Production & Operational Tasks", content: "Create Production Tasks to generate finished items (deducting ingredients automatically) or Operational Tasks (e.g., 'change fryer oil') to deduct specific items. Finished products are added to your stock and deducted upon sales." },
+                    { title: "Record Sales & Mass Import", content: "Choose between two methods to record your sales: Single Sale for real-time POS-style entry, or Mass Import to download a CSV template, enter sold quantities, and re-upload to register all sales at once.", vid1Label: "Single Sale", vid2Label: "Massive Import" },
+                    { title: "Review Dashboards", content: "Explore two specialized dashboards: the Management Dashboard for F&B Managers (tracking revenue, margins, and profits) and the Kitchen Dashboard for Chefs (featuring menu engineering, most/least sold dishes, and critical stock alerts).", vid1Label: "Kitchen Dashboard", vid2Label: "Management Dashboard" },
+                    { title: "Simulate a Purchase", content: "As sales and production deduct ingredients from your inventory, any items falling below their Safety Stock threshold are automatically added to your Shopping List. You can manually add extra items and seamlessly export the final list—either consolidated or grouped by supplier—ready for purchasing." },
+                    { title: "Goods In & Validate Order", content: "When goods arrive, find them in Pending Orders and validate the receipt manually or by scanning the delivery note with OCR. If there are any inconsistencies between what was ordered and what was delivered, the system will automatically flag them with alerts." }
+                ],
+                aiFlowTitle: "AI Flow",
+                aiFlowSubtitle: "Consult the same data and repeat actions through text or voice AI.",
+                aiFlowHint: "💡 Click any step to explore AI capabilities.",
+                aiSteps: [
+                    { title: "Repeat Manually Completed Actions", content: "Use the AI Assistant to log ingredients and trigger production tasks in seconds.", vid1Label: "Add Ingredient", vid2Label: "Add Production" },
+                    { title: "Ask AI for Insights", content: "Ask the AI about inventory, recipes, costs, sales results, dashboards, or tasks and compare the answer with the platform pages.", vid1Label: "AI Management Insights" },
+                    { title: "Use Voice Assistant", content: "Use the hands-free Voice Assistant to manage kitchen operations and consult your data. Simply speak to log ingredients and trigger production tasks, or ask for real-time insights on stock levels, food costs, and management dashboards." },
+                    { title: "Verify and Confirm", content: "Whenever the AI Assistant proposes a data-changing action, you must confirm it before it applies. Test cancelling as well as confirming." },
+                    { title: "Report Feedback", content: "Report any unexpected behavior, missing data, or improvement suggestion directly through the Send Feedback button in the app.", linkLabel: "How to Report Feedback & Bugs" }
+                ]
+            },
+            guardrails: {
+                title: "Data Privacy & AI Guardrails",
+                subtitle: "ChefCode's AI Assistant runs on Gemini via Vertex AI. As with any AI system, please follow these safety rules during the pilot:",
+                cards: {
+                    personalData: {
+                        title: "Protect Personal and Confidential Information",
+                        bullets: [
+                            "Use fictional or test data wherever possible. Do not enter personal information, passwords, banking details, or sensitive customer or employee records.",
+                            "Avoid sharing confidential business information, such as proprietary recipes, supplier contracts, confidential pricing, or documents that you are not authorized to share.",
+                            "Do not assume that information entered into the AI Assistant is automatically private or deleted after use."
+                        ]
+                    },
+                    responsibleAi: {
+                        title: "Use AI Responsibly",
+                        bullets: [
+                            "ChefCode's AI Assistant uses Gemini via Vertex AI. AI-generated responses may contain errors or incomplete information.",
+                            "Always verify important outputs, especially ingredient quantities, recipes, costs, margins, forecasts, and inventory recommendations.",
+                            "Do not rely on AI alone for food safety, allergen, HACCP, legal, or financial decisions. Use your professional judgment and established procedures."
+                        ]
+                    },
+                    reviewActions: {
+                        title: "Review AI Actions Before Confirming",
+                        bullets: [
+                            "Carefully review AI-proposed changes to ingredients, quantities, inventory, recipes, or tasks before confirming them.",
+                            "Check that the selected item, quantity, and unit are correct. Confirm only when you are satisfied with the proposed action; otherwise, cancel it.",
+                            "Use test records during the pilot unless you have been explicitly authorized to work with live data."
+                        ]
+                    },
+                    accountSecurity: {
+                        title: "Keep Your Account Secure",
+                        bullets: [
+                            "Keep your login credentials private and do not share accounts with other testers.",
+                            "Access only the features and data permitted by your assigned role. Sign out when using a shared device.",
+                            "Do not include passwords or other access credentials in screenshots, prompts, or feedback reports."
+                        ]
+                    },
+                    checkFeedback: {
+                        title: "Check Feedback and Attachments",
+                        bullets: [
+                            "Feedback submissions may include screenshots and contextual information, such as the page, user role, device, and app version.",
+                            "Review screenshots and attachments before submitting them. Remove personal, confidential, or unnecessary information.",
+                            "When reporting a bug, describe the issue using test data wherever possible. Do not attach real customer records, invoices, or contracts unless specifically authorized."
+                        ]
+                    },
+                    reportConcerns: {
+                        title: "Report Privacy or Security Concerns",
+                        bullets: [
+                            "Immediately report suspected data exposure, unauthorized access, account compromise, or unexpected changes to records.",
+                            "Provide enough detail to explain the issue, but do not include additional sensitive information in your report."
+                        ]
+                    }
+                },
+                remember: {
+                    title: "Remember",
+                    desc: "ChefCode is in pilot testing, and features or AI responses may change. Protect confidential information, verify AI-generated outputs, and keep human judgment in control of important decisions."
+                }
+            },
+            feedbackBugs: {
+                title: "How to Report Feedback & Bugs",
+                subtitle: "You will hit rough edges — that's exactly what this pilot is for. When you do, tell us straight from the app with the Send Feedback button.",
+                steps: [
+                    { title: "Open Send Feedback.", text: "On a computer, click the feedback icon in the top bar. On the Dashboard there is also a Send Feedback button under Quick Actions. On a phone, tap the ⋮ menu at the top right, then Send Feedback." },
+                    { title: "Choose the kind of feedback:", text: "Problem, Idea, Question or Praise." },
+                    { title: "Tell us more:", text: "which screen you were on, what you did, what happened and what you expected instead." },
+                    { title: "Check the attachments:", text: "A screenshot is added automatically. You can add up to 5 photos." },
+                    { title: "Send it.", text: "Optionally choose which part of the app it is about, then tap Send feedback." }
+                ],
+                fig2Alt: "Figure 2 - Desktop feedback",
+                fig3Alt: "Figure 3 - Mobile feedback form",
+                adminEmailTitle: "Need a reply?",
+                adminEmailDesc: "If you'd like us to get back to you, add your name and email to your message.",
+                urgentNote: "For anything urgent — you're blocked, can't sign in, or something looks unsafe — contact your Pilot Manager directly."
+            },
+            timeline: {
+                title: "Pilot Timeline",
+                cards: [
+                    { title: "Duration", desc: "4 weeks from kickoff" },
+                    { title: "Weekly check-in", desc: "2-min pulse survey every Friday" },
+                    { title: "Mid-pilot review", desc: "Optional 15-min call, week 2" },
+                    { title: "Final survey", desc: "Sent in the last week of pilot" }
+                ]
+            },
+            videoComingSoon: "Video coming soon...",
+            videoPlaceholder: "Video/GIF Placeholder",
+            feedbackGuideBtn: "How to Report Feedback & Bugs"
         }
     },
     it: {
@@ -1161,6 +1328,173 @@ export const translations = {
                 copyright: "© 2025 ChefCode. Tutti i diritti riservati.",
                 back: "Torna alla Home ChefCode"
             }
+        },
+        userGuide: {
+            hero: {
+                tag: "Programma Pilota AI",
+                title: "Guida per i Tester",
+                titleGradient: "& Linee Guida",
+                description: "Benvenuto e grazie per aver preso parte al programma pilota di ChefCode. Nelle prossime 4 settimane sarai tra i 30 chef che testeranno in condizioni reali la nostra app di gestione cucina guidata dall'Intelligenza Artificiale."
+            },
+            quickStart: {
+                title: "Avvio Rapido",
+                step1Title: "Apri il browser (da smartphone o computer) e vai su:",
+                step2Text: "Accedi con il tuo account dedicato. Abbiamo creato un account ChefCode per te, con dati di esempio già precaricati. Nella schermata di accesso, inserisci l'email e la password fornite dal tuo Pilot Manager e premi Accedi (riquadro 1 in Figura 1).",
+                fig1Alt: "Figura 1 - Schermata di accesso",
+                step3Intro: "Seleziona il tuo ruolo quando richiesto: Cameriere, Capo Partita, Chef o F&B Manager. Il ruolo determina le sezioni e le funzionalità visibili:",
+                roles: {
+                    waiter: { name: "Cameriere", scope: "Operatività" },
+                    subChef: { name: "Capo Partita", scope: "Operatività, Magazzino" },
+                    chef: { name: "Chef", scope: "Dashboard, Operatività, Magazzino" },
+                    fbMgr: { name: "F&B Manager", scope: "Dashboard, Operatività, Magazzino, Conformità" }
+                },
+                roleNote: "Puoi cambiare ruolo in qualsiasi momento. La scelta non è definitiva, quindi sentiti libero di esplorare i diversi profili per scoprire le relative viste. Da computer, clicca sul pulsante del ruolo nella barra superiore. Da smartphone, apri il menu ⋮ in alto a destra e seleziona \"Passa a...\" oppure \"Vedi tutti i ruoli\".",
+                step4Text: "Entra in Operatività — qui si svolge la maggior parte dei test del programma pilota: Ricettario, Bacheca Produzioni, Esecuzione Task, Membri del Team e Assistente AI.",
+                step5Text: "Esegui la tua prima azione: apri l'Assistente AI e fai una prima domanda sulle giacenze in dispensa, su una ricetta o sulle attività di produzione previste per oggi."
+            },
+            whatToTest: {
+                title: "Cosa Testare in Operatività",
+                subtitle: "Durante il periodo di test ti invitiamo a esplorare a fondo ciascuna di queste aree mettendole alla prova in ogni situazione:",
+                cards: {
+                    recipes: {
+                        title: "Ricettario",
+                        desc: "Crea, modifica e organizza le ricette; associa gli ingredienti alle materie prime in magazzino per calcolare il food cost."
+                    },
+                    tasks: {
+                        title: "Attività di Produzione",
+                        desc: "Pianifica preparazioni, assegna task alla brigata, avvia o completa produzioni e monitora consumi e costi in tempo reale."
+                    },
+                    team: {
+                        title: "Membri del Team",
+                        desc: "Aggiungi e gestisci i collaboratori della tua brigata di cucina a cui assegnare ordini e compiti operativi."
+                    },
+                    aiAssistant: {
+                        title: "Assistente AI",
+                        desc: "Interroga l'AI su scorte, ricette, fabbisogni produttivi, dashboard di gestione, margini operativi o previsioni."
+                    },
+                    confirm: {
+                        title: "Verifica e Conferma",
+                        desc: "Verifica sempre le modifiche proposte dall'AI prima di renderle effettive nei dati. Prova sia a confermare che ad annullare."
+                    },
+                    dashboard: {
+                        title: "Dashboard & Magazzino",
+                        desc: "Se il tuo ruolo include Dashboard, Magazzino o Conformità, esamina i KPI e segnalaci ogni tua impressione."
+                    }
+                }
+            },
+            suggestedTests: {
+                title: "Test Suggeriti per Iniziare",
+                subtitle: "Un percorso guidato durante la prima settimana consente di confrontare con precisione i feedback di tutti i tester. Puoi sperimentare due flussi di lavoro: segui i passaggi interattivi qui sotto.",
+                manualFlowTitle: "Flusso Manuale",
+                manualFlowSubtitle: "Impara a conoscere la piattaforma eseguendo le operazioni passo dopo passo.",
+                manualFlowHint: "💡 Clicca su ciascun passaggio per visualizzare le istruzioni e i video dimostrativi.",
+                manualSteps: [
+                    { title: "Accesso e Selezione Ruolo", content: "Accedi alla piattaforma e seleziona il profilo Chef o F&B Manager per iniziare la sessione di lavoro." },
+                    { title: "Inserimento Ingredienti in Dispensa", content: "Aggiungi le materie prime manualmente oppure utilizza lo Scanner OCR per caricare una fattura ed effettuare un caricamento massivo e automatico." },
+                    { title: "Creazione Ricette e Semilavorati", content: "Crea le ricette per il tuo menù. Un Semilavorato è una preparazione base (es. Maionese, Ragù) riutilizzabile come ingrediente in altri piatti. Una Ricetta Finita è il piatto finale servito al cliente." },
+                    { title: "Mappatura Ingredienti e Analisi Costi", content: "Collega gli ingredienti generici della ricetta (es. 'filetto di maiale') agli articoli effettivi presenti in magazzino per calcolare i costi. L'operazione è automatica se i nomi coincidono. Verifica resa, food cost, allergeni e prezzo di vendita." },
+                    { title: "Attività di Produzione e Task Operativi", content: "Crea Task di Produzione per generare lotti di prodotti finiti (scalando automaticamente gli ingredienti utilizzati) oppure Task Operativi (es. 'sostituzione olio friggitrice') per scaricare materiali specifici. I prodotti finiti entrano a stock e vengono scaricati alla vendita." },
+                    { title: "Registrazione Vendite e Import Massivo", content: "Scegli tra due modalità per registrare il venduto: Vendita Singola in tempo reale in stile cassa POS, oppure Importazione Massiva scaricando il template CSV, inserendo i quantitativi venduti e ricaricando il file per registrare tutti i coperti in un colpo solo.", vid1Label: "Vendita Singola", vid2Label: "Import Massivo" },
+                    { title: "Consultazione delle Dashboard", content: "Esplora le due dashboard specializzate: la Dashboard Gestionale per i F&B Manager (con fatturato, margini e marginalità) e la Dashboard Cucina per gli Chef (con analisi menu engineering, piatti più e meno venduti e allarmi scorte critiche).", vid1Label: "Dashboard Cucina", vid2Label: "Dashboard Gestionale" },
+                    { title: "Simulazione d'Acquisto e Ordini Fornitori", content: "Man mano che vendite e preparazioni scalano gli ingredienti dalla dispensa, gli articoli che scendono sotto la soglia di Scorta di Sicurezza vengono aggiunti in automatico alla Lista della Spesa. Puoi aggiungere manualmente altri prodotti ed esportare la lista finale consolidata o suddivisa per fornitore." },
+                    { title: "Ricezione Merci e Controllo Bolla", content: "All'arrivo della merce, apri gli Ordini in Attesa e valida la ricezione manualmente o tramite scansione OCR del documento di trasporto. Qualora emergano discrepanze tra quanto ordinato e quanto consegnato, il sistema genererà automaticamente apposite segnalazioni di allerta." }
+                ],
+                aiFlowTitle: "Flusso Assistito dall'AI",
+                aiFlowSubtitle: "Consulta gli stessi dati e replica le operazioni tramite interazione vocale o testuale con l'AI.",
+                aiFlowHint: "💡 Clicca su ciascun passaggio per scoprire le potenzialità dell'Intelligenza Artificiale.",
+                aiSteps: [
+                    { title: "Ripeti le Operazioni con l'AI", content: "Utilizza l'Assistente AI per registrare rapidamente ingredienti e avviare task di produzione in pochi secondi.", vid1Label: "Aggiungi Ingrediente", vid2Label: "Crea Produzione" },
+                    { title: "Chiedi Approfondimenti all'AI", content: "Interroga l'AI su inventario, ricette, costi, risultati di vendita o dashboard e confronta le risposte con le schermate dell'app.", vid1Label: "AI Management Insights" },
+                    { title: "Usa l'Assistente Vocale", content: "Con l'Assistente Vocale puoi gestire la cucina e consultare la piattaforma a mani libere. Pronuncia comandi vocali per inserire ingredienti e avviare produzioni, oppure chiedi informazioni in tempo reale su scorte, costi e dashboard di gestione." },
+                    { title: "Verifica e Conferma", content: "Ogni volta che l'AI propone una modifica ai dati, dovrai confermarla prima che venga applicata. Prova sia ad annullare che a confermare." },
+                    { title: "Segnala Feedback", content: "Invia subito una segnalazione direttamente dall'app per qualsiasi anomalia, dato inatteso o suggerimento di miglioramento riscontrato durante il test.", linkLabel: "Consulta la guida Feedback & Bug" }
+                ]
+            },
+            guardrails: {
+                title: "Privacy dei Dati e Linee Guida AI",
+                subtitle: "L'Assistente AI di ChefCode è alimentato da modelli Gemini tramite Vertex AI. Come per ogni sistema di Intelligenza Artificiale, ti invitiamo a rispettare queste regole di sicurezza durante il test:",
+                cards: {
+                    personalData: {
+                        title: "Proteggi le Informazioni Personali e Riservate",
+                        bullets: [
+                            "Utilizza preferibilmente dati fittizi o di prova. Non inserire dati personali, password, coordinate bancarie o dettagli sensibili relativi a clienti o personale.",
+                            "Evita di condividere informazioni aziendali confidenziali, come ricette segrete coperte da brevetto, contratti con fornitori, listini riservati o documenti non autorizzati.",
+                            "Non considerare i dati inseriti nella chat con l'Assistente AI come automaticamente privati o cancellati subito dopo la sessione."
+                        ]
+                    },
+                    responsibleAi: {
+                        title: "Usa l'AI in Modo Responsabile",
+                        bullets: [
+                            "L'Assistente AI di ChefCode impiega modelli Gemini su Vertex AI. Le risposte generate dall'AI possono contenere imprecisioni o dettagli incompleti.",
+                            "Verifica sempre i dati critici per l'attività, in particolare quantità di ingredienti, dosaggi ricetta, costi, marginalità, previsioni e ordini suggeriti.",
+                            "Non affidarti esclusivamente all'AI per decisioni in materia di sicurezza alimentare, allergeni, protocolli HACCP, aspetti legali o scelte finanziarie. Fai sempre riferimento al tuo giudizio professionale e alle procedure ufficiali."
+                        ]
+                    },
+                    reviewActions: {
+                        title: "Verifica le Azioni dell'AI Prima di Confermare",
+                        bullets: [
+                            "Controlla attentamente le modifiche proposte dall'AI per ingredienti, dosi, inventario, ricette o task prima di procedere alla conferma.",
+                            "Assicurati che articolo selezionato, quantità e unità di misura corrispondano a quanto desiderato. Conferma solo se il risultato proposto è corretto; in caso contrario, annulla l'azione.",
+                            "Nel corso del programma pilota utilizza preferibilmente record di test, a meno che tu non sia stato esplicitamente autorizzato a operare con dati aziendali reali."
+                        ]
+                    },
+                    accountSecurity: {
+                        title: "Mantieni Sicuro il Tuo Account",
+                        bullets: [
+                            "Custodisci le tue credenziali di accesso e non condividere il tuo account con altri tester.",
+                            "Accedi solo alle funzioni consentite dal tuo ruolo assegnato. Effettua il logout quando utilizzi un dispositivo condiviso.",
+                            "Non inserire password o credenziali di autenticazione all'interno di screenshot, prompt o segnalazioni inviate."
+                        ]
+                    },
+                    checkFeedback: {
+                        title: "Verifica Segnalazioni e Allegati",
+                        bullets: [
+                            "I moduli di feedback possono includere screenshot e informazioni di contesto, come schermata attiva, ruolo utente, dispositivo e versione dell'app.",
+                            "Esamina gli screenshot e gli allegati prima dell'invio, rimuovendo eventuali dati sensibili, personali o non necessari.",
+                            "Quando segnali un'anomalia, descrivi il problema usando possibilmente dati di test. Non allegare anagrafiche clienti, fatture o contratti reali senza preventiva autorizzazione."
+                        ]
+                    },
+                    reportConcerns: {
+                        title: "Segnala Tempestivamente Anomalie di Sicurezza",
+                        bullets: [
+                            "Segnala immediatamente qualsiasi sospetto di esposizione dati, accesso non autorizzato, compromissione dell'account o modifiche impreviste ai registri.",
+                            "Fornisci dettagli sufficienti a comprendere l'anomalia, evitando tuttavia di inserire ulteriori dati sensibili nel corpo della segnalazione."
+                        ]
+                    }
+                },
+                remember: {
+                    title: "Promemoria Importante",
+                    desc: "ChefCode è attualmente in fase pilota e le funzionalità o le risposte dell'AI potrebbero evolvere. Proteggi i dati riservati, verifica le informazioni generate e mantieni sempre il giudizio umano al centro delle decisioni cruciali."
+                }
+            },
+            feedbackBugs: {
+                title: "Come Segnalare Feedback e Bug",
+                subtitle: "Incontrerai sicuramente aspetti da perfezionare: è proprio questo lo scopo del programma pilota. Quando noti qualcosa, segnalacelo direttamente dall'app con il pulsante Invia Feedback.",
+                steps: [
+                    { title: "Apri Invia Feedback.", text: "Da computer, clicca sull'icona di feedback nella barra superiore. Nella Dashboard trovi anche il pulsante Invia Feedback tra le Azioni Rapide. Da smartphone, tocca il menu ⋮ in alto a destra e seleziona Invia Feedback." },
+                    { title: "Scegli il tipo di feedback:", text: "Problema, Idea, Domanda o Complimento." },
+                    { title: "Raccontaci cosa è successo:", text: "in quale schermata ti trovavi, cosa hai fatto, cosa è accaduto e cosa ti saresti aspettato invece." },
+                    { title: "Verifica gli allegati:", text: "uno screenshot viene aggiunto in automatico. Puoi allegare fino a 5 fotografie." },
+                    { title: "Invia la segnalazione.", text: "Indica facoltativamente l'area dell'app interessata e tocca Invia feedback." }
+                ],
+                fig2Alt: "Figura 2 - Feedback da desktop",
+                fig3Alt: "Figura 3 - Modulo feedback da mobile",
+                adminEmailTitle: "Hai bisogno di risposta?",
+                adminEmailDesc: "Se desideri che il nostro team ti ricontatti direttamente per approfondire la segnalazione, inserisci il tuo nome ed email all'interno del messaggio.",
+                urgentNote: "Per situazioni urgenti (se sei bloccato, non riesci ad accedere o rilevi comportamenti critici), contatta direttamente il tuo Pilot Manager."
+            },
+            timeline: {
+                title: "Programma e Tempistiche del Pilota",
+                cards: [
+                    { title: "Durata", desc: "4 settimane dal kick-off iniziale" },
+                    { title: "Check-in Settimanale", desc: "Breve sondaggio di 2 minuti ogni venerdì" },
+                    { title: "Revisione Intermedia", desc: "Call facoltativa di 15 minuti alla seconda settimana" },
+                    { title: "Sondaggio Finale", desc: "Inviato nell'ultima settimana del pilota" }
+                ]
+            },
+            videoComingSoon: "Video in arrivo...",
+            videoPlaceholder: "Video/GIF Dimostrativo",
+            feedbackGuideBtn: "Consulta la guida Feedback & Bug"
         }
     }
 };

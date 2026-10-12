@@ -30,6 +30,7 @@ import {
 import { Link } from 'react-router-dom';
 import logo from './assets/logo.svg';
 import { useLanguage } from './context/LanguageContext';
+import { translations } from './data/translations';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import videoDemo from './assets/sign_in_opt.webm';
 import ocrExtractionVideo from './assets/ocr_extraction.webm';
@@ -52,7 +53,7 @@ import guideImg1 from './assets/user_guide_3.jpeg';
 import guideImg2 from './assets/user_guide_2.jpeg';
 import guideImg3 from './assets/user_guide 1.jpeg';
 
-const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, setActiveVideoUrl }) => {
+const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, setActiveVideoUrl, comingSoonText, guideLabel, twoVideosLabel }) => {
   const isActive = activeIndex === index;
   const itemRef = useRef(null);
 
@@ -95,11 +96,11 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                     : 'bg-orange-50 text-orange-600 border border-orange-200/80 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 group-hover:shadow-md group-hover:shadow-orange-500/25 group-hover:scale-105'
                 }`}>
                   <Play className="w-3 h-3 fill-current transition-transform duration-300 group-hover:scale-110" />
-                  <span>{step.twoWideVideos || step.videoSrc2 !== undefined ? '2 Videos' : 'Video Demo'}</span>
+                  <span>{step.twoWideVideos || step.videoSrc2 !== undefined ? (twoVideosLabel || '2 Videos') : 'Video Demo'}</span>
                 </span>
               ) : (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-slate-400 bg-slate-100 border border-slate-200/60">
-                  Guide
+                  {guideLabel || 'Guide'}
                 </span>
               )}
             </div>
@@ -219,7 +220,7 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                       ) : (
                         <div className="w-full aspect-[16/9] bg-slate-100 flex flex-col items-center justify-center group-hover/video:bg-slate-200 transition-colors">
                           <Play className="w-12 h-12 text-slate-300 mb-2" />
-                          <span className="text-sm font-medium text-slate-400">Video in arrivo...</span>
+                          <span className="text-sm font-medium text-slate-400">{comingSoonText || "Video in arrivo..."}</span>
                         </div>
                       )}
                       
@@ -263,7 +264,7 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
   );
 };
 
-const VideoDisplay = ({ videoUrl, stepTitle, onClose }) => {
+const VideoDisplay = ({ videoUrl, stepTitle, onClose, placeholderTitle, taskLabel }) => {
   const videoRef = useRef(null);
 
   return (
@@ -286,8 +287,8 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose }) => {
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
             <Play className="w-20 h-20 mb-4 text-orange-500 opacity-80 transition-all duration-300" />
-            <span className="text-2xl font-medium text-white mb-2">Video/GIF Placeholder</span>
-            <span className="text-lg opacity-70">Mostrerà il task: "{stepTitle}"</span>
+            <span className="text-2xl font-medium text-white mb-2">{placeholderTitle || "Video/GIF Dimostrativo"}</span>
+            <span className="text-lg opacity-70">{taskLabel || "Mostrerà il task:"} "{stepTitle}"</span>
           </div>
         )}
 
@@ -307,6 +308,7 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose }) => {
 
 const UserGuide = () => {
   const { t, language } = useLanguage();
+  const guide = translations[language]?.userGuide || translations['en'].userGuide;
   const [activeManualFlow, setActiveManualFlow] = useState(null);
   const [activeAIFlow, setActiveAIFlow] = useState(null);
   
@@ -403,62 +405,52 @@ const UserGuide = () => {
   };
 
   const manualFlowSteps = [
-    { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role.", hasVideo: true, videoSrc: videoDemo },
-    { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion.", hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 11.90 },
-    { title: "Create Prepared or Semi-Prepared Recipe", content: "Create recipes for your menu. A Semi-Prepared recipe is a base preparation (e.g., Mayonnaise, Ragù) that can be reused as an ingredient in other recipes. A Prepared recipe is the final finished dish served to the customer.", hasVideo: true, videoSrc: addRecipeVideo },
-    { title: "Map Ingredients & Review", content: "Link generic recipe ingredients (e.g., 'pork fillet') to your actual inventory items to calculate costs. This is only needed if the names differ; otherwise, it's automatic. Then, review yield, cost, allergens, and selling price.", hasVideo: true, videoSrc: mappingIngredientVideo },
-    { title: "Create Production & Operational Tasks", content: "Create Production Tasks to generate finished items (deducting ingredients automatically) or Operational Tasks (e.g., 'change fryer oil') to deduct specific items. Finished products are added to your stock and deducted upon sales.", hasVideo: true, videoSrc: taskVideo },
-    { title: "Record Sales & Mass Import", content: "Choose between two methods to record your sales: Single Sale for real-time POS-style entry, or Mass Import to download a CSV template, enter sold quantities, and re-upload to register all sales at once.", hasVideo: true, videoSrc: singleSalesVideo, videoSrc2: massImportVideo, twoWideVideos: true, vid1Label: "Single Sale", vid2Label: "Massive Import" },
-    { title: "Review Dashboards", content: "Explore two specialized dashboards: the Management Dashboard for F&B Managers (tracking revenue, margins, and profits) and the Kitchen Dashboard for Chefs (featuring menu engineering, most/least sold dishes, and critical stock alerts).", hasVideo: true, videoSrc: kitchenDashboardVideo, videoSrc2: managementDashboardVideo, twoWideVideos: true, vid1Label: "Kitchen Dashboard", vid2Label: "Management Dashboard" },
-    { title: "Simulate a Purchase", content: "As sales and production deduct ingredients from your inventory, any items falling below their Safety Stock threshold are automatically added to your Shopping List. You can manually add extra items and seamlessly export the final list—either consolidated or grouped by supplier—ready for purchasing.", hasVideo: true, videoSrc: shoppingVideo },
-    { title: "Goods In & Validate Order", content: "When goods arrive, find them in Pending Orders and validate the receipt manually or by scanning the delivery note with OCR. If there are any inconsistencies between what was ordered and what was delivered, the system will automatically flag them with alerts.", hasVideo: true, videoSrc: validateOrderVideo },
+    { title: guide.suggestedTests.manualSteps[0].title, content: guide.suggestedTests.manualSteps[0].content, hasVideo: true, videoSrc: videoDemo },
+    { title: guide.suggestedTests.manualSteps[1].title, content: guide.suggestedTests.manualSteps[1].content, hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 11.90 },
+    { title: guide.suggestedTests.manualSteps[2].title, content: guide.suggestedTests.manualSteps[2].content, hasVideo: true, videoSrc: addRecipeVideo },
+    { title: guide.suggestedTests.manualSteps[3].title, content: guide.suggestedTests.manualSteps[3].content, hasVideo: true, videoSrc: mappingIngredientVideo },
+    { title: guide.suggestedTests.manualSteps[4].title, content: guide.suggestedTests.manualSteps[4].content, hasVideo: true, videoSrc: taskVideo },
+    { title: guide.suggestedTests.manualSteps[5].title, content: guide.suggestedTests.manualSteps[5].content, hasVideo: true, videoSrc: singleSalesVideo, videoSrc2: massImportVideo, twoWideVideos: true, vid1Label: guide.suggestedTests.manualSteps[5].vid1Label, vid2Label: guide.suggestedTests.manualSteps[5].vid2Label },
+    { title: guide.suggestedTests.manualSteps[6].title, content: guide.suggestedTests.manualSteps[6].content, hasVideo: true, videoSrc: kitchenDashboardVideo, videoSrc2: managementDashboardVideo, twoWideVideos: true, vid1Label: guide.suggestedTests.manualSteps[6].vid1Label, vid2Label: guide.suggestedTests.manualSteps[6].vid2Label },
+    { title: guide.suggestedTests.manualSteps[7].title, content: guide.suggestedTests.manualSteps[7].content, hasVideo: true, videoSrc: shoppingVideo },
+    { title: guide.suggestedTests.manualSteps[8].title, content: guide.suggestedTests.manualSteps[8].content, hasVideo: true, videoSrc: validateOrderVideo },
   ];
 
   const aiFlowSteps = [
     { 
-      title: language === 'it' ? "Ripeti le Azioni Manuali" : "Repeat Manually Completed Actions", 
-      content: language === 'it'
-        ? "Utilizza l'Assistente AI per registrare rapidamente ingredienti e avviare task di produzione in pochi secondi."
-        : "Use the AI Assistant to log ingredients and trigger production tasks in seconds.", 
+      title: guide.suggestedTests.aiSteps[0].title, 
+      content: guide.suggestedTests.aiSteps[0].content, 
       hasVideo: true,
       videoSrc: aiAssistantAddIngredientVideo,
       videoSrc2: aiAssistantAddProductionVideo,
       twoWideVideos: true,
-      vid1Label: language === 'it' ? "Aggiungi Ingrediente" : "Add Ingredient",
-      vid2Label: language === 'it' ? "Crea Produzione" : "Add Production"
+      vid1Label: guide.suggestedTests.aiSteps[0].vid1Label,
+      vid2Label: guide.suggestedTests.aiSteps[0].vid2Label
     },
     { 
-      title: language === 'it' ? "Chiedi Approfondimenti all'AI" : "Ask AI for Insights", 
-      content: language === 'it'
-        ? "Interroga l'AI su inventario, ricette, costi, risultati di vendita o dashboard e confronta le risposte con le schermate dell'app."
-        : "Ask the AI about inventory, recipes, costs, sales results, dashboards, or tasks and compare the answer with the platform pages.", 
+      title: guide.suggestedTests.aiSteps[1].title, 
+      content: guide.suggestedTests.aiSteps[1].content, 
       hasVideo: true,
       videoSrc: aiAssistantManagementVideo,
-      vid1Label: language === 'it' ? "AI Management Insights" : "AI Management Insights"
+      vid1Label: guide.suggestedTests.aiSteps[1].vid1Label
     },
     { 
-      title: language === 'it' ? "Usa l'Assistente Vocale" : "Use Voice Assistant", 
-      content: language === 'it'
-        ? "Con l'Assistente Vocale puoi gestire la cucina e consultare la piattaforma a mani libere. Pronuncia comandi vocali per inserire ingredienti e avviare produzioni, oppure chiedi informazioni in tempo reale su scorte, costi e dashboard di gestione."
-        : "Use the hands-free Voice Assistant to manage kitchen operations and consult your data. Simply speak to log ingredients and trigger production tasks, or ask for real-time insights on stock levels, food costs, and management dashboards.", 
+      title: guide.suggestedTests.aiSteps[2].title, 
+      content: guide.suggestedTests.aiSteps[2].content, 
       hasVideo: true, 
       videoSrc: aiVoiceVideo 
     },
     { 
-      title: language === 'it' ? "Verifica e Conferma" : "Verify and Confirm", 
-      content: language === 'it'
-        ? "Ogni volta che l'AI propone una modifica ai dati, dovrai confermarla prima che venga applicata. Prova sia ad annullare che a confermare."
-        : "Whenever the AI Assistant proposes a data-changing action, you must confirm it before it applies. Test cancelling as well as confirming.", 
+      title: guide.suggestedTests.aiSteps[3].title, 
+      content: guide.suggestedTests.aiSteps[3].content, 
       hasVideo: false 
     },
     { 
-      title: language === 'it' ? "Segnala Feedback" : "Report Feedback", 
-      content: language === 'it'
-        ? "Invia subito una segnalazione direttamente dall'app per qualsiasi anomalia, dato inatteso o suggerimento di miglioramento riscontrato durante il test."
-        : "Report any unexpected behavior, missing data, or improvement suggestion directly through the Send Feedback button in the app.", 
+      title: guide.suggestedTests.aiSteps[4].title, 
+      content: guide.suggestedTests.aiSteps[4].content, 
       hasVideo: false,
       linkToSection: "feedback-bugs",
-      linkLabel: language === 'it' ? "Consulta la guida Feedback & Bug" : "How to Report Feedback & Bugs"
+      linkLabel: guide.suggestedTests.aiSteps[4].linkLabel
     },
   ];
 
@@ -558,7 +550,7 @@ const UserGuide = () => {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-orange-400 font-semibold text-sm mb-8 shadow-xl"
             >
               <Rocket className="w-4 h-4" />
-              AI Pilot Program
+              {guide.hero.tag}
             </motion.div>
             
             <motion.h1 
@@ -567,8 +559,8 @@ const UserGuide = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight"
             >
-              Tester Guide <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">& Guardrails</span>
+              {guide.hero.title} <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">{guide.hero.titleGradient}</span>
             </motion.h1>
             
             <motion.p 
@@ -577,7 +569,7 @@ const UserGuide = () => {
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed"
             >
-              Welcome, and thank you for joining the ChefCode AI pilot. Over the next 4 weeks, you'll be one of 30 chefs testing ChefCode's AI-powered kitchen management app in real conditions.
+              {guide.hero.description}
             </motion.p>
           </div>
         </div>
@@ -588,14 +580,14 @@ const UserGuide = () => {
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Rocket className="w-5 h-5" />
             </span>
-            Quick Start
+            {guide.quickStart.title}
           </h2>
           <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-slate-200/50 border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
             <div className="space-y-10 text-slate-600">
               <div className="flex gap-4">
                 <span className="font-bold text-slate-900">1.</span>
                 <div>
-                  <p>Open your browser (mobile or desktop) and go to:</p>
+                  <p>{guide.quickStart.step1Title}</p>
                   <a href="https://chefcode.web.app" className="text-orange-500 font-medium hover:underline block mt-1">https://chefcode.web.app</a>
                 </div>
               </div>
@@ -603,11 +595,11 @@ const UserGuide = () => {
               <div className="flex gap-4">
                 <span className="font-bold text-slate-900">2.</span>
                 <div className="space-y-4">
-                  <p><strong>Sign in with your own account.</strong> We have created a ChefCode account for you, with some data already in it. On the Sign In tab, type the email and password your Pilot Manager gives you, then tap Sign In (box 1 in Figure 1).</p>
+                  <p>{guide.quickStart.step2Text}</p>
                   
                   {/* IMMAGINE 1 */}
                   <div className="w-full my-6 rounded-xl overflow-hidden shadow-lg border border-slate-200">
-                    <img src={guideImg1} alt="Figure 1 - The sign-in screen" className="w-full h-auto object-cover" />
+                    <img src={guideImg1} alt={guide.quickStart.fig1Alt} className="w-full h-auto object-cover" />
                   </div>
                 </div>
               </div>
@@ -615,51 +607,51 @@ const UserGuide = () => {
               <div className="flex gap-4">
                 <span className="font-bold text-slate-900">3.</span>
                 <div className="w-full">
-                  <p className="mb-4"><strong>Select your role when prompted</strong> — Waiter, Sub-Chef, Chef, or F&B Manager. Your role controls which sections you can see:</p>
+                  <p className="mb-4">{guide.quickStart.step3Intro}</p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
                     <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-start text-center shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-300 transition-all duration-300 group">
                       <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-orange-50 group-hover:scale-110 transition-all duration-300">
                         <ConciergeBell className="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors" />
                       </div>
-                      <span className="font-bold text-slate-900 mb-2">Waiter</span>
-                      <span className="text-xs text-slate-500 font-medium leading-relaxed">Operations</span>
+                      <span className="font-bold text-slate-900 mb-2">{guide.quickStart.roles.waiter.name}</span>
+                      <span className="text-xs text-slate-500 font-medium leading-relaxed">{guide.quickStart.roles.waiter.scope}</span>
                     </div>
                     <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-start text-center shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-300 transition-all duration-300 group">
                       <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-orange-50 group-hover:scale-110 transition-all duration-300">
                         <UtensilsCrossed className="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors" />
                       </div>
-                      <span className="font-bold text-slate-900 mb-2">Sub-Chef</span>
-                      <span className="text-xs text-slate-500 font-medium leading-relaxed">Operations, Stock</span>
+                      <span className="font-bold text-slate-900 mb-2">{guide.quickStart.roles.subChef.name}</span>
+                      <span className="text-xs text-slate-500 font-medium leading-relaxed">{guide.quickStart.roles.subChef.scope}</span>
                     </div>
                     <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-start text-center shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-300 transition-all duration-300 group">
                       <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-orange-50 group-hover:scale-110 transition-all duration-300">
                         <ChefHat className="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors" />
                       </div>
-                      <span className="font-bold text-slate-900 mb-2">Chef</span>
-                      <span className="text-xs text-slate-500 font-medium leading-relaxed">Dashboard, Operations, Stock</span>
+                      <span className="font-bold text-slate-900 mb-2">{guide.quickStart.roles.chef.name}</span>
+                      <span className="text-xs text-slate-500 font-medium leading-relaxed">{guide.quickStart.roles.chef.scope}</span>
                     </div>
                     <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-start text-center shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-300 transition-all duration-300 group">
                       <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-orange-50 group-hover:scale-110 transition-all duration-300">
                         <Briefcase className="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors" />
                       </div>
-                      <span className="font-bold text-slate-900 mb-2">F&B Mgr</span>
-                      <span className="text-xs text-slate-500 font-medium leading-relaxed">Dashboard, Operations, Stock, Compliance</span>
+                      <span className="font-bold text-slate-900 mb-2">{guide.quickStart.roles.fbMgr.name}</span>
+                      <span className="text-xs text-slate-500 font-medium leading-relaxed">{guide.quickStart.roles.fbMgr.scope}</span>
                     </div>
                   </div>
                   <div className="bg-orange-50 p-4 rounded-xl text-orange-900 text-sm">
-                    <strong>You can always change your role.</strong> It isn't permanent, so feel free to explore different roles and see what each one can see. On a computer, click the role button in the top bar (it shows your current role, e.g. Chef). On a phone, open the ⋮ menu at the top right. Then choose "Switch to ..." or "View All Roles".
+                    {guide.quickStart.roleNote}
                   </div>
                 </div>
               </div>
 
               <div className="flex gap-4">
                 <span className="font-bold text-slate-900">4.</span>
-                <p><strong>Land in Operations</strong> — this is where most of the pilot testing happens: Recipe Library, Production Task Board, Task Execution, Team Members, and the AI Assistant.</p>
+                <p>{guide.quickStart.step4Text}</p>
               </div>
 
               <div className="flex gap-4">
                 <span className="font-bold text-slate-900">5.</span>
-                <p><strong>Try your first task:</strong> open the AI Assistant and ask a starter question about your stock, a recipe, or today's production tasks.</p>
+                <p>{guide.quickStart.step5Text}</p>
               </div>
             </div>
           </div>
@@ -671,9 +663,9 @@ const UserGuide = () => {
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Search className="w-5 h-5" />
             </span>
-            What to Test in Operations
+            {guide.whatToTest.title}
           </h2>
-          <p className="text-slate-600 mb-8 font-medium">Please spend time in each of these areas over the pilot and try to break things — that's the point:</p>
+          <p className="text-slate-600 mb-8 font-medium">{guide.whatToTest.subtitle}</p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             
@@ -684,8 +676,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><Book className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">Recipe Library</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">Create, edit, and organize recipes; map ingredients to inventory.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.recipes.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.recipes.desc}</p>
             </div>
 
             {/* Card 2 */}
@@ -695,8 +687,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><ClipboardCheck className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">Production Task</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">Create tasks, assign them, start/complete them, and check usage and cost.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.tasks.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.tasks.desc}</p>
             </div>
 
             {/* Card 3 */}
@@ -706,8 +698,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><Users className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">Team Members</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">Add and edit the people you assign tasks to across your kitchen brigade.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.team.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.team.desc}</p>
             </div>
 
             {/* Card 4 */}
@@ -717,8 +709,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><Bot className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">AI Assistant</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">Ask about stock, recipes, production, dashboards, margins, or forecasts.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.aiAssistant.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.aiAssistant.desc}</p>
             </div>
 
             {/* Card 5 */}
@@ -728,8 +720,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><CheckCircle2 className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">Confirm / Cancel</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">Confirm AI-proposed data-changing actions before they apply. Test cancelling too.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.confirm.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.confirm.desc}</p>
             </div>
 
             {/* Card 6 */}
@@ -739,8 +731,8 @@ const UserGuide = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500"></div>
                 <div className="relative z-10"><Search className="w-8 h-8 text-white" strokeWidth={1.5} /></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">Dashboard & Stock</h3>
-              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">If your role includes Dashboard, Stock, or Compliance, explore them and provide feedback.</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-orange-600 group-hover:scale-105 transition-all duration-300">{guide.whatToTest.cards.dashboard.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300 text-sm">{guide.whatToTest.cards.dashboard.desc}</p>
             </div>
 
           </div>
@@ -752,9 +744,9 @@ const UserGuide = () => {
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Play className="w-5 h-5" />
             </span>
-            Suggested First Test
+            {guide.suggestedTests.title}
           </h2>
-          <p className="text-slate-600 mb-8">A common first-week journey helps the team compare feedback across all beta accounts. You can test through two workflows. Follow the interactive steps below.</p>
+          <p className="text-slate-600 mb-8">{guide.suggestedTests.subtitle}</p>
           
           <div className="space-y-16">
             
@@ -763,9 +755,9 @@ const UserGuide = () => {
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-3">
                   <User className="text-orange-500 w-8 h-8 p-1.5 bg-orange-100 rounded-lg" />
-                  Manual Flow
+                  {guide.suggestedTests.manualFlowTitle}
                 </h3>
-                <p className="text-slate-500 text-lg">Learn the platform directly by completing these tasks manually. <span className="text-sm font-semibold text-orange-600 block sm:inline sm:ml-2">💡 Click any step to open instructions and watch video demos.</span></p>
+                <p className="text-slate-500 text-lg">{guide.suggestedTests.manualFlowSubtitle} <span className="text-sm font-semibold text-orange-600 block sm:inline sm:ml-2">{guide.suggestedTests.manualFlowHint}</span></p>
               </div>
               
               <div className="flex flex-col gap-4">
@@ -781,6 +773,9 @@ const UserGuide = () => {
                     }}
                     setIsVideoOpen={setIsVideoOpen}
                     setActiveVideoUrl={setActiveVideoUrl}
+                    comingSoonText={guide.videoComingSoon}
+                    guideLabel={language === 'it' ? 'Guida' : 'Guide'}
+                    twoVideosLabel={language === 'it' ? '2 Video' : '2 Videos'}
                   />
                 ))}
               </div>
@@ -792,9 +787,9 @@ const UserGuide = () => {
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-3">
                   <Bot className="text-blue-500 w-8 h-8 p-1.5 bg-blue-100 rounded-lg" />
-                  AI Flow
+                  {guide.suggestedTests.aiFlowTitle}
                 </h3>
-                <p className="text-slate-500 text-lg">Consult the same data and repeat actions through text or voice AI. <span className="text-sm font-semibold text-blue-600 block sm:inline sm:ml-2">💡 Click any step to explore AI capabilities.</span></p>
+                <p className="text-slate-500 text-lg">{guide.suggestedTests.aiFlowSubtitle} <span className="text-sm font-semibold text-blue-600 block sm:inline sm:ml-2">{guide.suggestedTests.aiFlowHint}</span></p>
               </div>
               
               <div className="flex flex-col gap-4">
@@ -810,6 +805,9 @@ const UserGuide = () => {
                     }}
                     setIsVideoOpen={setIsVideoOpen}
                     setActiveVideoUrl={setActiveVideoUrl}
+                    comingSoonText={guide.videoComingSoon}
+                    guideLabel={language === 'it' ? 'Guida' : 'Guide'}
+                    twoVideosLabel={language === 'it' ? '2 Video' : '2 Videos'}
                   />
                 ))}
               </div>
@@ -826,9 +824,9 @@ const UserGuide = () => {
             
             <h3 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
               <ShieldAlert className="text-orange-500 w-8 h-8" />
-              Data Privacy & AI Guardrails
+              {guide.guardrails.title}
             </h3>
-            <p className="text-slate-300 text-lg font-medium mb-10 max-w-2xl mx-auto">ChefCode's AI Assistant runs on Gemini via Vertex AI. As with any AI system, please follow these safety rules during the pilot:</p>
+            <p className="text-slate-300 text-lg font-medium mb-10 max-w-2xl mx-auto">{guide.guardrails.subtitle}</p>
             
             <div className="space-y-10 text-left max-w-3xl mx-auto">
               
@@ -838,12 +836,15 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <Shield className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Protect Personal and Confidential Information</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.personalData.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Use fictional or test data wherever possible. Do not enter personal information, passwords, banking details, or sensitive customer or employee records.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Avoid sharing confidential business information, such as proprietary recipes, supplier contracts, confidential pricing, or documents that you are not authorized to share.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Do not assume that information entered into the AI Assistant is automatically private or deleted after use.</span></li>
+                  {guide.guardrails.cards.personalData.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -853,12 +854,15 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <Bot className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Use AI Responsibly</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.responsibleAi.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>ChefCode's AI Assistant uses Gemini via Vertex AI. AI-generated responses may contain errors or incomplete information.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Always verify important outputs, especially ingredient quantities, recipes, costs, margins, forecasts, and inventory recommendations.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Do not rely on AI alone for food safety, allergen, HACCP, legal, or financial decisions. Use your professional judgment and established procedures.</span></li>
+                  {guide.guardrails.cards.responsibleAi.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -868,12 +872,15 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <Search className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Review AI Actions Before Confirming</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.reviewActions.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Carefully review AI-proposed changes to ingredients, quantities, inventory, recipes, or tasks before confirming them.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Check that the selected item, quantity, and unit are correct. Confirm only when you are satisfied with the proposed action; otherwise, cancel it.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Use test records during the pilot unless you have been explicitly authorized to work with live data.</span></li>
+                  {guide.guardrails.cards.reviewActions.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -883,12 +890,15 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <Lock className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Keep Your Account Secure</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.accountSecurity.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Keep your login credentials private and do not share accounts with other testers.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Access only the features and data permitted by your assigned role. Sign out when using a shared device.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Do not include passwords or other access credentials in screenshots, prompts, or feedback reports.</span></li>
+                  {guide.guardrails.cards.accountSecurity.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -898,12 +908,15 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <MessageSquare className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Check Feedback and Attachments</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.checkFeedback.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Feedback submissions may include screenshots and contextual information, such as the page, user role, device, and app version.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Review screenshots and attachments before submitting them. Remove personal, confidential, or unnecessary information.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>When reporting a bug, describe the issue using test data wherever possible. Do not attach real customer records, invoices, or contracts unless specifically authorized.</span></li>
+                  {guide.guardrails.cards.checkFeedback.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -913,17 +926,21 @@ const UserGuide = () => {
                   <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-5 h-5" />
                   </div>
-                  <h4 className="font-bold text-white text-lg">Report Privacy or Security Concerns</h4>
+                  <h4 className="font-bold text-white text-lg">{guide.guardrails.cards.reportConcerns.title}</h4>
                 </div>
                 <ul className="space-y-3 text-slate-300 ml-13">
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Immediately report suspected data exposure, unauthorized access, account compromise, or unexpected changes to records.</span></li>
-                  <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div><span>Provide enough detail to explain the issue, but do not include additional sensitive information in your report.</span></li>
+                  {guide.guardrails.cards.reportConcerns.bullets.map((bullet, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div className="bg-orange-500 text-white p-6 rounded-2xl shadow-md text-center">
-                <p className="font-bold text-lg mb-2">Remember</p>
-                <p className="opacity-90 font-medium">ChefCode is in pilot testing, and features or AI responses may change. Protect confidential information, verify AI-generated outputs, and keep human judgment in control of important decisions.</p>
+                <p className="font-bold text-lg mb-2">{guide.guardrails.remember.title}</p>
+                <p className="opacity-90 font-medium">{guide.guardrails.remember.desc}</p>
               </div>
 
             </div>
@@ -933,15 +950,15 @@ const UserGuide = () => {
           <div id="feedback-bugs" className="bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-800 text-white text-center shadow-xl scroll-mt-28">
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
               <Bug className="text-orange-500" />
-              How to Report Feedback & Bugs
+              {guide.feedbackBugs.title}
             </h3>
-            <p className="text-slate-300 mb-8 max-w-2xl mx-auto">You will hit rough edges — that's exactly what this pilot is for. When you do, tell us straight from the app with the Send Feedback button.</p>
+            <p className="text-slate-300 mb-8 max-w-2xl mx-auto">{guide.feedbackBugs.subtitle}</p>
             
             <ol className="space-y-6 text-slate-300 text-sm list-none pl-0 text-left max-w-2xl mx-auto">
               <li className="flex gap-3">
                 <span className="font-bold text-white">1.</span>
                 <div>
-                  <strong>Open Send Feedback.</strong> On a computer, click the feedback icon in the top bar. On the Dashboard there is also a Send Feedback button under Quick Actions. On a phone, tap the ⋮ menu at the top right, then Send Feedback.
+                  <strong>{guide.feedbackBugs.steps[0].title}</strong> {guide.feedbackBugs.steps[0].text}
                   
                   {/* IMMAGINI 2 e 3 con Animazione Orizzontale */}
                   <div className="w-full my-12 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 relative">
@@ -952,7 +969,7 @@ const UserGuide = () => {
                       transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
                       className="w-full md:w-[60%] rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-700/50 z-10 hover:z-30 transition-z duration-300 md:-mr-8 md:scale-110"
                     >
-                      <img src={guideImg2} alt="Figure 2 - Desktop feedback" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
+                      <img src={guideImg2} alt={guide.feedbackBugs.fig2Alt} className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
                     </motion.div>
                     
                     <motion.div 
@@ -962,35 +979,35 @@ const UserGuide = () => {
                       transition={{ duration: 0.8, type: "spring", bounce: 0.4, delay: 0.2 }}
                       className="w-full md:w-[60%] rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-700/50 z-20 hover:z-30 transition-z duration-300 md:-ml-8 md:scale-110"
                     >
-                      <img src={guideImg3} alt="Figure 3 - Mobile feedback form" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
+                      <img src={guideImg3} alt={guide.feedbackBugs.fig3Alt} className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
                     </motion.div>
                   </div>
                 </div>
               </li>
               <li className="flex gap-3">
                 <span className="font-bold text-white">2.</span>
-                <span><strong>Choose the kind of feedback:</strong> Problem, Idea, Question or Praise.</span>
+                <span><strong>{guide.feedbackBugs.steps[1].title}</strong> {guide.feedbackBugs.steps[1].text}</span>
               </li>
               <li className="flex gap-3">
                 <span className="font-bold text-white">3.</span>
-                <span><strong>Tell us more:</strong> which screen you were on, what you did, what happened and what you expected instead.</span>
+                <span><strong>{guide.feedbackBugs.steps[2].title}</strong> {guide.feedbackBugs.steps[2].text}</span>
               </li>
               <li className="flex gap-3">
                 <span className="font-bold text-white">4.</span>
-                <span><strong>Check the attachments:</strong> A screenshot is added automatically. You can add up to 5 photos.</span>
+                <span><strong>{guide.feedbackBugs.steps[3].title}</strong> {guide.feedbackBugs.steps[3].text}</span>
               </li>
               <li className="flex gap-3">
                 <span className="font-bold text-white">5.</span>
-                <span><strong>Send it.</strong> Optionally choose which part of the app it is about, then tap Send feedback.</span>
+                <span><strong>{guide.feedbackBugs.steps[4].title}</strong> {guide.feedbackBugs.steps[4].text}</span>
               </li>
             </ol>
             
             <div className="mt-6 pt-6 border-t border-slate-700">
-              <p className="text-sm font-semibold text-white mb-2">Using the shared admin account?</p>
-              <p className="text-xs text-slate-400 mb-4">Our replies go to the admin email, so add your name and email to your message if you'd like us to get back to you.</p>
+              <p className="text-sm font-semibold text-white mb-2">{guide.feedbackBugs.adminEmailTitle}</p>
+              <p className="text-xs text-slate-400 mb-4">{guide.feedbackBugs.adminEmailDesc}</p>
               
               <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4">
-                <p className="text-xs text-red-200"><strong>For anything urgent</strong> — you're blocked, can't sign in, or something looks unsafe — contact your Pilot Manager directly.</p>
+                <p className="text-xs text-red-200"><strong>{language === 'it' ? 'Per qualsiasi urgenza' : 'For anything urgent'}</strong> — {guide.feedbackBugs.urgentNote}</p>
               </div>
             </div>
           </div>
@@ -1000,17 +1017,12 @@ const UserGuide = () => {
         <section id="timeline" className="scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">4</span>
-            Pilot Timeline
+            {guide.timeline.title}
           </h2>
           <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600"></div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              {[
-                { title: "Duration", desc: "4 weeks from kickoff" },
-                { title: "Weekly check-in", desc: "2-min pulse survey every Friday" },
-                { title: "Mid-pilot review", desc: "Optional 15-min call, week 2" },
-                { title: "Final survey", desc: "Sent in the last week of pilot" },
-              ].map((item, i) => (
+              {guide.timeline.cards.map((item, i) => (
                 <div key={i} className="pt-4 md:pt-0 md:px-6 first:px-0 first:pt-0">
                   <div className="flex items-center gap-2 mb-2 text-orange-500">
                     <Calendar className="w-5 h-5" />
@@ -1038,6 +1050,8 @@ const UserGuide = () => {
               videoUrl={activeVideoUrl}
               stepTitle={currentFlow === 'manual' ? manualFlowSteps[activeManualFlow]?.title : aiFlowSteps[activeAIFlow]?.title}
               onClose={() => setIsVideoOpen(false)}
+              placeholderTitle={guide.videoPlaceholder}
+              taskLabel={language === 'it' ? 'Mostrerà il task:' : 'Shows task:'}
             />
           </motion.div>
         )}
