@@ -22,10 +22,15 @@ import {
   ChefHat,
   ConciergeBell,
   UtensilsCrossed,
-  Briefcase
+  Briefcase,
+  Menu,
+  X,
+  ArrowLeft
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from './assets/logo.svg';
+import { useLanguage } from './context/LanguageContext';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import videoDemo from './assets/sign_in_opt.webm';
 import ocrExtractionVideo from './assets/ocr_extraction.webm';
 import addIngredientVideo from './assets/add_ingredient.webm';
@@ -38,7 +43,10 @@ import kitchenDashboardVideo from './assets/kitchen_dashboard.webm';
 import managementDashboardVideo from './assets/management_dashboard.webm';
 import shoppingVideo from './assets/shopping.webm';
 import validateOrderVideo from './assets/validate_order.webm';
-import aiVoiceVideo from './assets/ai_voice_flow.webm';
+import aiVoiceVideo from './assets/ai_voice_flow_v3.webm';
+import aiAssistantAddIngredientVideo from './assets/aiassistant_add_ingredient.webm';
+import aiAssistantAddProductionVideo from './assets/aiassistant_add_production.webm';
+import aiAssistantManagementVideo from './assets/aiassistant_management.webm';
 import ocrScanImg from './assets/ocr_scan.png';
 import guideImg1 from './assets/user_guide_3.jpeg';
 import guideImg2 from './assets/user_guide_2.jpeg';
@@ -46,9 +54,21 @@ import guideImg3 from './assets/user_guide 1.jpeg';
 
 const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, setActiveVideoUrl }) => {
   const isActive = activeIndex === index;
-  
+  const itemRef = useRef(null);
+
+  const handleToggle = () => {
+    const willOpen = !isActive;
+    setActiveIndex(willOpen ? index : null);
+    if (willOpen) {
+      setTimeout(() => {
+        itemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 180);
+    }
+  };
+
   return (
     <div 
+      ref={itemRef}
       className={`bg-white border transition-all duration-500 transform overflow-hidden group cursor-pointer ${
         isActive 
           ? 'border-slate-200 border-l-[6px] border-l-slate-900 shadow-2xl scale-[1.01] rounded-[1.5rem]' 
@@ -57,9 +77,7 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
     >
       <div 
         className="p-5 md:p-8 flex items-start gap-5"
-        onClick={() => {
-          setActiveIndex(index);
-        }}
+        onClick={handleToggle}
       >
         <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold transition-all duration-300 shadow-sm ${isActive ? 'bg-orange-500 text-white shadow-orange-500/30' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'}`}>
           {index + 1}
@@ -176,8 +194,12 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                       </motion.div>
                     </div>
                   ) : (
-                    <div 
-                      className="relative mt-4 w-full rounded-2xl overflow-hidden cursor-pointer group/video shadow-lg border border-slate-200 bg-slate-900"
+                    <motion.div 
+                      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.6, type: "spring", bounce: 0.25 }}
+                      className="relative mt-6 mb-4 w-full rounded-3xl overflow-hidden cursor-pointer group/video shadow-2xl border-4 border-slate-700/50 bg-slate-900 z-10 hover:z-20 transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         setActiveVideoUrl(step.videoSrc);
@@ -207,14 +229,31 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
                           <Play className="w-8 h-8 fill-white ml-1" />
                         </div>
                       </div>
-                    </div>
+
+                      {/* Optional Badge if provided */}
+                      {step?.vid1Label && (
+                        <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-lg">
+                          {step.vid1Label}
+                        </div>
+                      )}
+                    </motion.div>
                   )
-                ) : (
-                  <div className="mt-4 bg-slate-50 border border-slate-100 rounded-xl p-4 flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                    <span className="text-sm font-medium text-slate-600">This step is straightforward and does not require a video tutorial. Just follow the on-screen prompts!</span>
+                ) : step?.linkToSection ? (
+                  <div className="mt-4 flex items-center">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const el = document.getElementById(step.linkToSection);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white border border-orange-200/80 hover:border-orange-500 text-xs sm:text-sm font-bold shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 group/btn"
+                    >
+                      <Bug className="w-4 h-4 text-orange-500 group-hover/btn:text-white transition-colors" />
+                      <span>{step.linkLabel || "Guida Feedback & Bug"}</span>
+                      <span className="text-orange-400 group-hover/btn:text-white transition-transform group-hover/btn:translate-y-0.5">↓</span>
+                    </button>
                   </div>
-                )}
+                ) : null}
               </motion.div>
             )}
           </AnimatePresence>
@@ -267,13 +306,101 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose }) => {
 };
 
 const UserGuide = () => {
-  const [activeManualFlow, setActiveManualFlow] = useState(0);
+  const { t, language } = useLanguage();
+  const [activeManualFlow, setActiveManualFlow] = useState(null);
   const [activeAIFlow, setActiveAIFlow] = useState(null);
   
   // Aggiunto stato per la modale video (overlay)
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [activeVideoUrl, setActiveVideoUrl] = useState(null);
   const [currentFlow, setCurrentFlow] = useState('manual'); // 'manual' or 'ai'
+
+  // Scroll to top on page mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Navbar & Scroll state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('quick-start');
+  const [indicatorProps, setIndicatorProps] = useState({ left: 0, width: 0, opacity: 0 });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Update Top Bar Position based on active section
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeElement = document.getElementById(`guide-nav-${activeSection}`);
+      if (activeElement) {
+        const rect = activeElement.getBoundingClientRect();
+        setIndicatorProps({
+          left: rect.left,
+          width: rect.width,
+          opacity: 1
+        });
+      } else {
+        setIndicatorProps(prev => ({ ...prev, opacity: 0 }));
+      }
+    };
+
+    updateIndicator();
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, [activeSection]);
+
+  // Observe sections for active section highlight
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "-15% 0px -40% 0px" }
+    );
+
+    const sections = ['quick-start', 'what-to-test', 'suggested-tests', 'guardrails', 'feedback-bugs', 'timeline'];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const NavLink = ({ id, label, mobile }) => {
+    const isActive = activeSection === id;
+    let textColor = isActive ? "text-orange-500 font-bold drop-shadow-[0_0_8px_rgba(249,115,22,0.6)]" : "text-slate-300 hover:text-white font-medium";
+    const baseClasses = `${mobile ? 'text-lg py-1' : 'text-xs xl:text-sm'} ${textColor} transition-all duration-300 tracking-wide cursor-pointer select-none whitespace-nowrap`;
+    return (
+      <a
+        id={`guide-nav-${id}`}
+        href={`#${id}`}
+        className={baseClasses}
+        onClick={(e) => scrollToSection(e, id)}
+      >
+        {label}
+      </a>
+    );
+  };
 
   const manualFlowSteps = [
     { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role.", hasVideo: true, videoSrc: videoDemo },
@@ -288,23 +415,129 @@ const UserGuide = () => {
   ];
 
   const aiFlowSteps = [
-    { title: "Repeat Manually Completed Actions", content: "Use the text AI Assistant to repeat one or more supported actions completed manually.", hasVideo: true },
-    { title: "Ask AI for Insights", content: "Ask the AI about inventory, recipes, costs, sales results, dashboards, or tasks and compare the answer with the platform pages.", hasVideo: true },
-    { title: "Use Voice Assistant", content: "If available on your device, repeat the same test using the Voice Assistant.", hasVideo: true, videoSrc: aiVoiceVideo },
-    { title: "Verify and Confirm", content: "Whenever the AI Assistant proposes a data-changing action, you must confirm it before it applies. Test cancelling as well as confirming.", hasVideo: false },
-    { title: "Report Feedback", content: "Use the Send Feedback button to report any incorrect answer, missing information, unexpected action, unclear step, or improvement suggestion.", hasVideo: false },
+    { 
+      title: language === 'it' ? "Ripeti le Azioni Manuali" : "Repeat Manually Completed Actions", 
+      content: language === 'it'
+        ? "Utilizza l'Assistente AI per registrare rapidamente ingredienti e avviare task di produzione in pochi secondi."
+        : "Use the AI Assistant to log ingredients and trigger production tasks in seconds.", 
+      hasVideo: true,
+      videoSrc: aiAssistantAddIngredientVideo,
+      videoSrc2: aiAssistantAddProductionVideo,
+      twoWideVideos: true,
+      vid1Label: language === 'it' ? "Aggiungi Ingrediente" : "Add Ingredient",
+      vid2Label: language === 'it' ? "Crea Produzione" : "Add Production"
+    },
+    { 
+      title: language === 'it' ? "Chiedi Approfondimenti all'AI" : "Ask AI for Insights", 
+      content: language === 'it'
+        ? "Interroga l'AI su inventario, ricette, costi, risultati di vendita o dashboard e confronta le risposte con le schermate dell'app."
+        : "Ask the AI about inventory, recipes, costs, sales results, dashboards, or tasks and compare the answer with the platform pages.", 
+      hasVideo: true,
+      videoSrc: aiAssistantManagementVideo,
+      vid1Label: language === 'it' ? "AI Management Insights" : "AI Management Insights"
+    },
+    { 
+      title: language === 'it' ? "Usa l'Assistente Vocale" : "Use Voice Assistant", 
+      content: language === 'it'
+        ? "Con l'Assistente Vocale puoi gestire la cucina e consultare la piattaforma a mani libere. Pronuncia comandi vocali per inserire ingredienti e avviare produzioni, oppure chiedi informazioni in tempo reale su scorte, costi e dashboard di gestione."
+        : "Use the hands-free Voice Assistant to manage kitchen operations and consult your data. Simply speak to log ingredients and trigger production tasks, or ask for real-time insights on stock levels, food costs, and management dashboards.", 
+      hasVideo: true, 
+      videoSrc: aiVoiceVideo 
+    },
+    { 
+      title: language === 'it' ? "Verifica e Conferma" : "Verify and Confirm", 
+      content: language === 'it'
+        ? "Ogni volta che l'AI propone una modifica ai dati, dovrai confermarla prima che venga applicata. Prova sia ad annullare che a confermare."
+        : "Whenever the AI Assistant proposes a data-changing action, you must confirm it before it applies. Test cancelling as well as confirming.", 
+      hasVideo: false 
+    },
+    { 
+      title: language === 'it' ? "Segnala Feedback" : "Report Feedback", 
+      content: language === 'it'
+        ? "Invia subito una segnalazione direttamente dall'app per qualsiasi anomalia, dato inatteso o suggerimento di miglioramento riscontrato durante il test."
+        : "Report any unexpected behavior, missing data, or improvement suggestion directly through the Send Feedback button in the app.", 
+      hasVideo: false,
+      linkToSection: "feedback-bugs",
+      linkLabel: language === 'it' ? "Consulta la guida Feedback & Bug" : "How to Report Feedback & Bugs"
+    },
   ];
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-20">
       
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900 shadow-lg py-4 transition-all duration-300">
-        <div className="container mx-auto px-4 md:px-8 flex justify-center items-center">
-          <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-            <img src={logo} alt="ChefCode" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
-          </Link>
+      {/* --- SYNCHRONIZED TOP BAR INDICATOR --- */}
+      <div className="fixed top-0 left-0 w-full h-1 z-[60] pointer-events-none">
+        <div
+          className="h-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.8)] transition-all duration-300 ease-out rounded-full"
+          style={{
+            transform: `translateX(${indicatorProps.left}px)`,
+            width: `${indicatorProps.width}px`,
+            opacity: indicatorProps.opacity
+          }}
+        />
+      </div>
+
+      {/* --- NAVBAR --- */}
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg py-3' : 'bg-slate-900 py-4 lg:py-5'}`}>
+        <div className="container mx-auto px-4 md:px-8 flex justify-between items-center relative min-h-[56px]">
+          
+          {/* Mobile Menu Toggle (Left on mobile, hidden on desktop) */}
+          <div className="lg:hidden flex justify-start items-center">
+            <button className="p-2 -ml-2 text-white hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
+          </div>
+
+          {/* Logo (Center on mobile, Left on desktop) */}
+          <div className="flex justify-center lg:justify-start items-center group cursor-pointer shrink-0">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <img src={logo} alt="ChefCode" className="h-10 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Desktop Menu (Center) */}
+          <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-8 flex-1 px-4">
+            <NavLink id="quick-start" label={t('navbar.guideNavbar.quickStart')} />
+            <NavLink id="what-to-test" label={t('navbar.guideNavbar.whatToTest')} />
+            <NavLink id="suggested-tests" label={t('navbar.guideNavbar.suggestedTests')} />
+            <NavLink id="guardrails" label={t('navbar.guideNavbar.guardrails')} />
+            <NavLink id="feedback-bugs" label={t('navbar.guideNavbar.feedbackBugs')} />
+            <NavLink id="timeline" label={t('navbar.guideNavbar.timeline')} />
+          </div>
+
+          {/* Desktop Right Side */}
+          <div className="hidden lg:flex items-center justify-end gap-4 shrink-0">
+            <Link to="/">
+              <button className="px-5 py-2 rounded-full font-bold text-xs tracking-wider uppercase transition-all duration-300 bg-white hover:bg-orange-500 hover:text-white text-slate-900 shadow-sm hover:shadow-lg hover:-translate-y-0.5">
+                {t('navbar.backToHome')}
+              </button>
+            </Link>
+            <LanguageSwitcher />
+          </div>
+
+          {/* Mobile Right Side: LanguageSwitcher */}
+          <div className="lg:hidden flex justify-end items-center">
+            <LanguageSwitcher mobile={true} />
+          </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="lg:hidden absolute top-full inset-x-0 bg-slate-900 border-b border-slate-800 shadow-2xl p-6 flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <NavLink id="quick-start" label={t('navbar.guideNavbar.quickStart')} mobile />
+            <NavLink id="what-to-test" label={t('navbar.guideNavbar.whatToTest')} mobile />
+            <NavLink id="suggested-tests" label={t('navbar.guideNavbar.suggestedTests')} mobile />
+            <NavLink id="guardrails" label={t('navbar.guideNavbar.guardrails')} mobile />
+            <NavLink id="feedback-bugs" label={t('navbar.guideNavbar.feedbackBugs')} mobile />
+            <NavLink id="timeline" label={t('navbar.guideNavbar.timeline')} mobile />
+            <div className="pt-3 border-t border-slate-800 flex justify-between items-center">
+              <Link to="/" className="text-orange-400 font-bold text-sm hover:underline flex items-center gap-1.5" onClick={() => setIsMenuOpen(false)}>
+                <ArrowLeft size={16} />
+                <span>{t('navbar.backToHome')}</span>
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Decorative background element for the journey feeling */}
@@ -350,7 +583,7 @@ const UserGuide = () => {
         </div>
 
         {/* Quick Start */}
-        <section className="mb-16">
+        <section id="quick-start" className="mb-16 scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Rocket className="w-5 h-5" />
@@ -371,11 +604,6 @@ const UserGuide = () => {
                 <span className="font-bold text-slate-900">2.</span>
                 <div className="space-y-4">
                   <p><strong>Sign in with your own account.</strong> We have created a ChefCode account for you, with some data already in it. On the Sign In tab, type the email and password your Pilot Manager gives you, then tap Sign In (box 1 in Figure 1).</p>
-                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <p className="font-semibold text-slate-900 mb-2">Prefer to explore with more data?</p>
-                    <p className="mb-2">You can use the shared admin account instead. It has much more data in it. Tap the orange "Tap to fill admin credentials" box (box 2) to fill in the login, then tap Sign In. Or type it yourself:</p>
-                    <p className="font-mono text-sm bg-white p-2 rounded border border-slate-200 inline-block">Email: <strong>admin@chefcode.app</strong> &nbsp;&nbsp; Password: <strong>ChefCode2024!</strong></p>
-                  </div>
                   
                   {/* IMMAGINE 1 */}
                   <div className="w-full my-6 rounded-xl overflow-hidden shadow-lg border border-slate-200">
@@ -438,7 +666,7 @@ const UserGuide = () => {
         </section>
 
         {/* What to Test */}
-        <section className="mb-16">
+        <section id="what-to-test" className="mb-16 scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Search className="w-5 h-5" />
@@ -519,7 +747,7 @@ const UserGuide = () => {
         </section>
 
         {/* Interactive Testing Guide */}
-        <section className="mb-16">
+        <section id="suggested-tests" className="mb-16 scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
               <Play className="w-5 h-5" />
@@ -559,7 +787,7 @@ const UserGuide = () => {
             </div>
 
             {/* AI Flow Section */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-slate-200/50 border border-slate-200 relative overflow-hidden max-w-4xl mx-auto">
+            <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-xl shadow-slate-200/50 border border-slate-200 relative overflow-hidden w-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-3">
@@ -593,7 +821,7 @@ const UserGuide = () => {
         <div className="flex flex-col gap-12 mb-16 max-w-4xl mx-auto relative">
           
           {/* Card: Data Privacy */}
-          <div className="bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-800 text-center shadow-xl hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group">
+          <div id="guardrails" className="bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-800 text-center shadow-xl hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group scroll-mt-28">
             <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-125"></div>
             
             <h3 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
@@ -702,7 +930,7 @@ const UserGuide = () => {
           </div>
 
           {/* Card: Feedback & Bugs */}
-          <div className="bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-800 text-white text-center shadow-xl">
+          <div id="feedback-bugs" className="bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-800 text-white text-center shadow-xl scroll-mt-28">
             <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
               <Bug className="text-orange-500" />
               How to Report Feedback & Bugs
@@ -769,7 +997,7 @@ const UserGuide = () => {
         </div>
 
         {/* Timeline */}
-        <section>
+        <section id="timeline" className="scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">4</span>
             Pilot Timeline

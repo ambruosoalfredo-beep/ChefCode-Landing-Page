@@ -10,7 +10,15 @@ export const translations = {
             aboutUs: "About Us",
             home: "Home",
             bookDemo: "Book a Demo",
-            backToHome: "Back to Home"
+            backToHome: "Back to Home",
+            guideNavbar: {
+                quickStart: "Quick Start",
+                whatToTest: "What to Test",
+                suggestedTests: "Suggested Tests",
+                guardrails: "Guardrails",
+                feedbackBugs: "Feedback & Bugs",
+                timeline: "Timeline"
+            }
         },
         hero: {
             tagline: "The AI Revolution for Kitchens is Here",
@@ -584,7 +592,15 @@ export const translations = {
             aboutUs: "Chi Siamo",
             home: "Home",
             bookDemo: "Prenota Demo",
-            backToHome: "Torna alla Home"
+            backToHome: "Torna alla Home",
+            guideNavbar: {
+                quickStart: "Quick Start",
+                whatToTest: "Cosa Testare",
+                suggestedTests: "Test Suggeriti",
+                guardrails: "Guardrails",
+                feedbackBugs: "Feedback & Bug",
+                timeline: "Timeline"
+            }
         },
         hero: {
             tagline: "La Rivoluzione AI per le Cucine è Qui",
