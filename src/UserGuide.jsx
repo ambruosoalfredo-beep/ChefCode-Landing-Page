@@ -38,6 +38,7 @@ import kitchenDashboardVideo from './assets/kitchen_dashboard.webm';
 import managementDashboardVideo from './assets/management_dashboard.webm';
 import shoppingVideo from './assets/shopping.webm';
 import validateOrderVideo from './assets/validate_order.webm';
+import aiVoiceVideo from './assets/ai_voice_flow.webm';
 import ocrScanImg from './assets/ocr_scan.png';
 import guideImg1 from './assets/user_guide_3.jpeg';
 import guideImg2 from './assets/user_guide_2.jpeg';
@@ -239,7 +240,7 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose }) => {
             src={videoUrl} 
             className="w-full h-full object-contain origin-center bg-black"
             autoPlay 
-            muted 
+            controls
             playsInline
             loop
           />
@@ -289,7 +290,7 @@ const UserGuide = () => {
   const aiFlowSteps = [
     { title: "Repeat Manually Completed Actions", content: "Use the text AI Assistant to repeat one or more supported actions completed manually.", hasVideo: true },
     { title: "Ask AI for Insights", content: "Ask the AI about inventory, recipes, costs, sales results, dashboards, or tasks and compare the answer with the platform pages.", hasVideo: true },
-    { title: "Use Voice Assistant", content: "If available on your device, repeat the same test using the Voice Assistant.", hasVideo: true },
+    { title: "Use Voice Assistant", content: "If available on your device, repeat the same test using the Voice Assistant.", hasVideo: true, videoSrc: aiVoiceVideo },
     { title: "Verify and Confirm", content: "Whenever the AI Assistant proposes a data-changing action, you must confirm it before it applies. Test cancelling as well as confirming.", hasVideo: false },
     { title: "Report Feedback", content: "Use the Send Feedback button to report any incorrect answer, missing information, unexpected action, unclear step, or improvement suggestion.", hasVideo: false },
   ];
