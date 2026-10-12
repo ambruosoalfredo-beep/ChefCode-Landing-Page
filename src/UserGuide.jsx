@@ -48,14 +48,14 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
   
   return (
     <div 
-      className={`bg-white border transition-all duration-500 transform overflow-hidden ${
+      className={`bg-white border transition-all duration-500 transform overflow-hidden group cursor-pointer ${
         isActive 
           ? 'border-slate-200 border-l-[6px] border-l-slate-900 shadow-2xl scale-[1.01] rounded-[1.5rem]' 
-          : 'border-slate-200 rounded-2xl hover:border-slate-300 hover:shadow-xl hover:-translate-y-1'
+          : 'border-slate-200 rounded-2xl hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5 hover:-translate-y-1'
       }`}
     >
       <div 
-        className="p-5 md:p-8 flex items-start gap-5 cursor-pointer group"
+        className="p-5 md:p-8 flex items-start gap-5"
         onClick={() => {
           setActiveIndex(index);
         }}
@@ -64,15 +64,35 @@ const StepItem = ({ step, index, activeIndex, setActiveIndex, setIsVideoOpen, se
           {index + 1}
         </div>
         <div className="flex-1">
-          <div className="flex items-center justify-between mt-1">
-            <h4 className={`font-bold text-xl mb-1 ${isActive ? 'text-slate-900' : 'text-slate-700'}`}>
-              {step?.title}
-            </h4>
-            <ChevronDown 
-              className={`w-6 h-6 transition-transform duration-300 ${
-                isActive ? 'rotate-180 text-orange-500' : 'text-slate-300 group-hover:text-slate-500'
-              }`} 
-            />
+          <div className="flex items-center justify-between mt-1 gap-3">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h4 className={`font-bold text-lg md:text-xl transition-colors duration-300 ${isActive ? 'text-slate-900' : 'text-slate-700 group-hover:text-orange-600'}`}>
+                {step?.title}
+              </h4>
+              {step?.hasVideo ? (
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase transition-all duration-300 shadow-sm ${
+                  isActive
+                    ? 'bg-orange-500 text-white shadow-orange-500/30'
+                    : 'bg-orange-50 text-orange-600 border border-orange-200/80 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 group-hover:shadow-md group-hover:shadow-orange-500/25 group-hover:scale-105'
+                }`}>
+                  <Play className="w-3 h-3 fill-current transition-transform duration-300 group-hover:scale-110" />
+                  <span>{step.twoWideVideos || step.videoSrc2 !== undefined ? '2 Videos' : 'Video Demo'}</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-slate-400 bg-slate-100 border border-slate-200/60">
+                  Guide
+                </span>
+              )}
+            </div>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
+              isActive ? 'bg-orange-50 text-orange-500' : 'bg-slate-100 text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-500'
+            }`}>
+              <ChevronDown 
+                className={`w-5 h-5 transition-transform duration-300 ${
+                  isActive ? 'rotate-180' : 'group-hover:translate-y-0.5'
+                }`} 
+              />
+            </div>
           </div>
           <AnimatePresence>
             {isActive && (
@@ -516,7 +536,7 @@ const UserGuide = () => {
                   <User className="text-orange-500 w-8 h-8 p-1.5 bg-orange-100 rounded-lg" />
                   Manual Flow
                 </h3>
-                <p className="text-slate-500 text-lg">Learn the platform directly by completing these tasks manually.</p>
+                <p className="text-slate-500 text-lg">Learn the platform directly by completing these tasks manually. <span className="text-sm font-semibold text-orange-600 block sm:inline sm:ml-2">💡 Click any step to open instructions and watch video demos.</span></p>
               </div>
               
               <div className="flex flex-col gap-4">
@@ -545,7 +565,7 @@ const UserGuide = () => {
                   <Bot className="text-blue-500 w-8 h-8 p-1.5 bg-blue-100 rounded-lg" />
                   AI Flow
                 </h3>
-                <p className="text-slate-500 text-lg">Consult the same data and repeat actions through text or voice AI.</p>
+                <p className="text-slate-500 text-lg">Consult the same data and repeat actions through text or voice AI. <span className="text-sm font-semibold text-blue-600 block sm:inline sm:ml-2">💡 Click any step to explore AI capabilities.</span></p>
               </div>
               
               <div className="flex flex-col gap-4">
