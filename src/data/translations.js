@@ -11,6 +11,7 @@ export const translations = {
             home: "Home",
             bookDemo: "Book a Demo",
             backToHome: "Back to Home",
+            testerGuide: "Tester Guide",
             guideNavbar: {
                 quickStart: "Quick Start",
                 whatToTest: "What to Test",
@@ -760,6 +761,7 @@ export const translations = {
             home: "Home",
             bookDemo: "Prenota Demo",
             backToHome: "Torna alla Home",
+            testerGuide: "Guida Utente",
             guideNavbar: {
                 quickStart: "Quick Start",
                 whatToTest: "Cosa Testare",

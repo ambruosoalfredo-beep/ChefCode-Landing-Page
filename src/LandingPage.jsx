@@ -269,7 +269,7 @@ const LandingPage = () => {
             <NavLink href="/#faq" scrolled={scrolled}>{t('navbar.faq')}</NavLink>
             <NavLink href="/partners" scrolled={scrolled}>{t('navbar.partners')}</NavLink>
             <NavLink href="/about" scrolled={scrolled}>{t('navbar.aboutUs')}</NavLink>
-            <NavLink href="/guide" scrolled={scrolled}>Tester Guide</NavLink>
+            <NavLink href="/guide" scrolled={scrolled}>{t('navbar.testerGuide')}</NavLink>
           </div>
 
           {/* Desktop Right Side */}
@@ -295,7 +295,7 @@ const LandingPage = () => {
             <NavLink href="/#faq" mobile>{t('navbar.faq')}</NavLink>
             <NavLink href="/partners" mobile>{t('navbar.partners')}</NavLink>
             <NavLink href="/about" mobile>{t('navbar.aboutUs')}</NavLink>
-            <NavLink href="/guide" mobile>Tester Guide</NavLink>
+            <NavLink href="/guide" mobile>{t('navbar.testerGuide')}</NavLink>
             <div className="border-t border-slate-700 pt-6 flex flex-col gap-3">
               <button onClick={scrollToDemo} className="btn-aggressive-primary btn-pulse-orange w-full bg-orange-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-orange-900/50">
                 {t('navbar.bookDemo')}
