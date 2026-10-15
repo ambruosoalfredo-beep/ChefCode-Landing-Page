@@ -35,7 +35,8 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 import videoDemo from './assets/sign_in_opt.webm';
 import ocrExtractionVideo from './assets/ocr_extraction.webm';
 import addIngredientVideo from './assets/add_ingredient.webm';
-import addRecipeVideo from './assets/add_recipe.webm';
+import semiPreparedCremaVideo from './assets/semi_prepared_crema.webm';
+import recipeBurrataVideo from './assets/recipe_burrata.webm';
 import mappingIngredientVideo from './assets/mapping_ingredient.webm';
 import taskVideo from './assets/task.webm';
 import singleSalesVideo from './assets/single_sales.webm';
@@ -306,6 +307,233 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose, placeholderTitle, taskLabe
   );
 };
 
+const highlightMatch = (text, query) => {
+  if (!query || !query.trim()) return text;
+  const q = query.trim();
+  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const parts = String(text).split(regex);
+  return parts.map((part, i) =>
+    regex.test(part) ? (
+      <mark key={i} className="bg-orange-100 text-orange-900 font-bold rounded px-1 py-0.5">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  );
+};
+
+const categoryStyles = {
+  recipes_inventory: {
+    bg: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+    dot: 'bg-emerald-500',
+  },
+  foodcost_sales: {
+    bg: 'bg-amber-50 text-amber-700 border-amber-200/80',
+    dot: 'bg-amber-500',
+  },
+  purchasing_stock: {
+    bg: 'bg-sky-50 text-sky-700 border-sky-200/80',
+    dot: 'bg-sky-500',
+  },
+  kitchen_haccp: {
+    bg: 'bg-rose-50 text-rose-700 border-rose-200/80',
+    dot: 'bg-rose-500',
+  },
+  ai_workflows: {
+    bg: 'bg-purple-50 text-purple-700 border-purple-200/80',
+    dot: 'bg-purple-500',
+  },
+};
+
+const GlossarySection = ({ glossary, language }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  if (!glossary || !glossary.items) return null;
+
+  const categories = [
+    { key: 'all', label: glossary.categories?.all || (language === 'it' ? 'Tutti i Termini' : 'All Terms') },
+    { key: 'recipes_inventory', label: glossary.categories?.recipes_inventory || (language === 'it' ? 'Ricette & Magazzino' : 'Recipes & Inventory') },
+    { key: 'foodcost_sales', label: glossary.categories?.foodcost_sales || (language === 'it' ? 'Food Cost & Vendite' : 'Food Cost & Sales') },
+    { key: 'purchasing_stock', label: glossary.categories?.purchasing_stock || (language === 'it' ? 'Acquisti & Scorte' : 'Purchasing & Stock') },
+    { key: 'kitchen_haccp', label: glossary.categories?.kitchen_haccp || (language === 'it' ? 'Cucina & HACCP' : 'Kitchen Ops & HACCP') },
+    { key: 'ai_workflows', label: glossary.categories?.ai_workflows || (language === 'it' ? 'Flussi & Assistente IA' : 'Workflows & AI') },
+  ];
+
+  const filteredItems = glossary.items.filter((item) => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    if (!matchesCategory) return false;
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    const termMatches = item.term.toLowerCase().includes(q);
+    const meaningMatches = item.meaning.toLowerCase().includes(q);
+    return termMatches || meaningMatches;
+  });
+
+  const getCategoryCount = (catKey) => {
+    if (catKey === 'all') return glossary.items.length;
+    return glossary.items.filter((item) => item.category === catKey).length;
+  };
+
+  return (
+    <section id="glossary" className="mb-16 scroll-mt-28">
+      {/* Title */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+            <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
+              <Book className="w-5 h-5" />
+            </span>
+            {glossary.title}
+          </h2>
+          <p className="text-slate-600 mt-2 text-sm sm:text-base">
+            {glossary.subtitle}
+          </p>
+        </div>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-600 self-start md:self-auto">
+          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+          <span>{glossary.items.length} {language === 'it' ? 'termini documentati' : 'documented terms'}</span>
+        </div>
+      </div>
+
+      {/* Main Container Card */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 relative overflow-hidden">
+        {/* Top Gradient Line */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500"></div>
+
+        {/* Search Bar & Category Controls */}
+        <div className="space-y-4 mb-8">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+              <Search className="w-5 h-5" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={glossary.searchPlaceholder}
+              className="w-full pl-11 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:bg-white transition-all shadow-inner"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                title={language === 'it' ? 'Cancella ricerca' : 'Clear search'}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none pt-1">
+            {categories.map((cat) => {
+              const isSelected = selectedCategory === cat.key;
+              const count = getCategoryCount(cat.key);
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => setSelectedCategory(cat.key)}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-300 ${
+                    isSelected
+                      ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20 scale-[1.02]'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200/80 hover:border-slate-300'
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-orange-500 text-white' : 'bg-slate-200/80 text-slate-500'}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Results count text */}
+          <div className="flex items-center justify-between text-xs text-slate-400 pt-1 px-1">
+            <span>
+              {glossary.termsCount
+                ? glossary.termsCount.replace('{count}', filteredItems.length).replace('{total}', glossary.items.length)
+                : `${filteredItems.length} di ${glossary.items.length} termini`}
+            </span>
+            {(searchQuery || selectedCategory !== 'all') && (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                }}
+                className="text-orange-500 hover:text-orange-600 font-semibold hover:underline"
+              >
+                {glossary.resetSearch}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Terms Grid */}
+        {filteredItems.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredItems.map((item) => {
+              const catStyle = categoryStyles[item.category] || categoryStyles.recipes_inventory;
+              const catLabel = glossary.categories?.[item.category] || item.category;
+
+              return (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-lg hover:border-orange-200 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    {/* Category badge */}
+                    <div className="flex items-center justify-between gap-2 mb-2.5">
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border tracking-wide uppercase ${catStyle.bg}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${catStyle.dot}`}></span>
+                        {catLabel}
+                      </span>
+                    </div>
+
+                    {/* Term Title */}
+                    <h3 className="font-bold text-slate-900 text-base md:text-lg group-hover:text-orange-600 transition-colors leading-snug">
+                      {highlightMatch(item.term, searchQuery)}
+                    </h3>
+
+                    {/* Definition */}
+                    <p className="text-slate-600 text-sm leading-relaxed mt-2 font-normal">
+                      {highlightMatch(item.meaning, searchQuery)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* Empty state */
+          <div className="text-center py-12 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200">
+            <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 mx-auto flex items-center justify-center mb-3">
+              <Search className="w-6 h-6" />
+            </div>
+            <h4 className="text-base font-bold text-slate-800 mb-1">
+              {glossary.noResultsTitle}
+            </h4>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto mb-4">
+              {glossary.noResultsDesc}
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500 text-white font-semibold text-xs shadow-md shadow-orange-500/20 hover:bg-orange-600 transition-colors"
+            >
+              {glossary.resetSearch}
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
 const UserGuide = () => {
   const { t, language } = useLanguage();
   const guide = translations[language]?.userGuide || translations['en'].userGuide;
@@ -370,7 +598,7 @@ const UserGuide = () => {
       { threshold: 0.15, rootMargin: "-15% 0px -40% 0px" }
     );
 
-    const sections = ['quick-start', 'what-to-test', 'suggested-tests', 'guardrails', 'feedback-bugs', 'timeline'];
+    const sections = ['quick-start', 'what-to-test', 'suggested-tests', 'guardrails', 'feedback-bugs', 'glossary', 'timeline'];
     sections.forEach(id => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -407,7 +635,16 @@ const UserGuide = () => {
   const manualFlowSteps = [
     { title: guide.suggestedTests.manualSteps[0].title, content: guide.suggestedTests.manualSteps[0].content, hasVideo: true, videoSrc: videoDemo },
     { title: guide.suggestedTests.manualSteps[1].title, content: guide.suggestedTests.manualSteps[1].content, hasVideo: true, videoSrc: ocrExtractionVideo, videoSrc2: addIngredientVideo, loopAt: 11.90 },
-    { title: guide.suggestedTests.manualSteps[2].title, content: guide.suggestedTests.manualSteps[2].content, hasVideo: true, videoSrc: addRecipeVideo },
+    { 
+      title: guide.suggestedTests.manualSteps[2].title, 
+      content: guide.suggestedTests.manualSteps[2].content, 
+      hasVideo: true, 
+      videoSrc: semiPreparedCremaVideo, 
+      videoSrc2: recipeBurrataVideo, 
+      twoWideVideos: true, 
+      vid1Label: guide.suggestedTests.manualSteps[2].vid1Label, 
+      vid2Label: guide.suggestedTests.manualSteps[2].vid2Label 
+    },
     { title: guide.suggestedTests.manualSteps[3].title, content: guide.suggestedTests.manualSteps[3].content, hasVideo: true, videoSrc: mappingIngredientVideo },
     { title: guide.suggestedTests.manualSteps[4].title, content: guide.suggestedTests.manualSteps[4].content, hasVideo: true, videoSrc: taskVideo },
     { title: guide.suggestedTests.manualSteps[5].title, content: guide.suggestedTests.manualSteps[5].content, hasVideo: true, videoSrc: singleSalesVideo, videoSrc2: massImportVideo, twoWideVideos: true, vid1Label: guide.suggestedTests.manualSteps[5].vid1Label, vid2Label: guide.suggestedTests.manualSteps[5].vid2Label },
@@ -494,6 +731,7 @@ const UserGuide = () => {
             <NavLink id="suggested-tests" label={t('navbar.guideNavbar.suggestedTests')} />
             <NavLink id="guardrails" label={t('navbar.guideNavbar.guardrails')} />
             <NavLink id="feedback-bugs" label={t('navbar.guideNavbar.feedbackBugs')} />
+            <NavLink id="glossary" label={t('navbar.guideNavbar.glossary')} />
             <NavLink id="timeline" label={t('navbar.guideNavbar.timeline')} />
           </div>
 
@@ -521,6 +759,7 @@ const UserGuide = () => {
             <NavLink id="suggested-tests" label={t('navbar.guideNavbar.suggestedTests')} mobile />
             <NavLink id="guardrails" label={t('navbar.guideNavbar.guardrails')} mobile />
             <NavLink id="feedback-bugs" label={t('navbar.guideNavbar.feedbackBugs')} mobile />
+            <NavLink id="glossary" label={t('navbar.guideNavbar.glossary')} mobile />
             <NavLink id="timeline" label={t('navbar.guideNavbar.timeline')} mobile />
             <div className="pt-3 border-t border-slate-800 flex justify-between items-center">
               <Link to="/" className="text-orange-400 font-bold text-sm hover:underline flex items-center gap-1.5" onClick={() => setIsMenuOpen(false)}>
@@ -571,6 +810,24 @@ const UserGuide = () => {
             >
               {guide.hero.description}
             </motion.p>
+
+            {/* Quick Hero Glossary CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            >
+              <a
+                href="#glossary"
+                onClick={(e) => scrollToSection(e, 'glossary')}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-orange-500 border border-white/20 hover:border-orange-500 text-orange-300 hover:text-white font-semibold text-xs sm:text-sm transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-orange-500/30 hover:-translate-y-0.5 group"
+              >
+                <Book className="w-4 h-4 text-orange-400 group-hover:text-white transition-colors" />
+                <span>{guide.glossary?.heroButton || (language === 'it' ? 'Consulta il Glossario (28 termini)' : 'Explore Glossary (28 terms)')}</span>
+                <span className="text-orange-400 group-hover:text-white transition-transform group-hover:translate-y-0.5">↓</span>
+              </a>
+            </motion.div>
           </div>
         </div>
 
@@ -1013,10 +1270,15 @@ const UserGuide = () => {
           </div>
         </div>
 
+        {/* Glossary Section */}
+        <GlossarySection glossary={guide.glossary} language={language} />
+
         {/* Timeline */}
         <section id="timeline" className="scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">4</span>
+            <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
+              <Calendar className="w-5 h-5" />
+            </span>
             {guide.timeline.title}
           </h2>
           <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 overflow-hidden relative">

@@ -18,6 +18,7 @@ export const translations = {
                 suggestedTests: "Suggested Tests",
                 guardrails: "Guardrails",
                 feedbackBugs: "Feedback & Bugs",
+                glossary: "Glossary",
                 timeline: "Timeline"
             }
         },
@@ -643,7 +644,7 @@ export const translations = {
                 manualSteps: [
                     { title: "Sign in and select Role", content: "Sign in and select the Chef or F&B Manager role." },
                     { title: "Add Inventory Ingredients", content: "Add ingredients manually or use the OCR Scanner to upload an invoice for massive and automatic insertion." },
-                    { title: "Create Prepared or Semi-Prepared Recipe", content: "Create recipes for your menu. A Semi-Prepared recipe is a base preparation (e.g., Mayonnaise, Ragù) that can be reused as an ingredient in other recipes. A Prepared recipe is the final finished dish served to the customer." },
+                    { title: "Create Prepared or Semi-Prepared Recipe", content: "Build your menu by clearly separating internal kitchen prep from plated dishes. A Semi-Prepared item is a base preparation produced in-house by the kitchen brigade (such as the beetroot cream shown in the video, stocks, or base sauces) to be reused as an ingredient across multiple dishes. A Prepared Recipe is the finalized dish plated and served to the customer (such as the burrata & beetroot risotto), with ChefCode calculating full food cost and margins by aggregating raw items and semi-prepared bases.", vid1Label: "Semi-Prepared", vid2Label: "Prepared Recipe" },
                     { title: "Map Ingredients & Review", content: "Link generic recipe ingredients (e.g., 'pork fillet') to your actual inventory items to calculate costs. This is only needed if the names differ; otherwise, it's automatic. Then, review yield, cost, allergens, and selling price." },
                     { title: "Create Production & Operational Tasks", content: "Create Production Tasks to generate finished items (deducting ingredients automatically) or Operational Tasks (e.g., 'change fryer oil') to deduct specific items. Finished products are added to your stock and deducted upon sales." },
                     { title: "Record Sales & Mass Import", content: "Choose between two methods to record your sales: Single Sale for real-time POS-style entry, or Mass Import to download a CSV template, enter sold quantities, and re-upload to register all sales at once.", vid1Label: "Single Sale", vid2Label: "Massive Import" },
@@ -746,7 +747,56 @@ export const translations = {
             },
             videoComingSoon: "Video coming soon...",
             videoPlaceholder: "Video/GIF Placeholder",
-            feedbackGuideBtn: "How to Report Feedback & Bugs"
+            feedbackGuideBtn: "How to Report Feedback & Bugs",
+            glossary: {
+                title: "ChefCode Glossary",
+                subtitle: "Simple definitions of the main words used in the platform and this guide.",
+                searchPlaceholder: "Search terms or definitions (e.g., Food Cost, Yield, HACCP, Mapping)...",
+                heroBadge: "Need clarification on terms?",
+                heroButton: "Explore Glossary (28 terms)",
+                categories: {
+                    all: "All Terms",
+                    recipes_inventory: "Recipes & Inventory",
+                    foodcost_sales: "Food Cost & Sales",
+                    purchasing_stock: "Purchasing & Stock",
+                    kitchen_haccp: "Kitchen Ops & HACCP",
+                    ai_workflows: "Workflows & AI"
+                },
+                termsCount: "Showing {count} of {total} terms",
+                noResultsTitle: "No matching terms found",
+                noResultsDesc: "Try searching for another keyword or clear your filter.",
+                resetSearch: "Reset Search",
+                items: [
+                    { id: "inventory_item", term: "Inventory item / Raw material", meaning: "An ingredient or product recorded in stock.", category: "recipes_inventory" },
+                    { id: "prepared_recipe", term: "Prepared recipe", meaning: "A final dish or preparation intended for service or sale. It may contain inventory ingredients and semi-prepared recipes.", category: "recipes_inventory" },
+                    { id: "semi_prepared_recipe", term: "Semi-prepared recipe", meaning: "An intermediate preparation used inside another recipe, such as a sauce, dough, stock, cream, or base.", category: "recipes_inventory" },
+                    { id: "selling_price", term: "Selling price", meaning: "The price assigned to a sellable recipe or directly sold item. It is optional for semi-prepared recipes.", category: "foodcost_sales" },
+                    { id: "needs_action", term: "Needs Action", meaning: "A recipe status indicating that required information, mapping, or another action is still missing. A semi-prepared recipe should not enter this status solely because it has no selling price.", category: "recipes_inventory" },
+                    { id: "ingredient_mapping", term: "Ingredient mapping", meaning: "Linking the ingredient written in a recipe to the corresponding inventory item or semi-prepared recipe in ChefCode, enabling costing and stock deduction.", category: "recipes_inventory" },
+                    { id: "final_yield", term: "Final Yield", meaning: "The total output quantity and unit produced by one complete recipe batch. ChefCode uses it for portioning and production scaling.", category: "recipes_inventory" },
+                    { id: "food_cost", term: "Food Cost", meaning: "The cost of the ingredients required to produce a recipe.", category: "foodcost_sales" },
+                    { id: "food_cost_pct", term: "Food Cost %", meaning: "Recipe cost divided by selling price, expressed as a percentage.", category: "foodcost_sales" },
+                    { id: "margin", term: "Margin", meaning: "The difference between selling price and recipe cost before other operating expenses.", category: "foodcost_sales" },
+                    { id: "covers", term: "Covers", meaning: "The number of guests associated with a saved sales batch.", category: "foodcost_sales" },
+                    { id: "sales_channel", term: "Sales channel", meaning: "How the sale was served: Dine In, Takeaway, or Delivery.", category: "foodcost_sales" },
+                    { id: "safety_stock", term: "Safety Stock", meaning: "The minimum desired stock quantity. Falling below it can generate replenishment suggestions and alerts.", category: "purchasing_stock" },
+                    { id: "goods_in", term: "Goods In", meaning: "The process of recording delivered goods and adding them to inventory.", category: "purchasing_stock" },
+                    { id: "pending_delivery", term: "Pending Delivery", meaning: "A placed purchase order awaiting confirmation of the quantities and prices actually received.", category: "purchasing_stock" },
+                    { id: "variance", term: "Variance", meaning: "The difference between what was ordered and what was received, in quantity or price.", category: "purchasing_stock" },
+                    { id: "ocr", term: "OCR", meaning: "Optical Character Recognition: automatic extraction of invoice information from an image. Extracted data must be reviewed.", category: "purchasing_stock" },
+                    { id: "production_task", term: "Production Task", meaning: "A task linked to a selected recipe and its production output. When completed, ChefCode deducts the ingredients required by that recipe from inventory.", category: "kitchen_haccp" },
+                    { id: "batch", term: "Batch", meaning: "A group of sales, goods, or production records handled as one operation.", category: "kitchen_haccp" },
+                    { id: "scale_ticket", term: "Scale ticket", meaning: "An open weighing session used to review and confirm measured ingredient consumption.", category: "kitchen_haccp" },
+                    { id: "temperature_point", term: "Temperature Point", meaning: "A configured fridge, freezer, or monitored location used for temperature records.", category: "kitchen_haccp" },
+                    { id: "haccp", term: "HACCP", meaning: "The food-safety control framework used for monitoring risks such as temperatures and expiry dates.", category: "kitchen_haccp" },
+                    { id: "role_based_view", term: "Role-Based View", meaning: "The set of pages displayed according to the selected role: Waiter, Sub-Chef, Chef, or F&B Manager.", category: "kitchen_haccp" },
+                    { id: "operational_task", term: "Operational Task", meaning: "A custom activity with a user-defined title, such as Change the fryer oil. The user selects the inventory item that must be deducted when the task is completed.", category: "kitchen_haccp" },
+                    { id: "manual_flow", term: "Manual Flow", meaning: "Completing a workflow directly from the relevant ChefCode page and fields.", category: "ai_workflows" },
+                    { id: "ai_flow", term: "AI Flow", meaning: "Using the text or Voice Assistant to consult ChefCode data or prepare a currently supported action.", category: "ai_workflows" },
+                    { id: "proposed_action", term: "Proposed action", meaning: "A data-changing operation prepared by the AI and shown to the user before it is applied.", category: "ai_workflows" },
+                    { id: "confirmation", term: "Confirmation", meaning: "The explicit user approval required before the AI applies a proposed data change.", category: "ai_workflows" }
+                ]
+            }
         }
     },
     it: {
@@ -768,6 +818,7 @@ export const translations = {
                 suggestedTests: "Test Suggeriti",
                 guardrails: "Guardrails",
                 feedbackBugs: "Feedback & Bug",
+                glossary: "Glossario",
                 timeline: "Timeline"
             }
         },
@@ -1393,7 +1444,7 @@ export const translations = {
                 manualSteps: [
                     { title: "Accesso e Selezione Ruolo", content: "Accedi alla piattaforma e seleziona il profilo Chef o F&B Manager per iniziare la sessione di lavoro." },
                     { title: "Inserimento Ingredienti in Dispensa", content: "Aggiungi le materie prime manualmente oppure utilizza lo Scanner OCR per caricare una fattura ed effettuare un caricamento massivo e automatico." },
-                    { title: "Creazione Ricette e Semilavorati", content: "Crea le ricette per il tuo menù. Un Semilavorato è una preparazione base (es. Maionese, Ragù) riutilizzabile come ingrediente in altri piatti. Una Ricetta Finita è il piatto finale servito al cliente." },
+                    { title: "Creazione Ricette e Semilavorati", content: "Organizza il ricettario distinguendo chiaramente le lavorazioni interne dai piatti serviti in sala. Un Semi-Prepared (Semilavorato) è una preparazione prodotta internamente dalla brigata di cucina (come la crema di barbabietola del video, salse base, fondi o impasti), utile per essere impiegata in anticipo come ingrediente in altre ricette. Una Prepared Recipe (Ricetta Finita) è il piatto completato e finalizzato che viene servito al tavolo del cliente (come il risotto burrata e barbabietola), di cui ChefCode calcola food cost e margini aggregando automaticamente materie prime e semilavorati.", vid1Label: "Semi-Prepared", vid2Label: "Prepared Recipe" },
                     { title: "Mappatura Ingredienti e Analisi Costi", content: "Collega gli ingredienti generici della ricetta (es. 'filetto di maiale') agli articoli effettivi presenti in magazzino per calcolare i costi. L'operazione è automatica se i nomi coincidono. Verifica resa, food cost, allergeni e prezzo di vendita." },
                     { title: "Attività di Produzione e Task Operativi", content: "Crea Task di Produzione per generare lotti di prodotti finiti (scalando automaticamente gli ingredienti utilizzati) oppure Task Operativi (es. 'sostituzione olio friggitrice') per scaricare materiali specifici. I prodotti finiti entrano a stock e vengono scaricati alla vendita." },
                     { title: "Registrazione Vendite e Import Massivo", content: "Scegli tra due modalità per registrare il venduto: Vendita Singola in tempo reale in stile cassa POS, oppure Importazione Massiva scaricando il template CSV, inserendo i quantitativi venduti e ricaricando il file per registrare tutti i coperti in un colpo solo.", vid1Label: "Vendita Singola", vid2Label: "Import Massivo" },
@@ -1496,7 +1547,56 @@ export const translations = {
             },
             videoComingSoon: "Video in arrivo...",
             videoPlaceholder: "Video/GIF Dimostrativo",
-            feedbackGuideBtn: "Consulta la guida Feedback & Bug"
+            feedbackGuideBtn: "Consulta la guida Feedback & Bug",
+            glossary: {
+                title: "Glossario ChefCode",
+                subtitle: "Definizioni semplici e chiare dei termini principali utilizzati nella piattaforma e in questa guida.",
+                searchPlaceholder: "Cerca un termine o definizione (es. Food Cost, Yield, HACCP, Mappatura)...",
+                heroBadge: "Dubbi sui termini della piattaforma?",
+                heroButton: "Consulta il Glossario (28 termini)",
+                categories: {
+                    all: "Tutti i Termini",
+                    recipes_inventory: "Ricette & Magazzino",
+                    foodcost_sales: "Food Cost & Vendite",
+                    purchasing_stock: "Acquisti & Scorte",
+                    kitchen_haccp: "Cucina & HACCP",
+                    ai_workflows: "Flussi & Assistente IA"
+                },
+                termsCount: "Mostrando {count} di {total} termini",
+                noResultsTitle: "Nessun termine trovato",
+                noResultsDesc: "Prova a cercare un'altra parola chiave o azzera i filtri.",
+                resetSearch: "Azzera Ricerca",
+                items: [
+                    { id: "inventory_item", term: "Ingrediente a magazzino / Materia prima", meaning: "Un ingrediente o prodotto registrato e presente nelle scorte di magazzino.", category: "recipes_inventory" },
+                    { id: "prepared_recipe", term: "Ricetta finita / Piatto preparato", meaning: "Un piatto o preparazione finale destinata al servizio o alla vendita. Può contenere ingredienti a magazzino e semilavorati.", category: "recipes_inventory" },
+                    { id: "semi_prepared_recipe", term: "Semilavorato / Preparazione intermedia", meaning: "Una preparazione intermedia utilizzata all'interno di un'altra ricetta, come una salsa, un impasto, un brodo, una crema o una linea base.", category: "recipes_inventory" },
+                    { id: "selling_price", term: "Prezzo di vendita", meaning: "Il prezzo assegnato a una ricetta vendibile o a un articolo venduto direttamente al pubblico. È facoltativo per i semilavorati.", category: "foodcost_sales" },
+                    { id: "needs_action", term: "Richiede Azione (Needs Action)", meaning: "Stato di una ricetta che indica che mancano informazioni obbligatorie, mappature o altre azioni da completare. Un semilavorato non entra in questo stato solo perché non ha un prezzo di vendita.", category: "recipes_inventory" },
+                    { id: "ingredient_mapping", term: "Mappatura ingredienti", meaning: "Il collegamento dell'ingrediente indicato in una ricetta alla corrispondente materia prima o semilavorato in ChefCode, per calcolare il food cost e scalare le giacenze.", category: "recipes_inventory" },
+                    { id: "final_yield", term: "Resa finale (Final Yield)", meaning: "La quantità e unità di misura totale effettivamente prodotta da un lotto completo di ricetta. ChefCode la impiega per calcolare le porzioni e scalare le produzioni.", category: "recipes_inventory" },
+                    { id: "food_cost", term: "Food Cost", meaning: "Il costo vivo delle materie prime e degli ingredienti necessari per produrre una ricetta o porzione.", category: "foodcost_sales" },
+                    { id: "food_cost_pct", term: "Food Cost %", meaning: "Il costo vivo della ricetta diviso per il prezzo di vendita netto, espresso in percentuale.", category: "foodcost_sales" },
+                    { id: "margin", term: "Margine di contribuzione (Margin)", meaning: "La differenza tra il prezzo di vendita e il costo degli ingredienti della ricetta, al lordo delle altre spese di gestione.", category: "foodcost_sales" },
+                    { id: "covers", term: "Coperti (Covers)", meaning: "Il numero di ospiti o clienti associati a un lotto o sessione di vendite registrata.", category: "foodcost_sales" },
+                    { id: "sales_channel", term: "Canale di vendita", meaning: "La modalità con cui è stata servita la vendita: Sala (Dine In), Asporto (Takeaway) o Consegna a domicilio (Delivery).", category: "foodcost_sales" },
+                    { id: "safety_stock", term: "Scorta di sicurezza (Safety Stock)", meaning: "La quantità minima desiderata a magazzino. Scendere al di sotto di questa soglia genera avvisi e suggerimenti automatici di riordino.", category: "purchasing_stock" },
+                    { id: "goods_in", term: "Carico merci (Goods In)", meaning: "La procedura di registrazione delle merci consegnate dai fornitori e il relativo carico a magazzino.", category: "purchasing_stock" },
+                    { id: "pending_delivery", term: "Consegna in attesa (Pending Delivery)", meaning: "Un ordine d'acquisto inviato al fornitore e in attesa della conferma effettiva di quantità e prezzi ricevuti.", category: "purchasing_stock" },
+                    { id: "variance", term: "Scostamento / Differenza (Variance)", meaning: "La differenza tra quanto ordinato e quanto effettivamente consegnato o fatturato, in termini di quantità o prezzo unitario.", category: "purchasing_stock" },
+                    { id: "ocr", term: "OCR (Riconoscimento Fatture)", meaning: "Riconoscimento Ottico dei Caratteri: estrazione automatica dei dati di fatture e DDT da una foto o scansione. I dati estratti vanno sempre verificati.", category: "purchasing_stock" },
+                    { id: "production_task", term: "Task di produzione", meaning: "Un'attività collegata a una ricetta e alla quantità da produrre. Al completamento, ChefCode scarica automaticamente gli ingredienti dal magazzino.", category: "kitchen_haccp" },
+                    { id: "batch", term: "Lotto / Batch", meaning: "Un raggruppamento di registrazioni di vendita, carico merci o sessioni di produzione gestite insieme come un'unica operazione.", category: "kitchen_haccp" },
+                    { id: "scale_ticket", term: "Scheda / Sessione di pesatura (Scale ticket)", meaning: "Una sessione di pesatura aperta utilizzata per registrare, verificare e confermare il consumo reale degli ingredienti misurati alla bilancia.", category: "kitchen_haccp" },
+                    { id: "temperature_point", term: "Punto di temperatura", meaning: "Un frigorifero, congelatore o ambiente monitorato e configurato per la registrazione periodica delle temperature.", category: "kitchen_haccp" },
+                    { id: "haccp", term: "HACCP", meaning: "Il protocollo di sicurezza alimentare utilizzato per monitorare costantemente i punti critici di controllo, come temperature e scadenze.", category: "kitchen_haccp" },
+                    { id: "role_based_view", term: "Vista basata sui ruoli", meaning: "L'insieme delle schermate e delle funzionalità mostrate in base al profilo selezionato: Cameriere, Sub-Chef, Chef o F&B Manager.", category: "kitchen_haccp" },
+                    { id: "operational_task", term: "Task operativo", meaning: "Un'attività personalizzata con titolo a scelta (es. 'Cambio olio friggitrice'). L'utente può selezionare l'articolo da magazzino da scaricare al completamento del task.", category: "kitchen_haccp" },
+                    { id: "manual_flow", term: "Flusso Manuale", meaning: "Il completamento di una procedura compilando e navigando direttamente le schermate e i campi convenzionali di ChefCode.", category: "ai_workflows" },
+                    { id: "ai_flow", term: "Flusso con Assistente IA", meaning: "L'utilizzo dell'assistente testuale o vocale per consultare i dati di ChefCode o predisporre velocemente un'azione supportata.", category: "ai_workflows" },
+                    { id: "proposed_action", term: "Azione proposta (dall'IA)", meaning: "Un'operazione di creazione o modifica dati preparata dall'Intelligenza Artificiale e mostrata all'utente in anteprima prima di essere applicata.", category: "ai_workflows" },
+                    { id: "confirmation", term: "Conferma esplicita", meaning: "L'approvazione formale e obbligatoria richiesta all'utente prima che l'AI applichi effettivamente qualsiasi variazione ai dati di sistema.", category: "ai_workflows" }
+                ]
+            }
         }
     }
 };
