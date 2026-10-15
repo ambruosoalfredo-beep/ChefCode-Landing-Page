@@ -1562,18 +1562,18 @@ const UserGuide = () => {
           </div>
 
           <div className="bg-gradient-to-b from-white via-slate-50/50 to-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/90 relative overflow-hidden">
-            {/* Top decorative gradient bar */}
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500"></div>
+            {/* Top decorative orange gradient bar */}
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"></div>
 
-            {/* Ambient background glows */}
+            {/* Ambient warm background glow (unified orange brand palette) */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
             {/* Roadmap flow */}
             <div className="relative">
               {/* Horizontal Connecting Line (Desktop) */}
-              <div className="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-1 bg-slate-100 z-0">
-                <div className="w-full h-full bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 rounded-full opacity-60"></div>
+              <div className="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-1 bg-orange-100 z-0">
+                <div className="w-full h-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-full opacity-70"></div>
               </div>
 
               {/* 4 Roadmap Milestone Columns */}
@@ -1581,90 +1581,61 @@ const UserGuide = () => {
                 {guide.timeline.cards.map((item, i) => {
                   const icons = [Rocket, ClipboardCheck, Users, Award];
                   const StepIcon = icons[i] || Calendar;
-                  
-                  const stepThemes = [
-                    {
-                      badge: 'bg-orange-50 text-orange-600 border-orange-200/80',
-                      node: 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-orange-500/30 ring-orange-100',
-                      iconBox: 'bg-orange-500/10 text-orange-600 group-hover:bg-orange-500 group-hover:text-white',
-                      borderHover: 'group-hover:border-orange-500/40',
-                      tagIcon: 'text-orange-500',
-                    },
-                    {
-                      badge: 'bg-amber-50 text-amber-700 border-amber-200/80',
-                      node: 'bg-gradient-to-br from-amber-500 to-yellow-500 text-white shadow-amber-500/30 ring-amber-100',
-                      iconBox: 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500 group-hover:text-white',
-                      borderHover: 'group-hover:border-amber-500/40',
-                      tagIcon: 'text-amber-500',
-                    },
-                    {
-                      badge: 'bg-blue-50 text-blue-700 border-blue-200/80',
-                      node: 'bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-blue-500/30 ring-blue-100',
-                      iconBox: 'bg-blue-500/10 text-blue-600 group-hover:bg-blue-500 group-hover:text-white',
-                      borderHover: 'group-hover:border-blue-500/40',
-                      tagIcon: 'text-blue-500',
-                    },
-                    {
-                      badge: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                      node: 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-emerald-500/30 ring-emerald-100',
-                      iconBox: 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white',
-                      borderHover: 'group-hover:border-emerald-500/40',
-                      tagIcon: 'text-emerald-500',
-                    }
-                  ][i % 4];
 
                   return (
                     <div key={i} className="flex flex-col group">
                       {/* Milestone Node on Track (Desktop) */}
                       <div className="hidden md:flex items-center justify-center w-full mb-5">
-                        <div className={`w-14 h-14 rounded-2xl ${stepThemes.node} shadow-lg flex items-center justify-center font-black text-base tracking-tight border-2 border-white ring-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl`}>
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25 flex items-center justify-center font-black text-base tracking-tight border-2 border-white ring-4 ring-orange-100 transition-all duration-300 group-hover:scale-110 group-hover:shadow-orange-500/40">
                           {item.step || `0${i + 1}`}
                         </div>
                       </div>
 
-                      {/* Milestone Card */}
-                      <div className={`flex-1 bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-sm ${stepThemes.borderHover} transition-all duration-300 flex flex-col justify-between h-full group-hover:shadow-lg group-hover:-translate-y-1 relative`}>
+                      {/* Milestone Card (Centered content & unified ChefCode palette) */}
+                      <div className="flex-1 bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-sm group-hover:border-orange-500/40 transition-all duration-300 flex flex-col items-center text-center justify-between h-full group-hover:shadow-xl group-hover:-translate-y-1 relative">
                         {/* Mobile Header: Step Badge & Phase */}
-                        <div className="md:hidden flex items-center justify-between mb-3.5">
+                        <div className="md:hidden flex items-center justify-between w-full mb-4">
                           <div className="flex items-center gap-2">
-                            <span className={`w-7 h-7 rounded-lg ${stepThemes.node} flex items-center justify-center text-xs font-black shadow-sm`}>
+                            <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
                               {item.step || `0${i + 1}`}
                             </span>
-                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${stepThemes.badge}`}>
+                            <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full border uppercase tracking-wider bg-orange-50 text-orange-600 border-orange-200/80">
                               {item.phase || `Tappa 0${i + 1}`}
                             </span>
                           </div>
-                          <div className={`w-8 h-8 rounded-xl ${stepThemes.iconBox} flex items-center justify-center`}>
+                          <div className="w-8 h-8 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center">
                             <StepIcon className="w-4 h-4" />
                           </div>
                         </div>
 
-                        <div className="flex flex-col flex-1">
-                          {/* Desktop Header: Phase Badge & Step Icon */}
-                          <div className="hidden md:flex items-center justify-between mb-4">
-                            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border uppercase tracking-wider ${stepThemes.badge}`}>
+                        <div className="flex flex-col items-center text-center flex-1 w-full">
+                          {/* Centered Step Icon */}
+                          <div className="hidden md:flex w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 items-center justify-center mb-3.5 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-sm">
+                            <StepIcon className="w-5 h-5" />
+                          </div>
+
+                          {/* Centered Phase Badge */}
+                          <div className="hidden md:flex justify-center mb-3">
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full border uppercase tracking-wider bg-orange-50 text-orange-600 border-orange-200/80">
                               {item.phase || `Tappa 0${i + 1}`}
                             </span>
-                            <div className={`w-9 h-9 rounded-xl ${stepThemes.iconBox} flex items-center justify-center transition-all duration-300 shadow-sm`}>
-                              <StepIcon className="w-4 h-4" />
-                            </div>
                           </div>
 
                           {/* Title with consistent min-height for uniform alignment */}
-                          <h4 className="text-[15px] md:text-base font-bold text-slate-900 mb-2 leading-snug group-hover:text-orange-600 transition-colors min-h-[44px] flex items-center">
+                          <h4 className="text-[15px] md:text-base font-bold text-slate-900 mb-2 leading-snug group-hover:text-orange-600 transition-colors text-center min-h-[44px] flex items-center justify-center">
                             {item.title}
                           </h4>
 
                           {/* Description */}
-                          <p className="text-xs md:text-sm text-slate-600 leading-relaxed flex-1">
+                          <p className="text-xs md:text-sm text-slate-600 leading-relaxed text-center flex-1">
                             {item.desc}
                           </p>
                         </div>
 
-                        {/* Bottom Tag / Micro-metadata */}
+                        {/* Bottom Tag / Micro-metadata centered */}
                         {item.tag && (
-                          <div className="mt-4 pt-3.5 border-t border-slate-100 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                            <Clock className={`w-3.5 h-3.5 ${stepThemes.tagIcon}`} />
+                          <div className="mt-4 pt-3.5 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-500">
+                            <Clock className="w-3.5 h-3.5 text-orange-500" />
                             <span>{item.tag}</span>
                           </div>
                         )}
