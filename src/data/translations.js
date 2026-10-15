@@ -737,12 +737,14 @@ export const translations = {
                 urgentNote: "For anything urgent — you're blocked, can't sign in, or something looks unsafe — contact your Pilot Manager directly."
             },
             timeline: {
-                title: "Pilot Timeline",
+                title: "Pilot Roadmap & Timeline",
+                subtitle: "A structured 4-week path designed to support and onboard your team step by step.",
+                badge: "Pilot Roadmap",
                 cards: [
-                    { title: "Duration", desc: "4 weeks from kickoff" },
-                    { title: "Weekly check-in", desc: "2-min pulse survey every Friday" },
-                    { title: "Mid-pilot review", desc: "Optional 15-min call, week 2" },
-                    { title: "Final survey", desc: "Sent in the last week of pilot" }
+                    { step: "01", phase: "Weeks 1–4", title: "Kickoff & Duration", desc: "4 weeks of dedicated platform access and direct onboarding support for your team.", tag: "Full Pilot Window" },
+                    { step: "02", phase: "Every Friday", title: "Weekly Check-in", desc: "Quick 2-minute pulse survey to collect friction points, requests, and instant feedback.", tag: "Pulse Feedback" },
+                    { step: "03", phase: "Week 2", title: "Mid-Pilot Review", desc: "Optional 15-minute sync with your Pilot Manager to review early data and recipe costing.", tag: "15-min 1:1 Call" },
+                    { step: "04", phase: "Week 4", title: "Final Evaluation", desc: "Closing survey and ROI report to assess time saved, margin control, and next steps.", tag: "Wrap-up & ROI" }
                 ]
             },
             videoComingSoon: "Video coming soon...",
@@ -1537,12 +1539,14 @@ export const translations = {
                 urgentNote: "Per situazioni urgenti (se sei bloccato, non riesci ad accedere o rilevi comportamenti critici), contatta direttamente il tuo Pilot Manager."
             },
             timeline: {
-                title: "Programma e Tempistiche del Pilota",
+                title: "Roadmap e Tempistiche del Pilota",
+                subtitle: "Un percorso strutturato in 4 settimane per guidare e supportare la tua brigata passo dopo passo.",
+                badge: "Roadmap del Pilota",
                 cards: [
-                    { title: "Durata", desc: "4 settimane dal kick-off iniziale" },
-                    { title: "Check-in Settimanale", desc: "Breve sondaggio di 2 minuti ogni venerdì" },
-                    { title: "Revisione Intermedia", desc: "Call facoltativa di 15 minuti alla seconda settimana" },
-                    { title: "Sondaggio Finale", desc: "Inviato nell'ultima settimana del pilota" }
+                    { step: "01", phase: "Settimane 1–4", title: "Kick-off & Durata", desc: "4 settimane di accesso completo, supporto iniziale e test operativo sul campo con il team.", tag: "Durata Pilota" },
+                    { step: "02", phase: "Ogni Venerdì", title: "Check-in Settimanale", desc: "Breve sondaggio di 2 minuti per segnalare criticità, dubbi o feedback direttamente al team.", tag: "Pulse Survey" },
+                    { step: "03", phase: "Settimana 2", title: "Revisione Intermedia", desc: "Call facoltativa di 15 minuti con il tuo Pilot Manager per analizzare i primi dati e ricette.", tag: "Call 15 min" },
+                    { step: "04", phase: "Settimana 4", title: "Valutazione Finale", desc: "Sondaggio conclusivo e report ROI per misurare tempo risparmiato, precisione costi e prossimi passi.", tag: "Chiusura & ROI" }
                 ]
             },
             videoComingSoon: "Video in arrivo...",

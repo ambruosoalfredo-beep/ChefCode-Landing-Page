@@ -19,6 +19,8 @@ import {
   Book,
   ClipboardCheck,
   Users,
+  Award,
+  Milestone,
   ChefHat,
   ConciergeBell,
   UtensilsCrossed,
@@ -1536,26 +1538,141 @@ const UserGuide = () => {
         {/* Glossary Section */}
         <GlossarySection glossary={guide.glossary} language={language} onOpenDrawer={() => setIsGlossaryOpen(true)} />
 
-        {/* Timeline */}
+        {/* Timeline / Roadmap Section */}
         <section id="timeline" className="scroll-mt-28">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
-              <Calendar className="w-5 h-5" />
-            </span>
-            {guide.timeline.title}
-          </h2>
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600"></div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              {guide.timeline.cards.map((item, i) => (
-                <div key={i} className="pt-4 md:pt-0 md:px-6 first:px-0 first:pt-0">
-                  <div className="flex items-center gap-2 mb-2 text-orange-500">
-                    <Calendar className="w-5 h-5" />
-                    <h4 className="font-bold text-slate-900">{item.title}</h4>
-                  </div>
-                  <p className="text-sm text-slate-600">{item.desc}</p>
-                </div>
-              ))}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 text-xs font-bold uppercase tracking-wider mb-2">
+                <Milestone className="w-3.5 h-3.5" />
+                {guide.timeline.badge || (language === 'it' ? 'Roadmap del Pilota' : 'Pilot Roadmap')}
+              </div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                {guide.timeline.title}
+              </h2>
+              {guide.timeline.subtitle && (
+                <p className="text-slate-500 text-sm md:text-base mt-1.5 max-w-2xl">
+                  {guide.timeline.subtitle}
+                </p>
+              )}
+            </div>
+            <div className="hidden md:inline-flex items-center gap-2 text-xs font-bold text-slate-700 bg-white px-4 py-2 rounded-full border border-slate-200/90 shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              {language === 'it' ? '4 Settimane • 4 Tappe Chiave' : '4 Weeks • 4 Key Milestones'}
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-b from-white via-slate-50/50 to-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/90 relative overflow-hidden">
+            {/* Top decorative gradient bar */}
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500"></div>
+
+            {/* Ambient background glows */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* Roadmap flow */}
+            <div className="relative">
+              {/* Horizontal Connecting Line (Desktop) */}
+              <div className="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-1 bg-slate-100 z-0">
+                <div className="w-full h-full bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 rounded-full opacity-60"></div>
+              </div>
+
+              {/* 4 Roadmap Milestone Columns */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+                {guide.timeline.cards.map((item, i) => {
+                  const icons = [Rocket, ClipboardCheck, Users, Award];
+                  const StepIcon = icons[i] || Calendar;
+                  
+                  const stepThemes = [
+                    {
+                      badge: 'bg-orange-50 text-orange-600 border-orange-200/80',
+                      node: 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-orange-500/30 ring-orange-100',
+                      iconBox: 'bg-orange-500/10 text-orange-600 group-hover:bg-orange-500 group-hover:text-white',
+                      borderHover: 'group-hover:border-orange-500/40',
+                      tagIcon: 'text-orange-500',
+                    },
+                    {
+                      badge: 'bg-amber-50 text-amber-700 border-amber-200/80',
+                      node: 'bg-gradient-to-br from-amber-500 to-yellow-500 text-white shadow-amber-500/30 ring-amber-100',
+                      iconBox: 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500 group-hover:text-white',
+                      borderHover: 'group-hover:border-amber-500/40',
+                      tagIcon: 'text-amber-500',
+                    },
+                    {
+                      badge: 'bg-blue-50 text-blue-700 border-blue-200/80',
+                      node: 'bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-blue-500/30 ring-blue-100',
+                      iconBox: 'bg-blue-500/10 text-blue-600 group-hover:bg-blue-500 group-hover:text-white',
+                      borderHover: 'group-hover:border-blue-500/40',
+                      tagIcon: 'text-blue-500',
+                    },
+                    {
+                      badge: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                      node: 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-emerald-500/30 ring-emerald-100',
+                      iconBox: 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white',
+                      borderHover: 'group-hover:border-emerald-500/40',
+                      tagIcon: 'text-emerald-500',
+                    }
+                  ][i % 4];
+
+                  return (
+                    <div key={i} className="flex flex-col group">
+                      {/* Milestone Node on Track (Desktop) */}
+                      <div className="hidden md:flex items-center justify-center w-full mb-5">
+                        <div className={`w-14 h-14 rounded-2xl ${stepThemes.node} shadow-lg flex items-center justify-center font-black text-base tracking-tight border-2 border-white ring-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl`}>
+                          {item.step || `0${i + 1}`}
+                        </div>
+                      </div>
+
+                      {/* Milestone Card */}
+                      <div className={`flex-1 bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-sm ${stepThemes.borderHover} transition-all duration-300 flex flex-col justify-between h-full group-hover:shadow-lg group-hover:-translate-y-1 relative`}>
+                        {/* Mobile Header: Step Badge & Phase */}
+                        <div className="md:hidden flex items-center justify-between mb-3.5">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-7 h-7 rounded-lg ${stepThemes.node} flex items-center justify-center text-xs font-black shadow-sm`}>
+                              {item.step || `0${i + 1}`}
+                            </span>
+                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${stepThemes.badge}`}>
+                              {item.phase || `Tappa 0${i + 1}`}
+                            </span>
+                          </div>
+                          <div className={`w-8 h-8 rounded-xl ${stepThemes.iconBox} flex items-center justify-center`}>
+                            <StepIcon className="w-4 h-4" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col flex-1">
+                          {/* Desktop Header: Phase Badge & Step Icon */}
+                          <div className="hidden md:flex items-center justify-between mb-4">
+                            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border uppercase tracking-wider ${stepThemes.badge}`}>
+                              {item.phase || `Tappa 0${i + 1}`}
+                            </span>
+                            <div className={`w-9 h-9 rounded-xl ${stepThemes.iconBox} flex items-center justify-center transition-all duration-300 shadow-sm`}>
+                              <StepIcon className="w-4 h-4" />
+                            </div>
+                          </div>
+
+                          {/* Title with consistent min-height for uniform alignment */}
+                          <h4 className="text-[15px] md:text-base font-bold text-slate-900 mb-2 leading-snug group-hover:text-orange-600 transition-colors min-h-[44px] flex items-center">
+                            {item.title}
+                          </h4>
+
+                          {/* Description */}
+                          <p className="text-xs md:text-sm text-slate-600 leading-relaxed flex-1">
+                            {item.desc}
+                          </p>
+                        </div>
+
+                        {/* Bottom Tag / Micro-metadata */}
+                        {item.tag && (
+                          <div className="mt-4 pt-3.5 border-t border-slate-100 flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+                            <Clock className={`w-3.5 h-3.5 ${stepThemes.tagIcon}`} />
+                            <span>{item.tag}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
