@@ -307,11 +307,72 @@ const VideoDisplay = ({ videoUrl, stepTitle, onClose, placeholderTitle, taskLabe
   );
 };
 
+const normalizeForSearch = (str) => {
+  return String(str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // remove accents (è -> e, à -> a, etc.)
+    .toLowerCase()
+    .replace(/[-_'/\\.,;:!?()%#&]/g, ' ') // treat dashes, slashes, punctuation as spaces
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
+const STOPWORDS_REGEX = /\b(di|da|del|della|dello|dei|degli|delle|al|alla|allo|ai|agli|alle|il|lo|la|i|gli|le|un|uno|una|ed|ad|of|to|for|in|on|at|by|the|a|an|and|or)\b/g;
+
+const stripStopwords = (str) => {
+  return str.replace(STOPWORDS_REGEX, ' ').replace(/\s+/g, ' ').trim();
+};
+
+// Build a dynamic vocabulary lexicon across all glossary terms (both IT and EN) for universal compound decomposition
+const buildGlossaryLexicon = () => {
+  const words = new Set();
+  const allItems = [
+    ...(translations?.it?.guide?.glossary?.items || []),
+    ...(translations?.en?.guide?.glossary?.items || []),
+  ];
+  allItems.forEach((item) => {
+    const text = `${item.term} ${item.id || ''}`;
+    const norm = normalizeForSearch(text);
+    norm.split(' ').forEach((w) => {
+      if (w.length >= 3) words.add(w);
+    });
+  });
+  return Array.from(words).sort((a, b) => b.length - a.length); // longest first
+};
+
+const GLOSSARY_LEXICON = buildGlossaryLexicon();
+
 const highlightMatch = (text, query) => {
   if (!query || !query.trim()) return text;
-  const q = query.trim();
-  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+
+  // Extract individual words/tokens, normalizing punctuation
+  const rawTokens = query
+    .trim()
+    .split(/[\s\-_\/.,;:!?()%#&]+/)
+    .filter((t) => t.length > 0);
+
+  if (rawTokens.length === 0) return text;
+
+  // Universally expand tokens with any constituent sub-tokens found in the glossary lexicon
+  const allTokens = new Set(rawTokens);
+  rawTokens.forEach((t) => {
+    const low = t.toLowerCase();
+    for (const word of GLOSSARY_LEXICON) {
+      if (low.includes(word) && word.length >= 3 && low.length > word.length) {
+        allTokens.add(word);
+      }
+    }
+  });
+
+  const escapedTokens = Array.from(allTokens)
+    .sort((a, b) => b.length - a.length)
+    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  if (escapedTokens.length === 0) return text;
+
+  const regex = new RegExp(`(${escapedTokens.join('|')})`, 'gi');
   const parts = String(text).split(regex);
+
   return parts.map((part, i) =>
     regex.test(part) ? (
       <mark key={i} className="bg-orange-100 text-orange-900 font-bold rounded px-1 py-0.5">
@@ -321,6 +382,63 @@ const highlightMatch = (text, query) => {
       part
     )
   );
+};
+
+const getGlossaryScore = (item, searchQuery) => {
+  if (!searchQuery || !searchQuery.trim()) return 100;
+
+  const normQuery = normalizeForSearch(searchQuery);
+  const compactQuery = normQuery.replace(/\s+/g, '');
+  const compactQueryNoStop = stripStopwords(normQuery).replace(/\s+/g, '');
+
+  const normTerm = normalizeForSearch(item.term);
+  const compactTerm = normTerm.replace(/\s+/g, '');
+  const compactTermNoStop = stripStopwords(normTerm).replace(/\s+/g, '');
+
+  const normId = normalizeForSearch(item.id);
+  const compactId = normId.replace(/\s+/g, '');
+
+  const normMeaning = normalizeForSearch(item.meaning);
+  const compactMeaning = normMeaning.replace(/\s+/g, '');
+  const compactMeaningNoStop = stripStopwords(normMeaning).replace(/\s+/g, '');
+
+  const normCategory = normalizeForSearch(item.category || '');
+
+  // 1. Direct match on Term / ID (Highest relevance)
+  if (normTerm === normQuery || normId === normQuery) return 1000;
+  if (compactTerm === compactQuery || compactId === compactQuery) return 950;
+  if (compactTermNoStop === compactQueryNoStop && compactQueryNoStop.length >= 3) return 900;
+  if (normTerm.includes(normQuery) || normId.includes(normQuery)) return 850;
+  if (compactTerm.includes(compactQuery) || compactId.includes(compactQuery)) return 800;
+  if (compactQueryNoStop.length >= 4 && compactTermNoStop.includes(compactQueryNoStop)) return 750;
+
+  // 2. Multi-token match on Term / ID
+  const tokens = normQuery.split(' ').filter(Boolean);
+  if (tokens.length > 1) {
+    const termTokensMatch = tokens.every((t) => normTerm.includes(t) || normId.includes(t));
+    if (termTokensMatch) return 600;
+  }
+
+  // 3. Match on Meaning (Definition)
+  if (normMeaning.includes(normQuery)) return 500;
+  if (compactQuery.length >= 3 && compactMeaning.includes(compactQuery)) return 400;
+  if (compactQueryNoStop.length >= 4 && compactMeaningNoStop.includes(compactQueryNoStop)) return 350;
+
+  // 4. Token match across Term + Meaning + Category
+  const combinedNorm = `${normTerm} ${normMeaning} ${normCategory} ${normId}`;
+  if (tokens.length > 0) {
+    const allTokensMatch = tokens.every((t) => {
+      if (combinedNorm.includes(t)) return true;
+      if (t.length >= 4) {
+        const stem = t.slice(0, -1);
+        return combinedNorm.split(' ').some((w) => w.startsWith(stem));
+      }
+      return false;
+    });
+    if (allTokensMatch) return 300;
+  }
+
+  return 0;
 };
 
 const categoryStyles = {
@@ -346,14 +464,41 @@ const categoryStyles = {
   },
 };
 
-const GlossarySection = ({ glossary, language }) => {
+const GlossaryDrawer = ({ isOpen, onClose, glossary, language }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const inputRef = useRef(null);
+
+  // Focus search input when drawer opens & manage body scroll
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => inputRef.current?.focus(), 250);
+    } else {
+      document.body.style.overflow = '';
+      setSearchQuery('');
+      setSelectedCategory('all');
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!glossary || !glossary.items) return null;
 
   const categories = [
-    { key: 'all', label: glossary.categories?.all || (language === 'it' ? 'Tutti i Termini' : 'All Terms') },
+    { key: 'all', label: glossary.categories?.all || (language === 'it' ? 'Tutti' : 'All') },
     { key: 'recipes_inventory', label: glossary.categories?.recipes_inventory || (language === 'it' ? 'Ricette & Magazzino' : 'Recipes & Inventory') },
     { key: 'foodcost_sales', label: glossary.categories?.foodcost_sales || (language === 'it' ? 'Food Cost & Vendite' : 'Food Cost & Sales') },
     { key: 'purchasing_stock', label: glossary.categories?.purchasing_stock || (language === 'it' ? 'Acquisti & Scorte' : 'Purchasing & Stock') },
@@ -361,15 +506,17 @@ const GlossarySection = ({ glossary, language }) => {
     { key: 'ai_workflows', label: glossary.categories?.ai_workflows || (language === 'it' ? 'Flussi & Assistente IA' : 'Workflows & AI') },
   ];
 
-  const filteredItems = glossary.items.filter((item) => {
-    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-    if (!matchesCategory) return false;
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase().trim();
-    const termMatches = item.term.toLowerCase().includes(q);
-    const meaningMatches = item.meaning.toLowerCase().includes(q);
-    return termMatches || meaningMatches;
-  });
+  const filteredItems = glossary.items
+    .map((item) => {
+      const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+      if (!matchesCategory) return null;
+      const score = getGlossaryScore(item, searchQuery);
+      if (score === 0) return null;
+      return { item, score };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score)
+    .map((entry) => entry.item);
 
   const getCategoryCount = (catKey) => {
     if (catKey === 'all') return glossary.items.length;
@@ -377,158 +524,238 @@ const GlossarySection = ({ glossary, language }) => {
   };
 
   return (
-    <section id="glossary" className="mb-16 scroll-mt-28">
-      {/* Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30">
-              <Book className="w-5 h-5" />
-            </span>
-            {glossary.title}
-          </h2>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
-            {glossary.subtitle}
-          </p>
-        </div>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-600 self-start md:self-auto">
-          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-          <span>{glossary.items.length} {language === 'it' ? 'termini documentati' : 'documented terms'}</span>
-        </div>
-      </div>
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[120] flex justify-end">
+          {/* Backdrop Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm cursor-pointer"
+          />
 
-      {/* Main Container Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 relative overflow-hidden">
-        {/* Top Gradient Line */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500"></div>
+          {/* Slide-over Drawer Panel */}
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+            className="relative z-10 w-full max-w-xl md:max-w-2xl bg-white shadow-2xl flex flex-col h-full border-l border-slate-200 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Gradient Bar */}
+            <div className="h-1.5 w-full bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500 flex-shrink-0" />
 
-        {/* Search Bar & Category Controls */}
-        <div className="space-y-4 mb-8">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <Search className="w-5 h-5" />
-            </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={glossary.searchPlaceholder}
-              className="w-full pl-11 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:bg-white transition-all shadow-inner"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
-                title={language === 'it' ? 'Cancella ricerca' : 'Clear search'}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            )}
-          </div>
-
-          {/* Category Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none pt-1">
-            {categories.map((cat) => {
-              const isSelected = selectedCategory === cat.key;
-              const count = getCategoryCount(cat.key);
-              return (
-                <button
-                  key={cat.key}
-                  onClick={() => setSelectedCategory(cat.key)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-300 ${
-                    isSelected
-                      ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20 scale-[1.02]'
-                      : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200/80 hover:border-slate-300'
-                  }`}
-                >
-                  <span>{cat.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-orange-500 text-white' : 'bg-slate-200/80 text-slate-500'}`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Results count text */}
-          <div className="flex items-center justify-between text-xs text-slate-400 pt-1 px-1">
-            <span>
-              {glossary.termsCount
-                ? glossary.termsCount.replace('{count}', filteredItems.length).replace('{total}', glossary.items.length)
-                : `${filteredItems.length} di ${glossary.items.length} termini`}
-            </span>
-            {(searchQuery || selectedCategory !== 'all') && (
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('all');
-                }}
-                className="text-orange-500 hover:text-orange-600 font-semibold hover:underline"
-              >
-                {glossary.resetSearch}
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Terms Grid */}
-        {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredItems.map((item) => {
-              const catStyle = categoryStyles[item.category] || categoryStyles.recipes_inventory;
-              const catLabel = glossary.categories?.[item.category] || item.category;
-
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-lg hover:border-orange-200 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div>
-                    {/* Category badge */}
-                    <div className="flex items-center justify-between gap-2 mb-2.5">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border tracking-wide uppercase ${catStyle.bg}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${catStyle.dot}`}></span>
-                        {catLabel}
-                      </span>
-                    </div>
-
-                    {/* Term Title */}
-                    <h3 className="font-bold text-slate-900 text-base md:text-lg group-hover:text-orange-600 transition-colors leading-snug">
-                      {highlightMatch(item.term, searchQuery)}
-                    </h3>
-
-                    {/* Definition */}
-                    <p className="text-slate-600 text-sm leading-relaxed mt-2 font-normal">
-                      {highlightMatch(item.meaning, searchQuery)}
-                    </p>
+            {/* Drawer Header */}
+            <div className="p-5 md:p-6 pb-4 border-b border-slate-100 flex items-center justify-between gap-4 flex-shrink-0 bg-white">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-2xl bg-orange-500 text-white flex items-center justify-center shadow-lg shadow-orange-500/30 flex-shrink-0">
+                  <Book className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-slate-900 text-lg md:text-xl truncate">
+                    {glossary.title}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-xs text-slate-500 font-medium">
+                      {glossary.items.length} {language === 'it' ? 'termini documentati' : 'documented terms'}
+                    </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          /* Empty state */
-          <div className="text-center py-12 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200">
-            <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 mx-auto flex items-center justify-center mb-3">
-              <Search className="w-6 h-6" />
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={onClose}
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition-all flex-shrink-0 group cursor-pointer"
+                title={language === 'it' ? 'Chiudi (Esc)' : 'Close (Esc)'}
+              >
+                <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+              </button>
             </div>
-            <h4 className="text-base font-bold text-slate-800 mb-1">
-              {glossary.noResultsTitle}
-            </h4>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto mb-4">
-              {glossary.noResultsDesc}
+
+            {/* Search Bar & Category Pills (Sticky in Drawer) */}
+            <div className="p-5 md:p-6 py-4 bg-slate-50/80 border-b border-slate-100 flex-shrink-0 space-y-3">
+              {/* Search Input */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Search className="w-4 h-4" />
+                </div>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={glossary.searchPlaceholder}
+                  className="w-full pl-10 pr-9 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-sm"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Category Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none pt-0.5">
+                {categories.map((cat) => {
+                  const isSelected = selectedCategory === cat.key;
+                  const count = getCategoryCount(cat.key);
+                  return (
+                    <button
+                      key={cat.key}
+                      onClick={() => setSelectedCategory(cat.key)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                        isSelected
+                          ? 'bg-slate-900 text-white shadow-sm'
+                          : 'bg-white hover:bg-slate-200 text-slate-600 border border-slate-200'
+                      }`}
+                    >
+                      <span>{cat.label}</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Count & Reset */}
+              <div className="flex items-center justify-between text-xs text-slate-400 px-0.5">
+                <span>
+                  {glossary.termsCount
+                    ? glossary.termsCount.replace('{count}', filteredItems.length).replace('{total}', glossary.items.length)
+                    : `${filteredItems.length} di ${glossary.items.length} termini`}
+                </span>
+                {(searchQuery || selectedCategory !== 'all') && (
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory('all');
+                    }}
+                    className="text-orange-500 hover:text-orange-600 font-semibold hover:underline cursor-pointer"
+                  >
+                    {glossary.resetSearch}
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Scrollable Terms Content */}
+            <div className="flex-1 overflow-y-auto p-5 md:p-6 space-y-3.5 bg-slate-50/40">
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => {
+                  const catStyle = categoryStyles[item.category] || categoryStyles.recipes_inventory;
+                  const catLabel = glossary.categories?.[item.category] || item.category;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-white rounded-2xl p-4 md:p-5 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-200 group"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border tracking-wide uppercase ${catStyle.bg}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${catStyle.dot}`}></span>
+                          {catLabel}
+                        </span>
+                      </div>
+                      <h4 className="font-bold text-slate-900 text-base group-hover:text-orange-600 transition-colors leading-snug">
+                        {highlightMatch(item.term, searchQuery)}
+                      </h4>
+                      <p className="text-slate-600 text-sm leading-relaxed mt-2 font-normal">
+                        {highlightMatch(item.meaning, searchQuery)}
+                      </p>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="text-center py-16 px-4 rounded-2xl bg-white border border-dashed border-slate-200">
+                  <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 mx-auto flex items-center justify-center mb-3">
+                    <Search className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-sm font-bold text-slate-800 mb-1">
+                    {glossary.noResultsTitle}
+                  </h4>
+                  <p className="text-xs text-slate-500 max-w-xs mx-auto mb-4">
+                    {glossary.noResultsDesc}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory('all');
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-orange-500 text-white font-semibold text-xs shadow-md shadow-orange-500/20 hover:bg-orange-600 transition-colors cursor-pointer"
+                  >
+                    {glossary.resetSearch}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Drawer Footer */}
+            <div className="p-3.5 px-6 bg-white border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 flex-shrink-0">
+              <span className="flex items-center gap-1.5">
+                <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono text-slate-600">Esc</kbd>
+                <span>{language === 'it' ? 'per chiudere' : 'to close'}</span>
+              </span>
+              <button
+                onClick={onClose}
+                className="text-orange-500 font-bold hover:underline cursor-pointer"
+              >
+                {language === 'it' ? 'Chiudi' : 'Close'}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const GlossarySection = ({ glossary, language, onOpenDrawer }) => {
+  if (!glossary) return null;
+
+  return (
+    <section id="glossary" className="mb-16 scroll-mt-28">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl relative overflow-hidden group border border-slate-700/60">
+        {/* Glowing background blob */}
+        <div className="absolute -top-24 -right-24 w-72 h-72 bg-orange-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-orange-500/25 transition-all duration-700"></div>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500"></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-orange-400 font-semibold text-xs mb-4 shadow-sm">
+              <Book className="w-3.5 h-3.5" />
+              <span>{glossary.title}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+              <span className="text-white/80">{glossary.items?.length || 28} {language === 'it' ? 'termini documentati' : 'documented terms'}</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+              {language === 'it' ? 'Hai dubbi sui termini della piattaforma?' : 'Need clarification on platform terms?'}
+            </h3>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              {glossary.subtitle}
             </p>
+          </div>
+
+          <div className="flex-shrink-0 w-full md:w-auto">
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('all');
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500 text-white font-semibold text-xs shadow-md shadow-orange-500/20 hover:bg-orange-600 transition-colors"
+              onClick={onOpenDrawer}
+              className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm sm:text-base shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all duration-300 group/btn cursor-pointer"
             >
-              {glossary.resetSearch}
+              <Book className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+              <span>{language === 'it' ? 'Apri il Glossario Completo' : 'Open Full Glossary'}</span>
+              <span className="text-orange-200 group-hover/btn:translate-x-1 transition-transform">→</span>
             </button>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
@@ -544,6 +771,7 @@ const UserGuide = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [activeVideoUrl, setActiveVideoUrl] = useState(null);
   const [currentFlow, setCurrentFlow] = useState('manual'); // 'manual' or 'ai'
+  const [isGlossaryOpen, setIsGlossaryOpen] = useState(false);
 
   // Scroll to top on page mount
   useEffect(() => {
@@ -625,7 +853,15 @@ const UserGuide = () => {
         id={`guide-nav-${id}`}
         href={`#${id}`}
         className={baseClasses}
-        onClick={(e) => scrollToSection(e, id)}
+        onClick={(e) => {
+          if (id === 'glossary') {
+            e.preventDefault();
+            setIsGlossaryOpen(true);
+            setIsMenuOpen(false);
+            return;
+          }
+          scrollToSection(e, id);
+        }}
       >
         {label}
       </a>
@@ -818,15 +1054,14 @@ const UserGuide = () => {
               transition={{ delay: 0.3 }}
               className="mt-8 flex flex-wrap items-center justify-center gap-3"
             >
-              <a
-                href="#glossary"
-                onClick={(e) => scrollToSection(e, 'glossary')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-orange-500 border border-white/20 hover:border-orange-500 text-orange-300 hover:text-white font-semibold text-xs sm:text-sm transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-orange-500/30 hover:-translate-y-0.5 group"
+              <button
+                onClick={() => setIsGlossaryOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-orange-500 border border-white/20 hover:border-orange-500 text-orange-300 hover:text-white font-semibold text-xs sm:text-sm transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-orange-500/30 hover:-translate-y-0.5 group cursor-pointer"
               >
                 <Book className="w-4 h-4 text-orange-400 group-hover:text-white transition-colors" />
                 <span>{guide.glossary?.heroButton || (language === 'it' ? 'Consulta il Glossario (28 termini)' : 'Explore Glossary (28 terms)')}</span>
-                <span className="text-orange-400 group-hover:text-white transition-transform group-hover:translate-y-0.5">↓</span>
-              </a>
+                <span className="text-orange-400 group-hover:text-white transition-transform group-hover:translate-x-0.5">→</span>
+              </button>
             </motion.div>
           </div>
         </div>
@@ -1271,7 +1506,7 @@ const UserGuide = () => {
         </div>
 
         {/* Glossary Section */}
-        <GlossarySection glossary={guide.glossary} language={language} />
+        <GlossarySection glossary={guide.glossary} language={language} onOpenDrawer={() => setIsGlossaryOpen(true)} />
 
         {/* Timeline */}
         <section id="timeline" className="scroll-mt-28">
@@ -1299,7 +1534,13 @@ const UserGuide = () => {
 
       </div>
 
-      {/* OVERLAY VIDEO COMPONENT (Moved to root level for correct z-index over navbar) */}
+      {/* GLOSSARY SLIDE-OVER DRAWER */}
+      <GlossaryDrawer 
+        isOpen={isGlossaryOpen}
+        onClose={() => setIsGlossaryOpen(false)}
+        glossary={guide.glossary}
+        language={language}
+      />
       <AnimatePresence>
         {isVideoOpen && (
           <motion.div
