@@ -784,14 +784,6 @@ const UserGuide = () => {
   const [activeSection, setActiveSection] = useState('quick-start');
   const [indicatorProps, setIndicatorProps] = useState({ left: 0, width: 0, opacity: 0 });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Update Top Bar Position based on active section
   useEffect(() => {
     const updateIndicator = () => {
@@ -804,39 +796,75 @@ const UserGuide = () => {
           opacity: 1
         });
       } else {
-        setIndicatorProps(prev => ({ ...prev, opacity: 0 }));
+        setIndicatorProps((prev) => ({ ...prev, opacity: 0 }));
       }
     };
 
     updateIndicator();
+    const timer = setTimeout(updateIndicator, 60);
     window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
-  }, [activeSection]);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [activeSection, scrolled]);
 
-  // Observe sections for active section highlight
+  // Robust Scroll Spy: tracks all sections (including tall multi-step sections like suggested-tests)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "-15% 0px -40% 0px" }
-    );
-
     const sections = ['quick-start', 'what-to-test', 'suggested-tests', 'guardrails', 'feedback-bugs', 'glossary', 'timeline'];
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    let ticking = false;
 
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // If near top of page, activate first section
+          if (window.scrollY < 120) {
+            setActiveSection(sections[0]);
+            ticking = false;
+            return;
+          }
+
+          // If near bottom of page, activate last section
+          const scrollBottom = window.innerHeight + window.scrollY;
+          const totalHeight = document.documentElement.scrollHeight;
+          if (scrollBottom >= totalHeight - 60) {
+            setActiveSection(sections[sections.length - 1]);
+            ticking = false;
+            return;
+          }
+
+          // Trigger line below the fixed navbar (activates when section enters upper third of viewport)
+          const triggerLine = Math.min(window.innerHeight * 0.35, 260);
+          let currentSection = sections[0];
+
+          for (const id of sections) {
+            const el = document.getElementById(id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= triggerLine) {
+                currentSection = id;
+              }
+            }
+          }
+
+          setActiveSection(currentSection);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
+    setActiveSection(sectionId);
     const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
