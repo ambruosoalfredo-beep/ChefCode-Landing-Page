@@ -112,7 +112,7 @@ export const translations = {
             title: "From paper to data - in seconds.",
             subtitle: "Snap, Scan, Approve",
             scanned: "SCANNED",
-            desc: "ChefCode's AI-powered OCR analyzes invoices—extracting ingredients, prices, and suppliers for your review and approval. Forget manual entry. Forget errors. Just scan and go.",
+            desc: "ChefCode's AI-powered OCR analyzes invoices, extracting ingredients, prices, and suppliers for your review and approval. Forget manual entry. Forget errors. Just scan and go.",
             items: [
                 "AI-assisted invoice processing",
                 "AI-assisted cost tracking",
@@ -914,7 +914,7 @@ export const translations = {
             title: "Dalla carta ai dati - in secondi.",
             subtitle: "Scatta, Scansiona, Approva",
             scanned: "SCANSIONATO",
-            desc: "L'OCR potenziato dall'AI di ChefCode analizza le fatture—estraendo ingredienti, prezzi e fornitori per la tua revisione e approvazione. Dimentica l'inserimento manuale o gli errori. Scansiona e vai.",
+            desc: "L'OCR potenziato dall'AI di ChefCode analizza le fatture, estraendo ingredienti, prezzi e fornitori per la tua revisione e approvazione. Dimentica l'inserimento manuale o gli errori. Scansiona e vai.",
             items: [
                 "Processamento fatture assistito da AI",
                 "Tracciamento costi assistito da AI",
