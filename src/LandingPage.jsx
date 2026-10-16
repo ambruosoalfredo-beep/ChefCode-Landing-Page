@@ -835,52 +835,87 @@ const LandingPage = () => {
         </div>
       </motion.section >
 
-      {/* --- FEATURE: OCR (Full Width Centered) --- */}
-      <section className="py-24 bg-white">
+      {/* --- FEATURE: OCR (Side-by-Side 2 Columns) --- */}
+      <section className="py-20 lg:py-28 bg-white overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto"
-          >
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-200 mx-auto mb-8 text-orange-600 border border-slate-100">
-              <FileText size={32} />
-            </div>
-
-            <h3 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 leading-tight">{t('ocr.title')}</h3>
-            <h4 className="text-xl md:text-2xl font-bold text-orange-600 mb-6">{t('ocr.subtitle')}</h4>
-
-            <p className="text-slate-600 mb-10 leading-relaxed font-medium text-lg max-w-3xl mx-auto">
-              {t('ocr.desc')}
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {t('ocr.items').map((item, i) => (
-                <div key={i} className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-100 text-slate-700 font-bold">
-                  <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-slate-500 font-bold italic mb-12 max-w-2xl mx-auto opacity-80">
-              {t('ocr.quote')}
-            </p>
-
-            {/* Large Visual Element for OCR */}
-            {/* Large Visual Element for OCR */}
-            <div className="relative rounded-3xl max-w-4xl mx-auto group">
-              <div className="absolute inset-0 bg-orange-100/50 rounded-3xl transform rotate-1 scale-[1.02] -z-10 group-hover:rotate-2 transition-transform duration-500"></div>
-              <img src={ocrScanImg} alt="AI OCR Scan" className="w-full h-auto rounded-3xl shadow-2xl" />
-
-              <div className="absolute -right-4 -bottom-4 md:-right-8 md:-bottom-8 bg-orange-600 text-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow">
-                <ScanLine size={28} />
-                <span className="font-bold text-sm hidden md:inline-block">AI Processing Active</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center max-w-7xl mx-auto">
+            {/* Left Column: Text & Features */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-5 flex flex-col items-start text-left"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-orange-50 border border-orange-100 rounded-full text-orange-600 font-bold text-xs uppercase tracking-wider mb-5 shadow-sm">
+                <FileText size={16} />
+                <span>AI Invoice Scanning</span>
               </div>
-            </div>
-          </motion.div>
+
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3 text-slate-900 leading-tight tracking-tight">
+                {t('ocr.title')}
+              </h3>
+
+              <h4 className="text-xl sm:text-2xl font-bold text-orange-600 mb-4">
+                {t('ocr.subtitle')}
+              </h4>
+
+              <p className="text-slate-600 mb-6 leading-relaxed font-medium text-base sm:text-lg">
+                {t('ocr.desc')}
+              </p>
+
+              {/* Feature Points Grid (2x2 on sm+, 1 col on mobile) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-6">
+                {t('ocr.items').map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100/80 transition-colors px-3.5 py-2.5 rounded-2xl border border-slate-100 text-slate-800 font-semibold text-xs sm:text-sm shadow-sm"
+                  >
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                      <CheckCircle2 size={14} className="text-emerald-600" />
+                    </div>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Quote Accent */}
+              <div className="pl-4 border-l-2 border-orange-500/50">
+                <p className="text-slate-500 font-bold italic text-sm sm:text-base">
+                  {t('ocr.quote')}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Animated Visual Demo */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-7 relative w-full"
+            >
+              <div className="relative rounded-3xl group">
+                {/* Decorative glowing backdrop */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-orange-200/50 via-amber-100/30 to-orange-100/50 rounded-3xl transform rotate-1 scale-[1.02] -z-10 group-hover:rotate-2 transition-transform duration-500"></div>
+
+                <div className="overflow-hidden rounded-3xl shadow-2xl border border-slate-100/90 bg-white">
+                  <img
+                    src={ocrScanImg}
+                    alt="ChefCode AI OCR Scan"
+                    className="w-full h-auto block object-cover"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Floating Active Badge */}
+                <div className="absolute -right-3 -bottom-4 sm:-right-6 sm:-bottom-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 animate-bounce-slow">
+                  <ScanLine size={22} className="shrink-0" />
+                  <span className="font-bold text-xs sm:text-sm whitespace-nowrap">AI Processing Active</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
