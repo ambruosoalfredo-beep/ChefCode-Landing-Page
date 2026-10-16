@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from './assets/logo.svg';
 import { Link } from 'react-router-dom';
-import videoDemo from './assets/chef-video.webm';
+import videoDemoEn from './assets/chef-video.webm';
+import videoDemoIta from './assets/chef-video-ita.webm';
 import { motion, AnimatePresence } from 'framer-motion';
 import mockup from './assets/mockup.webp';
 import mockupStop from './assets/animationstop.png';
@@ -46,7 +47,8 @@ import {
 } from 'lucide-react';
 
 const LandingPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const activeVideo = language === 'it' ? videoDemoIta : videoDemoEn;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [analyticsAnimationDone, setAnalyticsAnimationDone] = useState(true);
@@ -316,7 +318,8 @@ const LandingPage = () => {
               <X size={24} />
             </button>
             <video
-              src={videoDemo}
+              key={activeVideo}
+              src={activeVideo}
               controls
               autoPlay
               className="w-full h-full object-cover"
@@ -334,7 +337,7 @@ const LandingPage = () => {
         {/* Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
-            src={videoDemo}
+            src={activeVideo}
             autoPlay
             loop
             muted
