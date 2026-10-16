@@ -188,7 +188,7 @@ const Register = () => {
                                 {t('aboutUs.footer.tagline')}
                             </p>
                             <div className="flex gap-6">
-                                <a href="#" className="text-slate-400 hover:text-orange-500 transition-colors font-bold">LinkedIn</a>
+                                <a href="https://www.linkedin.com/company/chefcode/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-orange-500 transition-colors font-bold">LinkedIn</a>
                                 <a href="#" className="text-slate-400 hover:text-orange-500 transition-colors font-bold">Instagram</a>
                             </div>
                         </div>
