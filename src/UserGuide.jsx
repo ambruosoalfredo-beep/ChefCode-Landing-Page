@@ -51,7 +51,7 @@ import aiVoiceVideo from './assets/ai_voice_flow_v3.webm';
 import aiAssistantAddIngredientVideo from './assets/aiassistant_add_ingredient.webm';
 import aiAssistantAddProductionVideo from './assets/aiassistant_add_production.webm';
 import aiAssistantManagementVideo from './assets/aiassistant_management.webm';
-import ocrScanImg from './assets/ocr_scan.png';
+import ocrScanImg from './assets/ChefCode_OCR_Clean_4s.webp';
 import guideImg1 from './assets/user_guide_3.jpeg';
 import guideImg2 from './assets/user_guide_2.jpeg';
 import guideImg3 from './assets/user_guide 1.jpeg';

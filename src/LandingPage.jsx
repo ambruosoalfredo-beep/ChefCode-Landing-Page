@@ -9,7 +9,7 @@ import { useLanguage } from './context/LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
 
 import analyticsDashboard from './assets/interfacciaoffy.png';
-import ocrScanImg from './assets/ocr_scan.png';
+import ocrScanImg from './assets/ChefCode_OCR_Clean_4s.webp';
 import {
   Mic,
   ScanLine,
