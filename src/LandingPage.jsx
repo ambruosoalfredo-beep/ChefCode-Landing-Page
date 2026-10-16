@@ -1551,6 +1551,7 @@ const LandingPage = () => {
                 <li><a href="#dr-ai" className="hover:text-orange-500 transition-colors">{t('navbar.drAi')}</a></li>
                 <li><a href="#faq" className="hover:text-orange-500 transition-colors">{t('navbar.faq')}</a></li>
                 <li><a href="#integrations" className="hover:text-orange-500 transition-colors">{t('aboutUs.footer.integrations')}</a></li>
+                <li><Link to="/guide" className="hover:text-orange-500 transition-colors">{t('navbar.testerGuide')}</Link></li>
               </ul>
             </div>
 
